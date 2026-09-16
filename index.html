@@ -14,7 +14,7 @@
   --paper:#e9edf2; --paper-2:#ffffff; --line:#c8d2de;
   --ember:#b4451f; --ember-soft:#f0ded4; --steel:#3d5a7a;
   --shadow:0 1px 2px rgba(20,26,36,.06),0 8px 24px rgba(20,26,36,.07);
-  --panel:min(38vw,460px);
+  --panel:min(46vw,620px);
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --ink:#e6ecf4; --ink-2:#a9b8cc; --ink-3:#74849b;
@@ -61,8 +61,9 @@ body{margin:0;background:var(--paper);color:var(--ink);
 
 /* ── панель ── */
 .panel{flex:0 0 var(--panel);max-width:var(--panel);overflow-y:auto;
-  background:var(--paper-2);border-left:1px solid var(--line);padding:26px 22px 60px}
-@media (max-width:900px){.panel{flex:1 1 auto;max-width:none;border-left:0;padding:22px 18px 56px}}
+  background:var(--paper-2);border-right:1px solid var(--line);padding:26px 24px 60px}
+@media (max-width:900px){.panel{flex:1 1 auto;max-width:none;border-right:0;padding:22px 18px 56px}
+  .mapwrap{order:-1}}
 
 .kicker{font-family:"Unbounded",system-ui,sans-serif;font-weight:600;font-size:10px;
   letter-spacing:.22em;text-transform:uppercase;color:var(--ember);margin:0 0 10px}
@@ -70,6 +71,16 @@ h1{font-family:"Unbounded",system-ui,sans-serif;font-weight:800;font-size:clamp(
   line-height:1.05;letter-spacing:-.02em;margin:0 0 10px;text-wrap:balance}
 .lede{color:var(--ink-2);font-size:14px;margin:0 0 26px;max-width:46ch}
 
+.tabs{display:flex;gap:4px;margin:0 0 20px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.tabs button{font-family:"Unbounded",system-ui,sans-serif;font-weight:600;font-size:11px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);background:none;border:0;
+  border-bottom:2px solid transparent;padding:9px 12px;margin-bottom:-1px;cursor:pointer;white-space:nowrap}
+.tabs button:hover{color:var(--ink-2)}
+.tabs button[aria-selected="true"]{color:var(--ember);border-bottom-color:var(--ember)}
+.tabs button:focus-visible{outline:2px solid var(--ember);outline-offset:-2px;border-radius:2px}
+[role="tabpanel"][hidden]{display:none}
+[role="tabpanel"] > .chapter:first-child > h2{display:none}
+[role="tabpanel"] > .chapter:first-child > .csub{margin-top:0}
 .chapter h2{font-family:"Unbounded",system-ui,sans-serif;font-weight:800;font-size:17px;
   letter-spacing:-.01em;margin:34px 0 4px}
 .csub{color:var(--ink-3);font-size:12px;margin:0 0 16px}
@@ -91,7 +102,10 @@ li.ev.day .when{display:flex;gap:8px;align-items:baseline}
 .phase{display:flex;gap:9px;margin:8px 0 0}
 .pm{flex:0 0 auto;font-size:11px;opacity:.8;margin-top:3px}
 ul.sub{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
-ul.sub li{font-size:13.5px}
+ul.sub li{font-size:13.5px;border-radius:3px;padding:2px 6px;margin-left:-6px}
+ul.sub li.lit{background:var(--ember-soft)}
+ul.sub li:focus-visible{outline:2px solid var(--ember);outline-offset:1px}
+li.ev.lit>.when,li.ev.lit>.what{color:var(--ink)}
 ul.sub li.start{padding-top:2px}
 
 .chip{display:inline-block;font-family:"Unbounded",system-ui,sans-serif;font-weight:600;font-size:9px;
@@ -119,19 +133,184 @@ footer{margin-top:40px;padding-top:18px;border-top:1px solid var(--line);color:v
 </head>
 <body>
 <div class="app">
-  <div class="mapwrap">
-    <div class="stage" id="stage">
-      <img src="map.jpg" alt="Політична карта відомого світу">
-    </div>
-    <p class="hint">Наведи на подію — побачиш, де це сталося. Наведи на імʼя — коротка довідка.</p>
-  </div>
-
   <div class="panel">
     <p class="kicker">746 рік від заснування</p>
     <h1>Королівство Гарона</h1>
     <p class="lede">Хроніка кампанії. Тут немає нічого, чого ваші персонажі не знають.</p>
 
+    <nav class="tabs" role="tablist" aria-label="Розділи">
+      <button type="button" role="tab" id="b-days" aria-controls="t-days" aria-selected="true">Хроніка</button>
+      <button type="button" role="tab" id="b-era" aria-controls="t-era" aria-selected="false">Світ до вас</button>
+      <button type="button" role="tab" id="b-par" aria-controls="t-par" aria-selected="false">Тим часом у світі</button>
+    </nav>
 
+    <div id="t-days" role="tabpanel" aria-labelledby="b-days">
+<section class="chapter">
+  <h2>Ваша хроніка</h2>
+  <p class="csub">Від 2 до 9 Tarsakh 746 року.</p>
+  <ol class="tl">
+<li class="ev day">
+  <div class="when"><span class="dnum">День 1</span><span class="ddate">2 Tarsakh 746</span></div>
+  <div class="what">
+    <div class="phase sun"><span class="pm">☀</span>
+      <ul class="sub">
+        <li class="start"><span class="chip">Сесія 1</span></li>
+        <li data-p="kardosa">Біг по дахах <button type="button" class="ref" data-s="kardosa">Кардоси</button> і «купівля» інформації про обмінний дім.</li>
+        <li data-p="thorn-drexel"><button type="button" class="ref" data-s="ester">Естер</button> пропонує партії пограбувати <button type="button" class="ref" data-s="thorn-drexel">обмінний дім «Торн і Дрексель»</button>: вона підслухала розмову банди <button type="button" class="ref" data-s="mierzotnyky">Мерзотників</button>, які підкупили когось із дому заради <strong>ключа й плану</strong>. Героям обіцяно гроші.</li>
+        <li data-p="">Для розрахунку з бандою партія <strong>виготовила підроблені монети</strong> — і вони не знадобилися: ключ і план <strong>перехопили силою</strong>. Коли прибігла стража, героям повірили, а <strong><button type="button" class="ref" data-s="mierzotnyky">Мерзотників</button> забрали</strong>.</li>
+      </ul></div>
+    <div class="phase moon"><span class="pm">🌙</span>
+      <ul class="sub">
+        <li data-p=""><strong>Пограбування.</strong> Пролізли до сховища й знайшли там <strong>таємну кімнату <button type="button" class="ref" data-s="alisia-dan-torn">Алісії дан Торн</button></strong>: пляшки з кровʼю, лист від батька (<button type="button" class="ref" data-s="orven-letter">Лист Орвена Торна до Алісії</button>) і <strong>двоє людей у клітці</strong> — <button type="button" class="ref" data-s="tomas">Томас</button> з дружиною <button type="button" class="ref" data-s="elvira">Ельвірою</button>, яких вона тримала на їжу. Партія їх звільнила.</li>
+        <li data-p="">З листа стало ясно, що <strong><button type="button" class="ref" data-s="orven-dan-torn">Орвен дан Торн</button> — не людина</strong>: він називає себе найстарішим представником свого племені на континенті, а дім заснував 300 років тому <strong>особисто</strong>.</li>
+        <li data-p="">Відкрили люк униз. У темряві спали <strong>десятки породжень вампірів</strong>. Вони прокинулися, почався бій, герої втекли, <strong>піднявши шум</strong>. На шум прибігла стража — і <strong>породження її покусали</strong>.</li>
+        <li data-p=""><button type="button" class="ref" data-s="ester">Естер</button> у метушні <strong>краде <button type="button" class="ref" data-s="garon-crown">Вінець Гарона</button> і зникає</strong>.</li>
+        <li data-p="">Партія виносить <button type="button" class="ref" data-s="lion-pendant">Кулон Лева</button>, непритомного бухгалтера й дуже перегодованого кота <button type="button" class="ref" data-s="shprotia">Шпротя</button>.</li>
+      </ul></div>
+  </div>
+</li>
+<li class="ev day">
+  <div class="when"><span class="dnum">День 2</span><span class="ddate">3 Tarsakh 746</span></div>
+  <div class="what">
+    <div class="phase sun"><span class="pm">☀</span>
+      <ul class="sub">
+        <li class="start"><span class="chip">Сесія 2</span></li>
+        <li data-p="">Вийшли з дому вдосвіта <strong>з мішками мідяків</strong>: срібла й золота в сховищі вже не було — його вивезли раніше.</li>
+        <li data-p="astur-empire">У порту переполох. Партія вилазить на маяк і бачить: <strong>на місто суне армія <button type="button" class="ref" data-s="astur-empire">Астурська Імперія</button></strong>, багато легіонів.</li>
+        <li data-p="">У порт прискакує загін вершників зі щитами, на яких <strong>червоний лев і дві сині хвилясті лінії</strong>. <button type="button" class="ref" data-s="leo-dan-vern">Лео дан Верн «Молодий Лев»</button> знімає шолом і кричить, що всі кораблі реквізовані короною, що на південних воротах затор із тисяч біженців, і що ті, хто володіє магією або досвідчений у бою, потрібні <strong>в цитаделі, у <button type="button" class="ref" data-s="colonel-turner">полковника Тернера</button></strong>. Закінчує: «<strong>За Короля! За Гарону! За Нортланд!</strong>»</li>
+        <li data-p="rosinant"><strong>Срібні Доки.</strong> Єдиний корабель там — <button type="button" class="ref" data-s="rosinant">Корвет «Росінант»</button>, затягнутий брезентом: сліди гарматних пробоїн, латки, нові дошки. Перед ним мовчазний натовп із вузлами. Крізь нього проходить загін лицарів у плащах кольору <strong>ультрамарину зі знаком срібного птаха</strong>, попереду — <button type="button" class="ref" data-s="alisia-dan-torn">Алісія дан Торн</button>. Стражник посилається на наказ полковника, і вона питає: «<strong>Як мене звати?</strong>» Корабель переходить до неї. Тоді їй шепочуть на вухо новину про пограбування — обличчя міняється миттєво: «<strong>Я в обмінний дім!</strong>»</li>
+        <li data-p="">На площі <button type="button" class="ref" data-s="leo-dan-vern">Лео</button> сходиться з <button type="button" class="ref" data-s="colonel-turner">Тернером</button>. Той забороняє кінну вилазку: Лео втратить кінноту, а вона потрібна місту. <strong>Лео заявляє, що не виконуватиме накази людини без приставки «дан»</strong>, і веде нортландців у бій. Астурців він затримав, <strong>поклав багато своїх</strong> — і повернувся.</li>
+        <li data-p="">Астурців на мості тримала ще й група авантюристів (<button type="button" class="ref" data-s="bob-group">група Боба</button>); <button type="button" class="ref" data-s="colonel-turner">Тернер</button> заплатив їм і дав місце в евакуації.</li>
+        <li data-p="">Партія намагається викрасти корабель тихо — не виходить, здіймається бій. Несподівано допомагає колишній солдат <button type="button" class="ref" data-s="briz">Бріз</button>.</li>
+        <li data-p="">У порт <strong>вриваються породження</strong> — це покусані напередодні стражники. Через паніку <strong>оборона міста падає зсередини</strong>.</li>
+        <li data-p="">На борт беруть <strong>близько 150 людей</strong>. Вечоріє; з моря видно, як Імперія входить у місто, <strong>яке вже палає</strong>, і як на вулицях упереміш б'ються імперці, солдати королівства й породження.</li>
+        <li data-p="">Уже відпливаючи, партія бачить <strong>здалека, на іншому кораблі</strong>: із цитаделі виривається <button type="button" class="ref" data-s="colonel-turner">Тернер</button> з <button type="button" class="ref" data-s="leo-dan-vern">Лео</button>, вони тримають породжень, поки люди сідають, — і <strong>Тернер не дає кораблю відпливти, поки Лео не застрибнув останнім</strong>.</li>
+        <li data-p="rosinant">На <button type="button" class="ref" data-s="rosinant">«Росінант»</button> прилітає <button type="button" class="ref" data-s="alisia-dan-torn">Алісія дан Торн</button> і <strong>вимагає віддати корону</strong>.</li>
+      </ul></div>
+    <div class="phase moon"><span class="pm">🌙</span>
+      <ul class="sub">
+        <li class="start"><span class="chip">Сесія 3</span></li>
+        <li data-p=""><strong>Битва з Алісією.</strong> Вона <strong>не повірила</strong>, що корони в партії немає, і атакувала — обурена, що в неї викрали корабель, усю кров і, <strong>особливо, всі плаття</strong>. <strong>Її вбито.</strong> <strong>ЛР</strong></li>
+      </ul></div>
+  </div>
+</li>
+<li class="ev day">
+  <div class="when"><span class="dnum">День 3</span><span class="ddate">4 Tarsakh 746</span></div>
+  <div class="what">
+    <div class="phase sun"><span class="pm">☀</span>
+      <ul class="sub">
+        <li data-p="saltwake">Припливли в <button type="button" class="ref" data-s="saltwake">Солтвейк</button>, випустили біженців і <button type="button" class="ref" data-s="briz">Бріза</button>.</li>
+        <li data-p="garona"><strong>Видіння <button type="button" class="ref" data-s="eldarion">Ельдаріона</button>:</strong> чорний ворон дає напрям — <strong>іти в <button type="button" class="ref" data-s="garona">Гарону</button></strong>.</li>
+        <li data-p="arven">Клерк <button type="button" class="ref" data-s="milan">Мілан</button> підказує, що питання власності на корабель вирішується через <button type="button" class="ref" data-s="salvio">Сальвіо</button> в <button type="button" class="ref" data-s="arven">Арвені</button> фразою «<strong>до пекаря</strong>».</li>
+        <li data-p="garona,montelia,arven">Новина, яка визначить усе далі: <strong>король <button type="button" class="ref" data-s="king-lionel-iv">Ліонель IV «Мудрий»</button> їде до <button type="button" class="ref" data-s="garona">Гарони</button></strong> і скликає прийом для всіх лордів Королівства й можливих союзників із <button type="button" class="ref" data-s="montelia">Монтелії</button>. На час прийому <strong>залив перекривають</strong> — до столиці тепер лише в обхід, через <button type="button" class="ref" data-s="arven">Арвен</button> і трактом.</li>
+        <li data-p="">Розслідування справи <button type="button" class="ref" data-s="maliser">Малісера</button>: капітан <strong>сам прийшов у відділення</strong> й узяв на себе вбивство власного сина, а тіло має <strong>розтрощене пострілом із дробовика обличчя</strong> — упізнати неможливо.</li>
+        <li class="start"><span class="chip">Сесія 4</span></li>
+        <li data-p=""><button type="button" class="ref" data-s="mediz">Медіз</button> пробує зняти <button type="button" class="ref" data-s="astur-slave-collar">Нашийник раба Астурії</button> — <strong>не виходить</strong>. І кажуть, що цей не такий, як інші: такі вдягають <strong>не на астурців, а на людей з Королівства</strong>.</li>
+        <li data-p="kardosa">Переказують новини із захопленої <button type="button" class="ref" data-s="kardosa">Кардоси</button>: <button type="button" class="ref" data-s="gold-black-woman">Жінка в золото-чорному платті</button> хвалиться, що <strong>спалила захисників мосту</strong>. У це не вірять — тіл не знайшли. Клірики, яких опитували, <strong>уникали з нею говорити</strong>, поки на них не гаркнув воїн у золотій масці.</li>
+        <li data-p="vesela-lozhka">Слід <button type="button" class="ref" data-s="ester">Естер</button>: у «<button type="button" class="ref" data-s="vesela-lozhka">Таверна «Весела Ложка»</button>» її знають як ту, що <strong>грає в кості й упевнено оббирає всіх</strong>. Припливла на невеликому, але дуже швидкому судні й пішла <strong>курсом на північ</strong>.</li>
+      </ul></div>
+    <div class="phase moon"><span class="pm">🌙</span>
+      <ul class="sub">
+        <li data-p="">Знайшли <button type="button" class="ref" data-s="basu">Басу</button> — живого, у домі сусідки <button type="button" class="ref" data-s="kishari">Кішарі</button>. Умовили плисти з ними, пообіцявши витягнути батька.</li>
+        <li data-p="pleiades,lantaro"><strong>Вʼязниця.</strong> Прохід куплено <strong>підробленими монетами</strong>. Усередині — <button type="button" class="ref" data-s="kess-favor">Кесс Фавор</button> зі своїми людьми й <button type="button" class="ref" data-s="favor-sorceress">Чарівниця Фавора</button>. Бій: <strong>чарівниця тікає dimension door</strong>, устигнувши їх роздивитися; решту вбито, зокрема самого главу <button type="button" class="ref" data-s="pleiades">Плеяди</button>. На трупі знайдено <button type="button" class="ref" data-s="vitelia-letter-favor">Лист Вітелії до Фавора</button> — вимогу інквізиції <strong>не чіпати кораблі <button type="button" class="ref" data-s="lantaro">Лантаро</button></strong>.</li>
+        <li data-p="">Утекли на корабель. <strong>У місті здійнялася тривога.</strong> <strong>ЛР</strong></li>
+      </ul></div>
+  </div>
+</li>
+<li class="ev day">
+  <div class="when"><span class="dnum">День 4</span><span class="ddate">5 Tarsakh 746</span></div>
+  <div class="what">
+    <div class="phase sun"><span class="pm">☀</span>
+      <ul class="sub">
+        <li data-p="sira-hreis">У морі зустріли <strong>абсолютно порожній</strong> торговий корабель — «<button type="button" class="ref" data-s="sira-hreis">«Сіра Грейс»</button>».</li>
+        <li class="start"><span class="chip">Сесія 5</span></li>
+        <li data-p="">Корабель виявився <strong>міміком</strong>. Билися <strong>всередині нього</strong>, перемогли й <strong>потопили</strong>.</li>
+      </ul></div>
+    <div class="phase moon"><span class="pm">🌙</span>
+      <ul class="sub">
+
+      </ul></div>
+  </div>
+</li>
+<li class="ev day">
+  <div class="when"><span class="dnum">День 5</span><span class="ddate">6 Tarsakh 746</span></div>
+  <div class="what">
+    <div class="phase sun"><span class="pm">☀</span>
+      <ul class="sub">
+        <li data-p="lantaro,lauris,montelia">У дорозі зустріли корабель, що йшов <strong>із <button type="button" class="ref" data-s="lantaro">Герцогство Лантаро</button> до <button type="button" class="ref" data-s="lauris">Лауріс</button></strong>. На борту двоє головних: комунікабельний <button type="button" class="ref" data-s="batcho">Батчо</button> і його сварливий напарник з Імперії <button type="button" class="ref" data-s="khalil">Халіль</button> — вони <strong>сперечалися, чи взагалі говорити</strong> з партією. Судно йшло <strong>під прапорами <button type="button" class="ref" data-s="montelia">Монтелія</button></strong> й на вигляд було торговим, але <strong>в каюті сиділи десятки імперських воїнів, готових до бою</strong>. Бою уникнули: партія <strong>пообіцяла Халілю нікому не розказувати</strong>.</li>
+        <li data-p="arven,rosinant">Прибули в <button type="button" class="ref" data-s="arven">Арвен</button> — затоплене місто, де вулиці стали каналами. <strong>Рівень 4.</strong> <button type="button" class="ref" data-s="rosinant">«Росінант»</button> лишили в порту <button type="button" class="ref" data-s="salvio">Сальвіо</button>.</li>
+        <li data-p="lantaro,garona">У порту — <strong>флотилія з <button type="button" class="ref" data-s="lantaro">Лантаро</button>, що йде на прийом до короля в <button type="button" class="ref" data-s="garona">Гарона</button></strong>: три кораблі, <strong>один із них механічний, пароплав</strong>, і ще два кораблі супроводу з Королівства. На найбільшому стоять <strong><button type="button" class="ref" data-s="marco-kabrini">Марко Кабріні</button> та <button type="button" class="ref" data-s="eliana-vitarelli">Еліана Вітареллі</button></strong> — <strong>посміхаються й махають</strong> натовпу в порту, і натовп махає у відповідь.</li>
+        <li data-p="zalizo-i-shtuky">Закупилися в «<button type="button" class="ref" data-s="zalizo-i-shtuky">«Залізо і Штуки»</button>» у <button type="button" class="ref" data-s="bremmel">Бреммеля</button> — торговця, який <strong>не ходить, а зʼявляється</strong>: телепортується власною крамницею, вічно посміхається й підписує цінники крінжовими віршиками. Узяли <button type="button" class="ref" data-s="greyvik-axe">Грейвікська сокира</button>, <button type="button" class="ref" data-s="pistol-silencer">Глушник від FN Contingency</button> і <button type="button" class="ref" data-s="pearl-of-light">Перлинка Світла</button>.</li>
+        <li class="start"><span class="chip">Сесія 6</span></li>
+        <li data-p="">Місто в переполоху: скрізь <button type="button" class="ref" data-s="wanted-poster">Розшукова листівка «РОЗШУК!»</button> — <strong>1000 золотих за заколот проти корони, живого чи мертвого</strong>.</li>
+        <li data-p="na-terasi">Повечеряли з <button type="button" class="ref" data-s="lady-angelina">леді Анджеліною</button> в «<button type="button" class="ref" data-s="na-terasi">Ресторан «На терасі»</button>» і уклали угоду: партія постачає їй сукні, <strong>перешиті з речей убитої <button type="button" class="ref" data-s="alisia-dan-torn">Алісії дан Торн</button></strong>. Дві продали одразу.</li>
+      </ul></div>
+    <div class="phase moon"><span class="pm">🌙</span>
+      <ul class="sub">
+        <li data-p="">Розмова з <button type="button" class="ref" data-s="pekar">Пекарем</button>, який фактично тримає Старе місто, — і з його шестирічною внучкою <button type="button" class="ref" data-s="bulochka">Булочкою</button>, що вже дає поради з кримінального бізнесу. Доручення: принести <strong>три картини жінки з темним волоссям і світлими очима</strong> (<button type="button" class="ref" data-s="morella-portraits">Три портрети Морелли</button>).</li>
+        <li data-p="morella-house">Проникли в <button type="button" class="ref" data-s="morella-house">білий будинок Морелли</button> — <strong>білий будинок без вікон і дверей</strong> біля парку. Пройшли нижні поверхи через <strong>ілюзорні пастки</strong> й дійшли до спальні.</li>
+      </ul></div>
+  </div>
+</li>
+<li class="ev day">
+  <div class="when"><span class="dnum">День 6</span><span class="ddate">7 Tarsakh 746</span></div>
+  <div class="what">
+    <div class="phase sun"><span class="pm">☀</span>
+      <ul class="sub">
+        <li class="start"><span class="chip">Сесія 7</span></li>
+        <li data-p=""><button type="button" class="ref" data-s="morella">Морелла</button> чекала в спальні серед картин. <strong>Героїв затягнуло всередину полотен</strong>, і там вони билися з її породженнями. Після перемоги <strong>на всіх трьох картинах вона стала намальована мертвою</strong>.</li>
+        <li data-p="rosinant,morella-house"><button type="button" class="ref" data-s="pekar">Пекар</button> розрахувався щедро: <strong>документи на <button type="button" class="ref" data-s="rosinant">«Росінант»</button></strong> і <strong><button type="button" class="ref" data-s="morella-house">особняк Морелли</button> у власність</strong>.</li>
+        <li data-p="">І дав нове доручення: віднести <button type="button" class="ref" data-s="pekar-letter">Лист Пекаря до отця Домініка</button> отцю <button type="button" class="ref" data-s="father-dominic">Домініку</button> у столицю — <strong>з неушкодженою печаткою</strong>. Партія свідомо вирішила <strong>не читати</strong>.</li>
+        <li data-p="garona">Оскільки в <button type="button" class="ref" data-s="garona">Гарона</button> просто так не пускають, <button type="button" class="ref" data-s="lady-angelina">Леді Анджеліна Тревен</button> дала вантаж із документами на заїзд: <strong><button type="button" class="ref" data-s="three-geese">Три гуски — Оля, Люба і Недіс</button></strong> для королівської фуа-гра. Гравці назвали їх <strong>Оля, Люба й Недіс</strong>.</li>
+        <li data-p="">Того ж дня <button type="button" class="ref" data-s="elian">Еліан</button> із <button type="button" class="ref" data-s="huge-warrior">Гремезний воїн</button> помічені біля таверни Нижнього Міста, а <button type="button" class="ref" data-s="bob-group">Група Боба</button> — шестеро в човні — <strong>пішла за ним на північ</strong>. Перевізнику <button type="button" class="ref" data-s="zhan">Жан</button> за цю інформацію <strong>заплатили підробленими монетами</strong>.</li>
+      </ul></div>
+    <div class="phase moon"><span class="pm">🌙</span>
+      <ul class="sub">
+
+      </ul></div>
+  </div>
+</li>
+<li class="ev day">
+  <div class="when"><span class="dnum">День 7</span><span class="ddate">8 Tarsakh 746</span></div>
+  <div class="what">
+    <div class="phase sun"><span class="pm">☀</span>
+      <ul class="sub">
+        <li class="start"><span class="chip">Сесія 8</span></li>
+        <li data-p="arven">Купили в <button type="button" class="ref" data-s="arven">Арвені</button> <strong>250 пляшок вина</strong> по золотому — на продаж у столиці півтора.</li>
+        <li data-p="arven"><strong>Блокпост на тракті.</strong> Партія розказала вартовим про корабель з імперцями — і <strong>з блокпоста відправили гінця в <button type="button" class="ref" data-s="arven">Арвен</button></strong>.</li>
+        <li data-p="red-and-black">Під вечір доїхали до ігрового дому «<button type="button" class="ref" data-s="red-and-black">Ігровий дім «Червоне і Чорне»</button>». Власник <button type="button" class="ref" data-s="adrian">Адріан</button> упевнений, що <strong>імперці сюди ніколи не дійдуть, бо «в них немає кораблів»</strong>.</li>
+        <li data-p="">У залі впізнали <strong><button type="button" class="ref" data-s="elian">Еліана</button></strong> — того самого, за кого дають тисячу. <strong>Бій. Убито його та його охоронця-найманця.</strong> Нагороду платять <strong>за труп, привезений до столиці</strong>, тож тіло забрали з собою.</li>
+        <li data-p="">У залі повно свідків. Ночувати не лишилися — <strong>виїхали в ніч і дощ</strong>.</li>
+      </ul></div>
+    <div class="phase moon"><span class="pm">🌙</span>
+      <ul class="sub">
+        <li data-p="">Табір у лісі. <strong>ЛР</strong></li>
+      </ul></div>
+  </div>
+</li>
+<li class="ev day">
+  <div class="when"><span class="dnum">День 8</span><span class="ddate">9 Tarsakh 746</span></div>
+  <div class="what">
+    <div class="phase sun"><span class="pm">☀</span>
+      <ul class="sub">
+        <li data-p="">Зранку на табір вийшла <button type="button" class="ref" data-s="bob-group">група авантюристів</button> і назвалася: <strong><button type="button" class="ref" data-s="bob">Бартоломео Озіріс Блейдсонг «Боб»</button></strong> — Бартоломео Озіріс Блейдсонг, <strong><button type="button" class="ref" data-s="leira">Лейра</button></strong> — бардеса верхи на власній сестрі, <strong><button type="button" class="ref" data-s="keira">Кейра</button></strong> — друїдка в подобі левиці, <strong><button type="button" class="ref" data-s="revan">Реван</button></strong> — клірик, <strong><button type="button" class="ref" data-s="viga">Віга Хрипуча</button></strong> — Віга Хрипуча, барбаріанка. Шостого, рогу <button type="button" class="ref" data-s="movchun">Мовчуна</button>, ніхто не бачив. <strong>Заявили, що труп їхній.</strong></li>
+        <li class="start"><span class="chip">Сесія 9</span></li>
+        <li data-p="">Дуже напружений бій <strong>перейшов у торги</strong>: домовилися <strong>поділити нагороду</strong>. <button type="button" class="ref" data-s="movchun">Мовчун</button> загинув, на нього наклали <strong>gentle repose</strong>. Далі поїхали в столицю <strong>разом, на одному возі</strong>.</li>
+        <li data-p="">На тракті зустріли <strong>військо <button type="button" class="ref" data-s="colonel-turner">полковника Тернера</button>, що йшло на південь</strong>, і сказали йому, що <strong>це вони попередили про висадку</strong>. Він їх запамʼятав.</li>
+        <li data-p=""><strong>Столиця.</strong> На стіні — графіті: <strong>особа в короні в петлі</strong>; малювали діти, за ними ганялася стража. Поруч <strong>роздають бідним хліб від <button type="button" class="ref" data-s="kamila-dan-torn">Каміли дан Торн</button></strong>.</li>
+        <li data-p="">Тіло здали офіцеру <button type="button" class="ref" data-s="sadrik">Садріку</button> за <strong>1000 золотих</strong> — і тільки там дізналися імʼя вбитого: <strong>Еліан</strong>. Триста, як домовлялися, віддали групі Боба.</li>
+        <li data-p=""><button type="button" class="ref" data-s="three-geese">Три гуски — Оля, Люба і Недіс</button> здали на птахоферму <button type="button" class="ref" data-s="haspar">Гаспара</button>, <button type="button" class="ref" data-s="wine-cargo">250 пляшок вина</button> продали за <strong>375 золотих</strong>.</li>
+        <li data-p="temple-of-elemir">У <button type="button" class="ref" data-s="temple-of-elemir">храмі Елеміра</button> перед ними забігли <strong>ті самі діти, що малювали графіті</strong>, а слідом прийшла стража. <strong>Партія знала, де вони сховалися, і не здала їх</strong> — саме через це <button type="button" class="ref" data-s="father-dominic">Отець Домінік</button> їй довіряє. Лист він <strong>прочитав і спалив</strong>, не сказавши ні слова про зміст. Тільки те, що вони <strong>дуже ризикували</strong>.</li>
+      </ul></div>
+    <div class="phase moon"><span class="pm">🌙</span>
+      <ul class="sub">
+        <li data-p="">Заночували в храмі. <strong>ЛР</strong></li>
+      </ul></div>
+  </div>
+</li>
+  </ol>
+</section></div>
+    <div id="t-era" role="tabpanel" aria-labelledby="b-era" hidden>
 <section class="chapter">
   <h2>Світ до вас</h2>
   <p class="csub">Відлік — від дня, коли почалася ваша історія.</p>
@@ -190,7 +369,6 @@ footer{margin-top:40px;padding-top:18px;border-top:1px solid var(--line);color:v
 </li>
   </ol>
 </section>
-
 <section class="chapter">
   <h2>Без точної дати</h2>
   <p class="csub">Відомо, що було. Коли саме — ні.</p>
@@ -200,174 +378,8 @@ footer{margin-top:40px;padding-top:18px;border-top:1px solid var(--line);color:v
   <div class="what"><strong><button type="button" class="ref" data-s="valdeval">Вальдеваль де Вальде</button></strong> заробляє імʼя в набігах, іде говорити з предками в сніжні гори, збирає <button type="button" class="ref" data-s="clan-valde">клан Вальде</button>, будує <button type="button" class="ref" data-s="valdegrad">Вальдеград</button> і оголошує себе <strong>князем</strong> — бо почув це слово з боку <button type="button" class="ref" data-s="montelia">Монтелії</button> й вирішив, що воно звучить краще за «вождя». Інші клани з цього посміювалися. Далі похід забави ради, про союзників ворога він не подумав, і в нерівному морському бою <strong>пробив дно власного корабля</strong>, потопивши його разом із собою та чемпіоном крігенсфламів.</div>
 </li>
   </ol>
-</section>
-
-<section class="chapter">
-  <h2>Ваша хроніка</h2>
-  <p class="csub">Від 2 до 9 Tarsakh 746 року.</p>
-  <ol class="tl">
-<li class="ev day" data-p="kardosa,thorn-drexel" tabindex="0">
-  <div class="when"><span class="dnum">День 1</span><span class="ddate">2 Tarsakh 746</span></div>
-  <div class="what">
-    <div class="phase sun"><span class="pm">☀</span>
-      <ul class="sub">
-        <li class="start"><span class="chip">Сесія 1</span></li>
-        <li data-p="kardosa">Біг по дахах <button type="button" class="ref" data-s="kardosa">Кардоси</button> і «купівля» інформації про обмінний дім.</li>
-        <li data-p="thorn-drexel"><button type="button" class="ref" data-s="ester">Естер</button> пропонує партії пограбувати <button type="button" class="ref" data-s="thorn-drexel">обмінний дім «Торн і Дрексель»</button>: вона підслухала розмову банди <button type="button" class="ref" data-s="mierzotnyky">Мерзотників</button>, які підкупили когось із дому заради <strong>ключа й плану</strong>. Героям обіцяно гроші.</li>
-        <li data-p="">Для розрахунку з бандою партія <strong>виготовила підроблені монети</strong> — і вони не знадобилися: ключ і план <strong>перехопили силою</strong>. Коли прибігла стража, героям повірили, а <strong><button type="button" class="ref" data-s="mierzotnyky">Мерзотників</button> забрали</strong>.</li>
-      </ul></div>
-    <div class="phase moon"><span class="pm">🌙</span>
-      <ul class="sub">
-        <li data-p=""><strong>Пограбування.</strong> Пролізли до сховища й знайшли там <strong>таємну кімнату <button type="button" class="ref" data-s="alisia-dan-torn">Алісії дан Торн</button></strong>: пляшки з кровʼю, лист від батька (<button type="button" class="ref" data-s="orven-letter">Лист Орвена Торна до Алісії</button>) і <strong>двоє людей у клітці</strong> — <button type="button" class="ref" data-s="tomas">Томас</button> з дружиною <button type="button" class="ref" data-s="elvira">Ельвірою</button>, яких вона тримала на їжу. Партія їх звільнила.</li>
-        <li data-p="">З листа стало ясно, що <strong><button type="button" class="ref" data-s="orven-dan-torn">Орвен дан Торн</button> — не людина</strong>: він називає себе найстарішим представником свого племені на континенті, а дім заснував 300 років тому <strong>особисто</strong>.</li>
-        <li data-p="">Відкрили люк униз. У темряві спали <strong>десятки породжень вампірів</strong>. Вони прокинулися, почався бій, герої втекли, <strong>піднявши шум</strong>. На шум прибігла стража — і <strong>породження її покусали</strong>.</li>
-        <li data-p=""><button type="button" class="ref" data-s="ester">Естер</button> у метушні <strong>краде <button type="button" class="ref" data-s="garon-crown">Вінець Гарона</button> і зникає</strong>.</li>
-        <li data-p="">Партія виносить <button type="button" class="ref" data-s="lion-pendant">Кулон Лева</button>, непритомного бухгалтера й дуже перегодованого кота <button type="button" class="ref" data-s="shprotia">Шпротя</button>.</li>
-      </ul></div>
-  </div>
-</li>
-<li class="ev day" data-p="astur-empire,rosinant" tabindex="0">
-  <div class="when"><span class="dnum">День 2</span><span class="ddate">3 Tarsakh 746</span></div>
-  <div class="what">
-    <div class="phase sun"><span class="pm">☀</span>
-      <ul class="sub">
-        <li class="start"><span class="chip">Сесія 2</span></li>
-        <li data-p="">Вийшли з дому вдосвіта <strong>з мішками мідяків</strong>: срібла й золота в сховищі вже не було — його вивезли раніше.</li>
-        <li data-p="astur-empire">У порту переполох. Партія вилазить на маяк і бачить: <strong>на місто суне армія <button type="button" class="ref" data-s="astur-empire">Астурська Імперія</button></strong>, багато легіонів.</li>
-        <li data-p="">У порт прискакує загін вершників зі щитами, на яких <strong>червоний лев і дві сині хвилясті лінії</strong>. <button type="button" class="ref" data-s="leo-dan-vern">Лео дан Верн «Молодий Лев»</button> знімає шолом і кричить, що всі кораблі реквізовані короною, що на південних воротах затор із тисяч біженців, і що ті, хто володіє магією або досвідчений у бою, потрібні <strong>в цитаделі, у <button type="button" class="ref" data-s="colonel-turner">полковника Тернера</button></strong>. Закінчує: «<strong>За Короля! За Гарону! За Нортланд!</strong>»</li>
-        <li data-p="rosinant"><strong>Срібні Доки.</strong> Єдиний корабель там — <button type="button" class="ref" data-s="rosinant">Корвет «Росінант»</button>, затягнутий брезентом: сліди гарматних пробоїн, латки, нові дошки. Перед ним мовчазний натовп із вузлами. Крізь нього проходить загін лицарів у плащах кольору <strong>ультрамарину зі знаком срібного птаха</strong>, попереду — <button type="button" class="ref" data-s="alisia-dan-torn">Алісія дан Торн</button>. Стражник посилається на наказ полковника, і вона питає: «<strong>Як мене звати?</strong>» Корабель переходить до неї. Тоді їй шепочуть на вухо новину про пограбування — обличчя міняється миттєво: «<strong>Я в обмінний дім!</strong>»</li>
-        <li data-p="">На площі <button type="button" class="ref" data-s="leo-dan-vern">Лео</button> сходиться з <button type="button" class="ref" data-s="colonel-turner">Тернером</button>. Той забороняє кінну вилазку: Лео втратить кінноту, а вона потрібна місту. <strong>Лео заявляє, що не виконуватиме накази людини без приставки «дан»</strong>, і веде нортландців у бій. Астурців він затримав, <strong>поклав багато своїх</strong> — і повернувся.</li>
-        <li data-p="">Астурців на мості тримала ще й група авантюристів (<button type="button" class="ref" data-s="bob-group">група Боба</button>); <button type="button" class="ref" data-s="colonel-turner">Тернер</button> заплатив їм і дав місце в евакуації.</li>
-        <li data-p="">Партія намагається викрасти корабель тихо — не виходить, здіймається бій. Несподівано допомагає колишній солдат <button type="button" class="ref" data-s="briz">Бріз</button>.</li>
-        <li data-p="">У порт <strong>вриваються породження</strong> — це покусані напередодні стражники. Через паніку <strong>оборона міста падає зсередини</strong>.</li>
-        <li data-p="">На борт беруть <strong>близько 150 людей</strong>. Вечоріє; з моря видно, як Імперія входить у місто, <strong>яке вже палає</strong>, і як на вулицях упереміш б'ються імперці, солдати королівства й породження.</li>
-        <li data-p="">Уже відпливаючи, партія бачить <strong>здалека, на іншому кораблі</strong>: із цитаделі виривається <button type="button" class="ref" data-s="colonel-turner">Тернер</button> з <button type="button" class="ref" data-s="leo-dan-vern">Лео</button>, вони тримають породжень, поки люди сідають, — і <strong>Тернер не дає кораблю відпливти, поки Лео не застрибнув останнім</strong>.</li>
-        <li data-p="rosinant">На <button type="button" class="ref" data-s="rosinant">«Росінант»</button> прилітає <button type="button" class="ref" data-s="alisia-dan-torn">Алісія дан Торн</button> і <strong>вимагає віддати корону</strong>.</li>
-      </ul></div>
-    <div class="phase moon"><span class="pm">🌙</span>
-      <ul class="sub">
-        <li class="start"><span class="chip">Сесія 3</span></li>
-        <li data-p=""><strong>Битва з Алісією.</strong> Вона <strong>не повірила</strong>, що корони в партії немає, і атакувала — обурена, що в неї викрали корабель, усю кров і, <strong>особливо, всі плаття</strong>. <strong>Її вбито.</strong> <strong>ЛР</strong></li>
-      </ul></div>
-  </div>
-</li>
-<li class="ev day" data-p="saltwake,garona,arven,montelia,kardosa,vesela-lozhka,pleiades,lantaro" tabindex="0">
-  <div class="when"><span class="dnum">День 3</span><span class="ddate">4 Tarsakh 746</span></div>
-  <div class="what">
-    <div class="phase sun"><span class="pm">☀</span>
-      <ul class="sub">
-        <li data-p="saltwake">Припливли в <button type="button" class="ref" data-s="saltwake">Солтвейк</button>, випустили біженців і <button type="button" class="ref" data-s="briz">Бріза</button>.</li>
-        <li data-p="garona"><strong>Видіння <button type="button" class="ref" data-s="eldarion">Ельдаріона</button>:</strong> чорний ворон дає напрям — <strong>іти в <button type="button" class="ref" data-s="garona">Гарону</button></strong>.</li>
-        <li data-p="arven">Клерк <button type="button" class="ref" data-s="milan">Мілан</button> підказує, що питання власності на корабель вирішується через <button type="button" class="ref" data-s="salvio">Сальвіо</button> в <button type="button" class="ref" data-s="arven">Арвені</button> фразою «<strong>до пекаря</strong>».</li>
-        <li data-p="garona,montelia,arven">Новина, яка визначить усе далі: <strong>король <button type="button" class="ref" data-s="king-lionel-iv">Ліонель IV «Мудрий»</button> їде до <button type="button" class="ref" data-s="garona">Гарони</button></strong> і скликає прийом для всіх лордів Королівства й можливих союзників із <button type="button" class="ref" data-s="montelia">Монтелії</button>. На час прийому <strong>залив перекривають</strong> — до столиці тепер лише в обхід, через <button type="button" class="ref" data-s="arven">Арвен</button> і трактом.</li>
-        <li data-p="">Розслідування справи <button type="button" class="ref" data-s="maliser">Малісера</button>: капітан <strong>сам прийшов у відділення</strong> й узяв на себе вбивство власного сина, а тіло має <strong>розтрощене пострілом із дробовика обличчя</strong> — упізнати неможливо.</li>
-        <li class="start"><span class="chip">Сесія 4</span></li>
-        <li data-p=""><button type="button" class="ref" data-s="mediz">Медіз</button> пробує зняти <button type="button" class="ref" data-s="astur-slave-collar">Нашийник раба Астурії</button> — <strong>не виходить</strong>. І кажуть, що цей не такий, як інші: такі вдягають <strong>не на астурців, а на людей з Королівства</strong>.</li>
-        <li data-p="kardosa">Переказують новини із захопленої <button type="button" class="ref" data-s="kardosa">Кардоси</button>: <button type="button" class="ref" data-s="gold-black-woman">Жінка в золото-чорному платті</button> хвалиться, що <strong>спалила захисників мосту</strong>. У це не вірять — тіл не знайшли. Клірики, яких опитували, <strong>уникали з нею говорити</strong>, поки на них не гаркнув воїн у золотій масці.</li>
-        <li data-p="vesela-lozhka">Слід <button type="button" class="ref" data-s="ester">Естер</button>: у «<button type="button" class="ref" data-s="vesela-lozhka">Таверна «Весела Ложка»</button>» її знають як ту, що <strong>грає в кості й упевнено оббирає всіх</strong>. Припливла на невеликому, але дуже швидкому судні й пішла <strong>курсом на північ</strong>.</li>
-      </ul></div>
-    <div class="phase moon"><span class="pm">🌙</span>
-      <ul class="sub">
-        <li data-p="">Знайшли <button type="button" class="ref" data-s="basu">Басу</button> — живого, у домі сусідки <button type="button" class="ref" data-s="kishari">Кішарі</button>. Умовили плисти з ними, пообіцявши витягнути батька.</li>
-        <li data-p="pleiades,lantaro"><strong>Вʼязниця.</strong> Прохід куплено <strong>підробленими монетами</strong>. Усередині — <button type="button" class="ref" data-s="kess-favor">Кесс Фавор</button> зі своїми людьми й <button type="button" class="ref" data-s="favor-sorceress">Чарівниця Фавора</button>. Бій: <strong>чарівниця тікає dimension door</strong>, устигнувши їх роздивитися; решту вбито, зокрема самого главу <button type="button" class="ref" data-s="pleiades">Плеяди</button>. На трупі знайдено <button type="button" class="ref" data-s="vitelia-letter-favor">Лист Вітелії до Фавора</button> — вимогу інквізиції <strong>не чіпати кораблі <button type="button" class="ref" data-s="lantaro">Лантаро</button></strong>.</li>
-        <li data-p="">Утекли на корабель. <strong>У місті здійнялася тривога.</strong> <strong>ЛР</strong></li>
-      </ul></div>
-  </div>
-</li>
-<li class="ev day" data-p="sira-hreis" tabindex="0">
-  <div class="when"><span class="dnum">День 4</span><span class="ddate">5 Tarsakh 746</span></div>
-  <div class="what">
-    <div class="phase sun"><span class="pm">☀</span>
-      <ul class="sub">
-        <li data-p="sira-hreis">У морі зустріли <strong>абсолютно порожній</strong> торговий корабель — «<button type="button" class="ref" data-s="sira-hreis">«Сіра Грейс»</button>».</li>
-        <li class="start"><span class="chip">Сесія 5</span></li>
-        <li data-p="">Корабель виявився <strong>міміком</strong>. Билися <strong>всередині нього</strong>, перемогли й <strong>потопили</strong>.</li>
-      </ul></div>
-    <div class="phase moon"><span class="pm">🌙</span>
-      <ul class="sub">
-
-      </ul></div>
-  </div>
-</li>
-<li class="ev day" data-p="lantaro,lauris,montelia,arven,rosinant,garona,zalizo-i-shtuky,na-terasi,morella-house" tabindex="0">
-  <div class="when"><span class="dnum">День 5</span><span class="ddate">6 Tarsakh 746</span></div>
-  <div class="what">
-    <div class="phase sun"><span class="pm">☀</span>
-      <ul class="sub">
-        <li data-p="lantaro,lauris,montelia">У дорозі зустріли корабель, що йшов <strong>із <button type="button" class="ref" data-s="lantaro">Герцогство Лантаро</button> до <button type="button" class="ref" data-s="lauris">Лауріс</button></strong>. На борту двоє головних: комунікабельний <button type="button" class="ref" data-s="batcho">Батчо</button> і його сварливий напарник з Імперії <button type="button" class="ref" data-s="khalil">Халіль</button> — вони <strong>сперечалися, чи взагалі говорити</strong> з партією. Судно йшло <strong>під прапорами <button type="button" class="ref" data-s="montelia">Монтелія</button></strong> й на вигляд було торговим, але <strong>в каюті сиділи десятки імперських воїнів, готових до бою</strong>. Бою уникнули: партія <strong>пообіцяла Халілю нікому не розказувати</strong>.</li>
-        <li data-p="arven,rosinant">Прибули в <button type="button" class="ref" data-s="arven">Арвен</button> — затоплене місто, де вулиці стали каналами. <strong>Рівень 4.</strong> <button type="button" class="ref" data-s="rosinant">«Росінант»</button> лишили в порту <button type="button" class="ref" data-s="salvio">Сальвіо</button>.</li>
-        <li data-p="lantaro,garona">У порту — <strong>флотилія з <button type="button" class="ref" data-s="lantaro">Лантаро</button>, що йде на прийом до короля в <button type="button" class="ref" data-s="garona">Гарона</button></strong>: три кораблі, <strong>один із них механічний, пароплав</strong>, і ще два кораблі супроводу з Королівства. На найбільшому стоять <strong><button type="button" class="ref" data-s="marco-kabrini">Марко Кабріні</button> та <button type="button" class="ref" data-s="eliana-vitarelli">Еліана Вітареллі</button></strong> — <strong>посміхаються й махають</strong> натовпу в порту, і натовп махає у відповідь.</li>
-        <li data-p="zalizo-i-shtuky">Закупилися в «<button type="button" class="ref" data-s="zalizo-i-shtuky">«Залізо і Штуки»</button>» у <button type="button" class="ref" data-s="bremmel">Бреммеля</button> — торговця, який <strong>не ходить, а зʼявляється</strong>: телепортується власною крамницею, вічно посміхається й підписує цінники крінжовими віршиками. Узяли <button type="button" class="ref" data-s="greyvik-axe">Грейвікська сокира</button>, <button type="button" class="ref" data-s="pistol-silencer">Глушник від FN Contingency</button> і <button type="button" class="ref" data-s="pearl-of-light">Перлинка Світла</button>.</li>
-        <li class="start"><span class="chip">Сесія 6</span></li>
-        <li data-p="">Місто в переполоху: скрізь <button type="button" class="ref" data-s="wanted-poster">Розшукова листівка «РОЗШУК!»</button> — <strong>1000 золотих за заколот проти корони, живого чи мертвого</strong>.</li>
-        <li data-p="na-terasi">Повечеряли з <button type="button" class="ref" data-s="lady-angelina">леді Анджеліною</button> в «<button type="button" class="ref" data-s="na-terasi">Ресторан «На терасі»</button>» і уклали угоду: партія постачає їй сукні, <strong>перешиті з речей убитої <button type="button" class="ref" data-s="alisia-dan-torn">Алісії дан Торн</button></strong>. Дві продали одразу.</li>
-      </ul></div>
-    <div class="phase moon"><span class="pm">🌙</span>
-      <ul class="sub">
-        <li data-p="">Розмова з <button type="button" class="ref" data-s="pekar">Пекарем</button>, який фактично тримає Старе місто, — і з його шестирічною внучкою <button type="button" class="ref" data-s="bulochka">Булочкою</button>, що вже дає поради з кримінального бізнесу. Доручення: принести <strong>три картини жінки з темним волоссям і світлими очима</strong> (<button type="button" class="ref" data-s="morella-portraits">Три портрети Морелли</button>).</li>
-        <li data-p="morella-house">Проникли в <button type="button" class="ref" data-s="morella-house">білий будинок Морелли</button> — <strong>білий будинок без вікон і дверей</strong> біля парку. Пройшли нижні поверхи через <strong>ілюзорні пастки</strong> й дійшли до спальні.</li>
-      </ul></div>
-  </div>
-</li>
-<li class="ev day" data-p="rosinant,morella-house,garona" tabindex="0">
-  <div class="when"><span class="dnum">День 6</span><span class="ddate">7 Tarsakh 746</span></div>
-  <div class="what">
-    <div class="phase sun"><span class="pm">☀</span>
-      <ul class="sub">
-        <li class="start"><span class="chip">Сесія 7</span></li>
-        <li data-p=""><button type="button" class="ref" data-s="morella">Морелла</button> чекала в спальні серед картин. <strong>Героїв затягнуло всередину полотен</strong>, і там вони билися з її породженнями. Після перемоги <strong>на всіх трьох картинах вона стала намальована мертвою</strong>.</li>
-        <li data-p="rosinant,morella-house"><button type="button" class="ref" data-s="pekar">Пекар</button> розрахувався щедро: <strong>документи на <button type="button" class="ref" data-s="rosinant">«Росінант»</button></strong> і <strong><button type="button" class="ref" data-s="morella-house">особняк Морелли</button> у власність</strong>.</li>
-        <li data-p="">І дав нове доручення: віднести <button type="button" class="ref" data-s="pekar-letter">Лист Пекаря до отця Домініка</button> отцю <button type="button" class="ref" data-s="father-dominic">Домініку</button> у столицю — <strong>з неушкодженою печаткою</strong>. Партія свідомо вирішила <strong>не читати</strong>.</li>
-        <li data-p="garona">Оскільки в <button type="button" class="ref" data-s="garona">Гарона</button> просто так не пускають, <button type="button" class="ref" data-s="lady-angelina">Леді Анджеліна Тревен</button> дала вантаж із документами на заїзд: <strong><button type="button" class="ref" data-s="three-geese">Три гуски — Оля, Люба і Недіс</button></strong> для королівської фуа-гра. Гравці назвали їх <strong>Оля, Люба й Недіс</strong>.</li>
-        <li data-p="">Того ж дня <button type="button" class="ref" data-s="elian">Еліан</button> із <button type="button" class="ref" data-s="huge-warrior">Гремезний воїн</button> помічені біля таверни Нижнього Міста, а <button type="button" class="ref" data-s="bob-group">Група Боба</button> — шестеро в човні — <strong>пішла за ним на північ</strong>. Перевізнику <button type="button" class="ref" data-s="zhan">Жан</button> за цю інформацію <strong>заплатили підробленими монетами</strong>.</li>
-      </ul></div>
-    <div class="phase moon"><span class="pm">🌙</span>
-      <ul class="sub">
-
-      </ul></div>
-  </div>
-</li>
-<li class="ev day" data-p="arven,red-and-black" tabindex="0">
-  <div class="when"><span class="dnum">День 7</span><span class="ddate">8 Tarsakh 746</span></div>
-  <div class="what">
-    <div class="phase sun"><span class="pm">☀</span>
-      <ul class="sub">
-        <li class="start"><span class="chip">Сесія 8</span></li>
-        <li data-p="arven">Купили в <button type="button" class="ref" data-s="arven">Арвені</button> <strong>250 пляшок вина</strong> по золотому — на продаж у столиці півтора.</li>
-        <li data-p="arven"><strong>Блокпост на тракті.</strong> Партія розказала вартовим про корабель з імперцями — і <strong>з блокпоста відправили гінця в <button type="button" class="ref" data-s="arven">Арвен</button></strong>.</li>
-        <li data-p="red-and-black">Під вечір доїхали до ігрового дому «<button type="button" class="ref" data-s="red-and-black">Ігровий дім «Червоне і Чорне»</button>». Власник <button type="button" class="ref" data-s="adrian">Адріан</button> упевнений, що <strong>імперці сюди ніколи не дійдуть, бо «в них немає кораблів»</strong>.</li>
-        <li data-p="">У залі впізнали <strong><button type="button" class="ref" data-s="elian">Еліана</button></strong> — того самого, за кого дають тисячу. <strong>Бій. Убито його та його охоронця-найманця.</strong> Нагороду платять <strong>за труп, привезений до столиці</strong>, тож тіло забрали з собою.</li>
-        <li data-p="">У залі повно свідків. Ночувати не лишилися — <strong>виїхали в ніч і дощ</strong>.</li>
-      </ul></div>
-    <div class="phase moon"><span class="pm">🌙</span>
-      <ul class="sub">
-        <li data-p="">Табір у лісі. <strong>ЛР</strong></li>
-      </ul></div>
-  </div>
-</li>
-<li class="ev day" data-p="temple-of-elemir" tabindex="0">
-  <div class="when"><span class="dnum">День 8</span><span class="ddate">9 Tarsakh 746</span></div>
-  <div class="what">
-    <div class="phase sun"><span class="pm">☀</span>
-      <ul class="sub">
-        <li data-p="">Зранку на табір вийшла <button type="button" class="ref" data-s="bob-group">група авантюристів</button> і назвалася: <strong><button type="button" class="ref" data-s="bob">Бартоломео Озіріс Блейдсонг «Боб»</button></strong> — Бартоломео Озіріс Блейдсонг, <strong><button type="button" class="ref" data-s="leira">Лейра</button></strong> — бардеса верхи на власній сестрі, <strong><button type="button" class="ref" data-s="keira">Кейра</button></strong> — друїдка в подобі левиці, <strong><button type="button" class="ref" data-s="revan">Реван</button></strong> — клірик, <strong><button type="button" class="ref" data-s="viga">Віга Хрипуча</button></strong> — Віга Хрипуча, барбаріанка. Шостого, рогу <button type="button" class="ref" data-s="movchun">Мовчуна</button>, ніхто не бачив. <strong>Заявили, що труп їхній.</strong></li>
-        <li class="start"><span class="chip">Сесія 9</span></li>
-        <li data-p="">Дуже напружений бій <strong>перейшов у торги</strong>: домовилися <strong>поділити нагороду</strong>. <button type="button" class="ref" data-s="movchun">Мовчун</button> загинув, на нього наклали <strong>gentle repose</strong>. Далі поїхали в столицю <strong>разом, на одному возі</strong>.</li>
-        <li data-p="">На тракті зустріли <strong>військо <button type="button" class="ref" data-s="colonel-turner">полковника Тернера</button>, що йшло на південь</strong>, і сказали йому, що <strong>це вони попередили про висадку</strong>. Він їх запамʼятав.</li>
-        <li data-p=""><strong>Столиця.</strong> На стіні — графіті: <strong>особа в короні в петлі</strong>; малювали діти, за ними ганялася стража. Поруч <strong>роздають бідним хліб від <button type="button" class="ref" data-s="kamila-dan-torn">Каміли дан Торн</button></strong>.</li>
-        <li data-p="">Тіло здали офіцеру <button type="button" class="ref" data-s="sadrik">Садріку</button> за <strong>1000 золотих</strong> — і тільки там дізналися імʼя вбитого: <strong>Еліан</strong>. Триста, як домовлялися, віддали групі Боба.</li>
-        <li data-p=""><button type="button" class="ref" data-s="three-geese">Три гуски — Оля, Люба і Недіс</button> здали на птахоферму <button type="button" class="ref" data-s="haspar">Гаспара</button>, <button type="button" class="ref" data-s="wine-cargo">250 пляшок вина</button> продали за <strong>375 золотих</strong>.</li>
-        <li data-p="temple-of-elemir">У <button type="button" class="ref" data-s="temple-of-elemir">храмі Елеміра</button> перед ними забігли <strong>ті самі діти, що малювали графіті</strong>, а слідом прийшла стража. <strong>Партія знала, де вони сховалися, і не здала їх</strong> — саме через це <button type="button" class="ref" data-s="father-dominic">Отець Домінік</button> їй довіряє. Лист він <strong>прочитав і спалив</strong>, не сказавши ні слова про зміст. Тільки те, що вони <strong>дуже ризикували</strong>.</li>
-      </ul></div>
-    <div class="phase moon"><span class="pm">🌙</span>
-      <ul class="sub">
-        <li data-p="">Заночували в храмі. <strong>ЛР</strong></li>
-      </ul></div>
-  </div>
-</li>
-  </ol>
-</section>
-
+</section></div>
+    <div id="t-par" role="tabpanel" aria-labelledby="b-par" hidden>
 <section class="chapter">
   <h2>Тим часом у світі</h2>
   <p class="csub">Те, що відбувалося поруч, поки ви були зайняті іншим.</p>
@@ -385,9 +397,16 @@ footer{margin-top:40px;padding-top:18px;border-top:1px solid var(--line);color:v
   <div class="what"><strong>Розгром <button type="button" class="ref" data-s="kasim">Касіма</button></strong> (<span class="chip">Сесія 9</span>). <button type="button" class="ref" data-s="ninth-legion">Девʼятий легіон</button> іде трактом на <button type="button" class="ref" data-s="arven">Арвен</button> — спалити виноградники, зігнати селян за мури й замкнути гарнізон страхом, щоб легіони потім спокійно зайняли <strong>весь простір між <button type="button" class="ref" data-s="lauris">Лаурісом</button> і Арвеном</strong>. Касім певен, що попередити нікому: ні сигналу, ні корабля-вісника. Назустріч із пилу виходить <strong>закута в сталь кіннота Королівства</strong>, і його легка кіннота вже на повному галопі.</div>
 </li>
   </ol>
-</section>
+</section></div>
 
     <footer>Ведеться майстром. Оновлюється після кожної сесії.</footer>
+  </div>
+
+  <div class="mapwrap">
+    <div class="stage" id="stage">
+      <img src="map.jpg" alt="Політична карта відомого світу">
+    </div>
+    <p class="hint">Наведи на подію — побачиш, де це сталося. Наведи на імʼя — коротка довідка.</p>
   </div>
 </div>
 
@@ -419,24 +438,37 @@ function show(list) {
 }
 function clear() { show([]); }
 
-function placesFrom(el) {
-  const v = el.getAttribute('data-p');
-  return v ? v.split(',').filter(Boolean) : [];
-}
+document.querySelectorAll('[data-p]').forEach((el) => {
+  const places = (el.getAttribute('data-p') || '').split(',').filter(Boolean);
+  if (!places.length) return;
+  el.tabIndex = 0;
+  const on = () => { show(places); el.classList.add('lit'); };
+  const off = () => { clear(); el.classList.remove('lit'); };
+  el.addEventListener('mouseenter', on);
+  el.addEventListener('mouseleave', off);
+  el.addEventListener('focus', on);
+  el.addEventListener('blur', off);
+});
 
-document.querySelectorAll('li.ev, ul.sub > li[data-p]').forEach((li) => {
-  const on = (e) => {
-    const p = placesFrom(li);
-    if (!p.length) return;
-    e.stopPropagation();
-    show(p);
-    li.closest('li.ev').classList.add('lit');
-  };
-  const off = () => { li.closest('li.ev').classList.remove('lit'); };
-  li.addEventListener('mouseenter', on);
-  li.addEventListener('mouseleave', off);
-  li.addEventListener('focus', on);
-  li.addEventListener('blur', off);
+// таби
+const tabs = [...document.querySelectorAll('[role="tab"]')];
+tabs.forEach((t, i) => {
+  t.addEventListener('click', () => {
+    tabs.forEach((o) => {
+      const sel = o === t;
+      o.setAttribute('aria-selected', String(sel));
+      document.getElementById(o.getAttribute('aria-controls')).hidden = !sel;
+    });
+    clear();
+    document.querySelector('.panel').scrollTop = 0;
+  });
+  t.addEventListener('keydown', (e) => {
+    const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+    if (!d) return;
+    e.preventDefault();
+    tabs[(i + d + tabs.length) % tabs.length].focus();
+    tabs[(i + d + tabs.length) % tabs.length].click();
+  });
 });
 
 // ── попап ──
