@@ -118,6 +118,21 @@ li.ev.lit .what{color:var(--ink)}
 .what{font-size:14px;color:var(--ink-2)}
 li.ev.day .when{display:flex;gap:8px;align-items:baseline}
 .dnum{color:var(--ember);font-weight:800;font-size:12px;text-transform:none;letter-spacing:0}
+li.ev.day .when{flex-wrap:wrap}
+li.ev.lvl::before{box-shadow:0 0 0 4px var(--ember-soft)}
+.mile{margin-left:auto;display:inline-flex;align-items:center;gap:5px;
+  font-family:"Unbounded",system-ui,sans-serif;font-weight:700;font-size:9.5px;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--paper-2);
+  background:var(--ember);padding:3px 8px 3px 6px;border-radius:3px;
+  box-shadow:0 0 0 3px var(--ember-soft),0 1px 2px rgba(0,0,0,.18)}
+.mile svg{display:block;margin-top:-1px}
+.rest{display:flex;align-items:center;gap:10px;margin:14px 0 0}
+.rest::before,.rest::after{content:"";flex:1 1 auto;height:1px;
+  background:repeating-linear-gradient(90deg,var(--line) 0 3px,transparent 3px 7px)}
+.rest span{display:inline-flex;align-items:center;gap:6px;
+  font-family:"Unbounded",system-ui,sans-serif;font-weight:600;font-size:9px;
+  letter-spacing:.17em;text-transform:uppercase;color:var(--ink-3);white-space:nowrap}
+.rest svg{display:block;color:var(--ember)}
 .phase{display:flex;gap:9px;margin:8px 0 0}
 .pm{flex:0 0 auto;font-size:11px;opacity:.8;margin-top:3px}
 ul.sub{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
@@ -208,8 +223,9 @@ footer{margin-top:40px;padding-top:18px;border-top:1px solid var(--line);color:v
     <div class="phase moon"><span class="pm">🌙</span>
       <ul class="sub">
         <li class="start"><span class="chip">Сесія 3</span></li>
-        <li data-p=""><strong>Битва з Алісією.</strong> Вона <strong>не повірила</strong>, що корони в партії немає, і атакувала — обурена, що в неї викрали корабель, усю кров і, <strong>особливо, всі плаття</strong>. <strong>Її вбито.</strong> <strong>ЛР</strong></li>
+        <li data-p=""><strong>Битва з Алісією.</strong> Вона <strong>не повірила</strong>, що корони в партії немає, і атакувала — обурена, що в неї викрали корабель, усю кров і, <strong>особливо, всі плаття</strong>. <strong>Її вбито.</strong></li>
       </ul></div>
+    <div class="rest"><span><svg width="9" height="11" viewBox="0 0 9 11" fill="currentColor" aria-hidden="true"><path d="M4.5 0C4.5 2.2 1 3.4 1 7a3.5 3.5 0 0 0 7 0c0-1.7-1.1-2.6-1.7-3.6-.3.8-.8 1.3-1.4 1.6C5.5 3.4 5.2 1.4 4.5 0Z"/></svg>Довгий відпочинок</span></div>
   </div>
 </li>
 <li class="ev day">
@@ -231,8 +247,9 @@ footer{margin-top:40px;padding-top:18px;border-top:1px solid var(--line);color:v
       <ul class="sub">
         <li data-p="">Знайшли <button type="button" class="ref" data-s="basu">Басу</button> — живого, у домі сусідки <button type="button" class="ref" data-s="kishari">Кішарі</button>. Умовили плисти з ними, пообіцявши витягнути батька.</li>
         <li data-p="pleiades,lantaro"><strong>Вʼязниця.</strong> Прохід куплено <strong>підробленими монетами</strong>. Усередині — <button type="button" class="ref" data-s="kess-favor">Кесс Фавор</button> зі своїми людьми й <button type="button" class="ref" data-s="favor-sorceress">Чарівниця Фавора</button>. Бій: <strong>чарівниця тікає dimension door</strong>, устигнувши їх роздивитися; решту вбито, зокрема самого главу <button type="button" class="ref" data-s="pleiades">Плеяди</button>. На трупі знайдено <button type="button" class="ref" data-s="vitelia-letter-favor">Лист Вітелії до Фавора</button> — вимогу інквізиції <strong>не чіпати кораблі <button type="button" class="ref" data-s="lantaro">Лантаро</button></strong>.</li>
-        <li data-p="">Утекли на корабель. <strong>У місті здійнялася тривога.</strong> <strong>ЛР</strong></li>
+        <li data-p="">Утекли на корабель. <strong>У місті здійнялася тривога.</strong></li>
       </ul></div>
+    <div class="rest"><span><svg width="9" height="11" viewBox="0 0 9 11" fill="currentColor" aria-hidden="true"><path d="M4.5 0C4.5 2.2 1 3.4 1 7a3.5 3.5 0 0 0 7 0c0-1.7-1.1-2.6-1.7-3.6-.3.8-.8 1.3-1.4 1.6C5.5 3.4 5.2 1.4 4.5 0Z"/></svg>Довгий відпочинок</span></div>
   </div>
 </li>
 <li class="ev day">
@@ -244,19 +261,16 @@ footer{margin-top:40px;padding-top:18px;border-top:1px solid var(--line);color:v
         <li class="start"><span class="chip">Сесія 5</span></li>
         <li data-p="">Корабель виявився <strong>міміком</strong>. Билися <strong>всередині нього</strong>, перемогли й <strong>потопили</strong>.</li>
       </ul></div>
-    <div class="phase moon"><span class="pm">🌙</span>
-      <ul class="sub">
-
-      </ul></div>
+    <div class="rest"><span><svg width="9" height="11" viewBox="0 0 9 11" fill="currentColor" aria-hidden="true"><path d="M4.5 0C4.5 2.2 1 3.4 1 7a3.5 3.5 0 0 0 7 0c0-1.7-1.1-2.6-1.7-3.6-.3.8-.8 1.3-1.4 1.6C5.5 3.4 5.2 1.4 4.5 0Z"/></svg>Довгий відпочинок</span></div>
   </div>
 </li>
-<li class="ev day">
-  <div class="when"><span class="dnum">День 5</span><span class="ddate">6 Tarsakh 746</span></div>
+<li class="ev day lvl">
+  <div class="when"><span class="dnum">День 5</span><span class="ddate">6 Tarsakh 746</span><span class="mile"><svg width="9" height="9" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8.6V2.2M2 5.2l3-3 3 3"/></svg>Рівень 4</span></div>
   <div class="what">
     <div class="phase sun"><span class="pm">☀</span>
       <ul class="sub">
         <li data-p="lantaro,lauris,montelia">У дорозі зустріли корабель, що йшов <strong>із <button type="button" class="ref" data-s="lantaro">Герцогство Лантаро</button> до <button type="button" class="ref" data-s="lauris">Лауріс</button></strong>. На борту двоє головних: комунікабельний <button type="button" class="ref" data-s="batcho">Батчо</button> і його сварливий напарник з Імперії <button type="button" class="ref" data-s="khalil">Халіль</button> — вони <strong>сперечалися, чи взагалі говорити</strong> з партією. Судно йшло <strong>під прапорами <button type="button" class="ref" data-s="montelia">Монтелія</button></strong> й на вигляд було торговим, але <strong>в каюті сиділи десятки імперських воїнів, готових до бою</strong>. Бою уникнули: партія <strong>пообіцяла Халілю нікому не розказувати</strong>.</li>
-        <li data-p="arven,rosinant">Прибули в <button type="button" class="ref" data-s="arven">Арвен</button> — затоплене місто, де вулиці стали каналами. <strong>Рівень 4.</strong> <button type="button" class="ref" data-s="rosinant">«Росінант»</button> лишили в порту <button type="button" class="ref" data-s="salvio">Сальвіо</button>.</li>
+        <li data-p="arven,rosinant">Прибули в <button type="button" class="ref" data-s="arven">Арвен</button> — затоплене місто, де вулиці стали каналами. <button type="button" class="ref" data-s="rosinant">«Росінант»</button> лишили в порту <button type="button" class="ref" data-s="salvio">Сальвіо</button>.</li>
         <li data-p="lantaro,garona">У порту — <strong>флотилія з <button type="button" class="ref" data-s="lantaro">Лантаро</button>, що йде на прийом до короля в <button type="button" class="ref" data-s="garona">Гарона</button></strong>: три кораблі, <strong>один із них механічний, пароплав</strong>, і ще два кораблі супроводу з Королівства. На найбільшому стоять <strong><button type="button" class="ref" data-s="marco-kabrini">Марко Кабріні</button> та <button type="button" class="ref" data-s="eliana-vitarelli">Еліана Вітареллі</button></strong> — <strong>посміхаються й махають</strong> натовпу в порту, і натовп махає у відповідь.</li>
         <li data-p="zalizo-i-shtuky">Закупилися в «<button type="button" class="ref" data-s="zalizo-i-shtuky">«Залізо і Штуки»</button>» у <button type="button" class="ref" data-s="bremmel">Бреммеля</button> — торговця, який <strong>не ходить, а зʼявляється</strong>: телепортується власною крамницею, вічно посміхається й підписує цінники крінжовими віршиками. Узяли <button type="button" class="ref" data-s="greyvik-axe">Грейвікська сокира</button>, <button type="button" class="ref" data-s="pistol-silencer">Глушник від FN Contingency</button> і <button type="button" class="ref" data-s="pearl-of-light">Перлинка Світла</button>.</li>
         <li class="start"><span class="chip">Сесія 6</span></li>
@@ -268,6 +282,7 @@ footer{margin-top:40px;padding-top:18px;border-top:1px solid var(--line);color:v
         <li data-p="">Розмова з <button type="button" class="ref" data-s="pekar">Пекарем</button>, який фактично тримає Старе місто, — і з його шестирічною внучкою <button type="button" class="ref" data-s="bulochka">Булочкою</button>, що вже дає поради з кримінального бізнесу. Доручення: принести <strong>три картини жінки з темним волоссям і світлими очима</strong> (<button type="button" class="ref" data-s="morella-portraits">Три портрети Морелли</button>).</li>
         <li data-p="morella-house">Проникли в <button type="button" class="ref" data-s="morella-house">білий будинок Морелли</button> — <strong>білий будинок без вікон і дверей</strong> біля парку. Пройшли нижні поверхи через <strong>ілюзорні пастки</strong> й дійшли до спальні.</li>
       </ul></div>
+    <div class="rest"><span><svg width="9" height="11" viewBox="0 0 9 11" fill="currentColor" aria-hidden="true"><path d="M4.5 0C4.5 2.2 1 3.4 1 7a3.5 3.5 0 0 0 7 0c0-1.7-1.1-2.6-1.7-3.6-.3.8-.8 1.3-1.4 1.6C5.5 3.4 5.2 1.4 4.5 0Z"/></svg>Довгий відпочинок</span></div>
   </div>
 </li>
 <li class="ev day">
@@ -282,10 +297,7 @@ footer{margin-top:40px;padding-top:18px;border-top:1px solid var(--line);color:v
         <li data-p="garona">Оскільки в <button type="button" class="ref" data-s="garona">Гарона</button> просто так не пускають, <button type="button" class="ref" data-s="lady-angelina">Леді Анджеліна Тревен</button> дала вантаж із документами на заїзд: <strong><button type="button" class="ref" data-s="three-geese">Три гуски — Оля, Люба і Недіс</button></strong> для королівської фуа-гра. Гравці назвали їх <strong>Оля, Люба й Недіс</strong>.</li>
         <li data-p="">Того ж дня <button type="button" class="ref" data-s="elian">Еліан</button> із <button type="button" class="ref" data-s="huge-warrior">Гремезний воїн</button> помічені біля таверни Нижнього Міста, а <button type="button" class="ref" data-s="bob-group">Група Боба</button> — шестеро в човні — <strong>пішла за ним на північ</strong>. Перевізнику <button type="button" class="ref" data-s="zhan">Жан</button> за цю інформацію <strong>заплатили підробленими монетами</strong>.</li>
       </ul></div>
-    <div class="phase moon"><span class="pm">🌙</span>
-      <ul class="sub">
-
-      </ul></div>
+    <div class="rest"><span><svg width="9" height="11" viewBox="0 0 9 11" fill="currentColor" aria-hidden="true"><path d="M4.5 0C4.5 2.2 1 3.4 1 7a3.5 3.5 0 0 0 7 0c0-1.7-1.1-2.6-1.7-3.6-.3.8-.8 1.3-1.4 1.6C5.5 3.4 5.2 1.4 4.5 0Z"/></svg>Довгий відпочинок</span></div>
   </div>
 </li>
 <li class="ev day">
@@ -302,8 +314,9 @@ footer{margin-top:40px;padding-top:18px;border-top:1px solid var(--line);color:v
       </ul></div>
     <div class="phase moon"><span class="pm">🌙</span>
       <ul class="sub">
-        <li data-p="">Табір у лісі. <strong>ЛР</strong></li>
+        <li data-p="">Табір у лісі.</li>
       </ul></div>
+    <div class="rest"><span><svg width="9" height="11" viewBox="0 0 9 11" fill="currentColor" aria-hidden="true"><path d="M4.5 0C4.5 2.2 1 3.4 1 7a3.5 3.5 0 0 0 7 0c0-1.7-1.1-2.6-1.7-3.6-.3.8-.8 1.3-1.4 1.6C5.5 3.4 5.2 1.4 4.5 0Z"/></svg>Довгий відпочинок</span></div>
   </div>
 </li>
 <li class="ev day">
@@ -322,8 +335,9 @@ footer{margin-top:40px;padding-top:18px;border-top:1px solid var(--line);color:v
       </ul></div>
     <div class="phase moon"><span class="pm">🌙</span>
       <ul class="sub">
-        <li data-p="">Заночували в храмі. <strong>ЛР</strong></li>
+        <li data-p="">Заночували в храмі.</li>
       </ul></div>
+    <div class="rest"><span><svg width="9" height="11" viewBox="0 0 9 11" fill="currentColor" aria-hidden="true"><path d="M4.5 0C4.5 2.2 1 3.4 1 7a3.5 3.5 0 0 0 7 0c0-1.7-1.1-2.6-1.7-3.6-.3.8-.8 1.3-1.4 1.6C5.5 3.4 5.2 1.4 4.5 0Z"/></svg>Довгий відпочинок</span></div>
   </div>
 </li>
   </ol>
