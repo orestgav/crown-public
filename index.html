@@ -7,72 +7,475 @@
 <title>Королівство Гарона</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=Literata:opsz,wght@7..72,400;7..72,600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap">
 <style>
 :root{
   --ink:#141a24; --ink-2:#38465a; --ink-3:#6b7c94;
-  --paper:#eef1f5; --paper-2:#ffffff; --line:#c8d2de;
-  --ember:#b4451f; --steel:#3d5a7a;
-  --shadow:0 1px 2px rgba(20,26,36,.06),0 10px 30px rgba(20,26,36,.07);
+  --paper:#e9edf2; --paper-2:#ffffff; --line:#c8d2de;
+  --ember:#b4451f; --ember-soft:#f0ded4; --steel:#3d5a7a;
+  --shadow:0 1px 2px rgba(20,26,36,.06),0 8px 24px rgba(20,26,36,.07);
+  --panel:min(38vw,460px);
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --ink:#e6ecf4; --ink-2:#a9b8cc; --ink-3:#74849b;
-    --paper:#0d1117; --paper-2:#151c26; --line:#27303d;
-    --ember:#e8703f; --steel:#7fa3c4;
-    --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 34px rgba(0,0,0,.35);
-  }
-}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --ink:#e6ecf4; --ink-2:#a9b8cc; --ink-3:#74849b;
+  --paper:#0b0f15; --paper-2:#141b24; --line:#26303d;
+  --ember:#e8703f; --ember-soft:#3a251c; --steel:#7fa3c4;
+  --shadow:0 1px 2px rgba(0,0,0,.45),0 10px 30px rgba(0,0,0,.4);
+}}
 :root[data-theme="dark"]{
   --ink:#e6ecf4; --ink-2:#a9b8cc; --ink-3:#74849b;
-  --paper:#0d1117; --paper-2:#151c26; --line:#27303d;
-  --ember:#e8703f; --steel:#7fa3c4;
-  --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 34px rgba(0,0,0,.35);
+  --paper:#0b0f15; --paper-2:#141b24; --line:#26303d;
+  --ember:#e8703f; --ember-soft:#3a251c; --steel:#7fa3c4;
+  --shadow:0 1px 2px rgba(0,0,0,.45),0 10px 30px rgba(0,0,0,.4);
 }
 *{box-sizing:border-box}
+html,body{height:100%}
 body{margin:0;background:var(--paper);color:var(--ink);
-  font-family:"Literata",Georgia,serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
-.wrap{max-width:760px;margin:0 auto;padding-block:clamp(56px,11vw,120px);padding-left:20px;padding-right:20px}
-.kicker{font-family:"Unbounded",system-ui,sans-serif;font-weight:600;font-size:11px;
-  letter-spacing:.22em;text-transform:uppercase;color:var(--ember);margin:0 0 14px}
-h1{font-family:"Unbounded",system-ui,sans-serif;font-weight:800;
-  font-size:clamp(36px,8vw,68px);line-height:1;letter-spacing:-.02em;margin:0 0 20px;text-wrap:balance}
-.lede{max-width:56ch;color:var(--ink-2);font-size:clamp(16px,2.2vw,19px);margin:0 0 clamp(36px,6vw,60px)}
-.rule{height:2px;background:var(--ember);width:64px;margin:0 0 clamp(36px,6vw,60px)}
-.cards{display:grid;gap:16px;grid-template-columns:1fr}
-@media (min-width:640px){.cards{grid-template-columns:1fr 1fr}}
-a.card{display:flex;flex-direction:column;gap:8px;text-decoration:none;color:inherit;
-  background:var(--paper-2);border:1px solid var(--line);border-radius:4px;
-  padding:24px 22px;box-shadow:var(--shadow);transition:transform .15s ease,border-color .15s ease}
-a.card:hover,a.card:focus-visible{transform:translateY(-2px);border-color:var(--steel)}
-a.card:focus-visible{outline:2px solid var(--ember);outline-offset:3px}
-.card h2{font-family:"Unbounded",system-ui,sans-serif;font-weight:800;font-size:20px;margin:0;letter-spacing:-.01em}
-.card p{margin:0;color:var(--ink-3);font-size:14px}
-.card .go{font-family:"Unbounded",system-ui,sans-serif;font-size:11px;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--ember);margin-top:6px}
-footer{margin-top:clamp(48px,8vw,84px);padding-top:22px;border-top:1px solid var(--line);
-  color:var(--ink-3);font-size:13px}
+  font-family:"Literata",Georgia,serif;font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+
+.app{display:flex;height:100%;min-height:0}
+@media (max-width:900px){.app{flex-direction:column;height:auto}}
+
+/* ── карта ── */
+.mapwrap{flex:1 1 auto;position:relative;min-width:0;background:var(--paper);
+  display:grid;place-items:center;overflow:hidden}
+@media (max-width:900px){.mapwrap{position:sticky;top:0;z-index:5;height:44vh;
+  border-bottom:1px solid var(--line);background:var(--paper)}}
+.stage{position:relative;line-height:0;max-width:100%;max-height:100%}
+.stage img{display:block;max-width:100%;max-height:100%;width:auto;height:auto}
+.pin{position:absolute;transform:translate(-50%,-50%);pointer-events:none;opacity:0;
+  transition:opacity .18s ease}
+.pin.on{opacity:1}
+.pin i{display:block;width:13px;height:13px;border-radius:50%;background:var(--ember);
+  box-shadow:0 0 0 3px rgba(180,69,31,.28),0 0 0 9px rgba(180,69,31,.12)}
+.pin.on i{animation:beat 1.5s ease-in-out infinite}
+@keyframes beat{0%,100%{box-shadow:0 0 0 3px rgba(180,69,31,.28),0 0 0 9px rgba(180,69,31,.12)}
+  50%{box-shadow:0 0 0 5px rgba(180,69,31,.32),0 0 0 16px rgba(180,69,31,0)}}
+.pin b{position:absolute;left:50%;top:-8px;transform:translate(-50%,-100%);white-space:nowrap;
+  font-family:"Unbounded",system-ui,sans-serif;font-weight:600;font-size:10px;letter-spacing:.08em;
+  text-transform:uppercase;background:var(--ink);color:var(--paper-2);padding:4px 8px;border-radius:2px}
+.hint{position:absolute;left:14px;bottom:12px;font-size:11px;color:var(--ink-3);
+  background:color-mix(in srgb,var(--paper-2) 84%,transparent);padding:6px 10px;border-radius:3px;
+  border:1px solid var(--line);line-height:1.3;max-width:min(60vw,320px)}
+@media (prefers-reduced-motion:reduce){.pin.on i{animation:none}}
+
+/* ── панель ── */
+.panel{flex:0 0 var(--panel);max-width:var(--panel);overflow-y:auto;
+  background:var(--paper-2);border-left:1px solid var(--line);padding:26px 22px 60px}
+@media (max-width:900px){.panel{flex:1 1 auto;max-width:none;border-left:0;padding:22px 18px 56px}}
+
+.kicker{font-family:"Unbounded",system-ui,sans-serif;font-weight:600;font-size:10px;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--ember);margin:0 0 10px}
+h1{font-family:"Unbounded",system-ui,sans-serif;font-weight:800;font-size:clamp(25px,3.2vw,34px);
+  line-height:1.05;letter-spacing:-.02em;margin:0 0 10px;text-wrap:balance}
+.lede{color:var(--ink-2);font-size:14px;margin:0 0 26px;max-width:46ch}
+
+.chapter h2{font-family:"Unbounded",system-ui,sans-serif;font-weight:800;font-size:17px;
+  letter-spacing:-.01em;margin:34px 0 4px}
+.csub{color:var(--ink-3);font-size:12px;margin:0 0 16px}
+
+ol.tl{list-style:none;margin:0;padding:0;position:relative}
+ol.tl::before{content:"";position:absolute;left:5px;top:8px;bottom:8px;width:2px;background:var(--line)}
+li.ev{position:relative;padding:0 0 16px 24px;cursor:default;border-radius:4px}
+li.ev::before{content:"";position:absolute;left:0;top:9px;width:12px;height:12px;border-radius:50%;
+  background:var(--paper-2);border:2px solid var(--steel);transition:transform .15s ease}
+li.ev.day::before{background:var(--ember);border-color:var(--ember)}
+li.ev:hover::before,li.ev:focus-visible::before{transform:scale(1.35)}
+li.ev:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
+li.ev.lit .what{color:var(--ink)}
+.when{font-family:"Unbounded",system-ui,sans-serif;font-weight:600;font-size:10px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:4px}
+.what{font-size:14px;color:var(--ink-2)}
+li.ev.day .when{display:flex;gap:8px;align-items:baseline}
+.dnum{color:var(--ember);font-weight:800;font-size:12px;text-transform:none;letter-spacing:0}
+.phase{display:flex;gap:9px;margin:8px 0 0}
+.pm{flex:0 0 auto;font-size:11px;opacity:.8;margin-top:3px}
+ul.sub{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
+ul.sub li{font-size:13.5px}
+ul.sub li.start{padding-top:2px}
+
+.chip{display:inline-block;font-family:"Unbounded",system-ui,sans-serif;font-weight:600;font-size:9px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ember);background:var(--ember-soft);
+  padding:3px 7px;border-radius:2px}
+button.ref{font:inherit;color:var(--steel);font-weight:600;background:none;border:0;padding:0;
+  cursor:help;border-bottom:1px dotted color-mix(in srgb,var(--steel) 55%,transparent)}
+button.ref:hover,button.ref:focus-visible{color:var(--ember);border-bottom-color:var(--ember);outline:none}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:italic}
+
+/* ── попап ── */
+#pop{position:fixed;z-index:50;max-width:330px;background:var(--paper-2);border:1px solid var(--line);
+  border-radius:4px;box-shadow:var(--shadow);padding:14px 16px;display:none;pointer-events:none}
+#pop.on{display:block}
+#pop .pk{font-family:"Unbounded",system-ui,sans-serif;font-weight:600;font-size:9px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--ember);margin-bottom:4px}
+#pop .pn{font-family:"Unbounded",system-ui,sans-serif;font-weight:800;font-size:15px;margin-bottom:8px}
+#pop ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+#pop li{font-size:13px;color:var(--ink-2);padding-left:11px;position:relative}
+#pop li::before{content:"";position:absolute;left:0;top:8px;width:4px;height:4px;border-radius:50%;background:var(--steel)}
+
+footer{margin-top:40px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink-3);font-size:12px}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <p class="kicker">746 рік від заснування</p>
-  <h1>Королівство Гарона</h1>
-  <p class="lede">Матеріали кампанії для гравців. Оновлюються після кожної сесії.</p>
-  <div class="rule"></div>
-  <div class="cards">
-    <a class="card" href="chronicle.html">
-      <h2>Хроніка</h2>
-      <p>Що було у світі до вас — і що сталося відтоді, день за днем.</p>
-      <span class="go">Відкрити →</span>
-    </a>
-    <a class="card" href="bestiary.html">
-      <h2>Бестіарій</h2>
-      <p>Статблоки тих, кого ви вже зустрічали.</p>
-      <span class="go">Відкрити →</span>
-    </a>
+<div class="app">
+  <div class="mapwrap">
+    <div class="stage" id="stage">
+      <img src="map.jpg" alt="Політична карта відомого світу">
+    </div>
+    <p class="hint">Наведи на подію — побачиш, де це сталося. Наведи на імʼя — коротка довідка.</p>
   </div>
-  <footer>Ведеться майстром. Тут немає нічого, чого ваші персонажі не знають.</footer>
+
+  <div class="panel">
+    <p class="kicker">746 рік від заснування</p>
+    <h1>Королівство Гарона</h1>
+    <p class="lede">Хроніка кампанії. Тут немає нічого, чого ваші персонажі не знають.</p>
+
+
+<section class="chapter">
+  <h2>Світ до вас</h2>
+  <p class="csub">Відлік — від дня, коли почалася ваша історія.</p>
+  <ol class="tl">
+<li class="ev" data-p="astur-empire,high-council-of-faith" tabindex="0">
+  <div class="when">~1000 років до старту</div>
+  <div class="what"><strong>Приходить <button type="button" class="ref" data-s="eshkar">Ешʼкар</button>.</strong> Високий худорлявий чоловік із посохом, у чиїх очах відбивався вогонь навіть у темряві, стає на південному кордоні й починає проповідувати: світ народився з Вогню, і лише Вогонь очищає душі. Де його не приймали, там уночі здіймалися стовпи полумʼя. За ним пішли тисячі — так постала <button type="button" class="ref" data-s="astur-empire">Астурська Імперія</button> і <button type="button" class="ref" data-s="high-council-of-faith">Вища Рада Віри</button>. Потім він зник із літописів: ні смерті, ні поховання ніде не записано.</div>
+</li>
+<li class="ev" data-p="" tabindex="0">
+  <div class="when">~760 років до старту</div>
+  <div class="what">Землі роздроблені між дрібними володарями. На арену виходить <strong>Гарон</strong> і за три десятиліття збирає їх під одну руку.</div>
+</li>
+<li class="ev" data-p="kingdom-garona" tabindex="0">
+  <div class="when"><strong>745 років до старту</strong></div>
+  <div class="what"><strong>Заснування <button type="button" class="ref" data-s="kingdom-garona">Королівства Гарона</button>.</strong> Від цього року й ведеться все літочислення.</div>
+</li>
+<li class="ev" data-p="" tabindex="0">
+  <div class="when">~745 років до старту</div>
+  <div class="what"><strong><button type="button" class="ref" data-s="prophecy-of-garon">Пророцтво Гарона</button>.</strong> Гарон провіщає віки темряви й чвар, коли захитаються мури столиці, а Червоний Лев знеможе у власних пазурах — і що тоді «з гілки, що росте в тіні» явиться <strong>бастард у короні його</strong>. Пророцтво досі переказують у кожній таверні.</div>
+</li>
+<li class="ev" data-p="eastmarch" tabindex="0">
+  <div class="when">~200 років до старту</div>
+  <div class="what"><strong><button type="button" class="ref" data-s="eastmarch">Істмарш</button></strong> переходить під владу Королівства — без війни, через династичний шлюб. Місцеві ще довго вважатимуть себе окремим народом.</div>
+</li>
+<li class="ev" data-p="thorn-drexel" tabindex="0">
+  <div class="when"><strong>300 років до старту</strong></div>
+  <div class="what"><strong>Засновано обмінний дім <button type="button" class="ref" data-s="thorn-drexel">«Торн і Дрексель»</button></strong> — <button type="button" class="ref" data-s="orven-dan-torn">Орвен дан Торн</button> і <button type="button" class="ref" data-s="lucio-dan-drexel">Луціо дан Дрексель</button>. Починали як невелика спілка: кредити купцям, зберігання скарбів знаті.</div>
+</li>
+<li class="ev" data-p="arven" tabindex="0">
+  <div class="when">~40 років до старту</div>
+  <div class="what"><strong>Потоп в <button type="button" class="ref" data-s="arven">Арвені</button>.</strong> Вище за течією руйнується стара дамба, і хвиля повільно, але невідворотно топить центр міста разом із портом. Вода стає на рівні середини другого поверху; вулиці робляться каналами. Знать тікає на сухі окраїни, а покинуті палаци заселяє біднота. За владу над містом б'ються багато хто, у фіналі лишаються двоє — <button type="button" class="ref" data-s="pekar">Пекар</button> і <button type="button" class="ref" data-s="morella">Морелла</button>. <strong>Перемагає Пекар:</strong> він виявився удачливішим і значно кращим до людей.</div>
+</li>
+<li class="ev" data-p="" tabindex="0">
+  <div class="when">19 років до старту</div>
+  <div class="what">Народився <button type="button" class="ref" data-s="mediz">Медіз</button>.</div>
+</li>
+<li class="ev" data-p="" tabindex="0">
+  <div class="when">~13 років до старту</div>
+  <div class="what"><button type="button" class="ref" data-s="euriala">Евріала</button> зникає «під час пригодницької вилазки». Шестирічний <button type="button" class="ref" data-s="mediz">Медіз</button> лишається сам і потрапляє в астурський сиротинець, де швидко заробляє славу тирана серед дітей.</div>
+</li>
+<li class="ev" data-p="lantaro" tabindex="0">
+  <div class="when"><strong>8 років до старту</strong></div>
+  <div class="what"><strong>Переворот у <button type="button" class="ref" data-s="lantaro">Лантаро</button>.</strong> <button type="button" class="ref" data-s="marco-kabrini">Марко Кабріні</button>, голова таємної служби, вбиває герцога <button type="button" class="ref" data-s="alessandro-vitarelli">Алессандро Вітареллі</button> і герцогиню <button type="button" class="ref" data-s="katarina-vitarelli">Катаріну Вітареллі</button>. Їхню єдину доньку <button type="button" class="ref" data-s="eliana-vitarelli">Еліану Вітареллі</button> лишають живою як ширму — після ультиматумів і прохань <button type="button" class="ref" data-s="rene">Рене</button>. Еліана перетворюється на пташку в золотій клітці й більше ніколи не відчиняє подрузі дверей.</div>
+</li>
+<li class="ev" data-p="ostroh,astur-empire" tabindex="0">
+  <div class="when">5 років до старту</div>
+  <div class="what"><strong>Напад на бібліотеку в <button type="button" class="ref" data-s="ostroh">Острозі</button>.</strong> Уночі приходять озброєні люди, які шукають трактати теократії <button type="button" class="ref" data-s="astur-empire">Астурської Імперії</button>; серед них <button type="button" class="ref" data-s="raud">Рауд</button>. Полиці охоплює вогонь. <button type="button" class="ref" data-s="pero">Пєро</button> затримує нападників і гине від списа, <strong>перед смертю вперше заговоривши по-справжньому — голосом <button type="button" class="ref" data-s="yaropolk">Ярополка</button></strong>. Самого Ярополка судять за підпал; батько відмовляється заступитися.</div>
+</li>
+<li class="ev" data-p="clan-krigensflam,northland,greyvik" tabindex="0">
+  <div class="when">2 роки до старту</div>
+  <div class="what"><strong>Народження «Молодого Лева».</strong> <button type="button" class="ref" data-s="clan-krigensflam">Клан Крігенсфлам</button> уривається в <button type="button" class="ref" data-s="northland">Нортланд</button> грабувати й брати полонених. З <button type="button" class="ref" data-s="greyvik">Грейвік</button> приходить наказ відступати — вісімнадцятирічний <button type="button" class="ref" data-s="leo-dan-vern">Лео дан Верн</button> його <strong>ігнорує</strong>, піднімає людей і пробиває фланг. Для «Горящих Сокир» це принизлива поразка. Уся його репутація збудована на відмові виконати наказ.</div>
+</li>
+<li class="ev" data-p="thorn-drexel,kardosa" tabindex="0">
+  <div class="when">менш ніж рік до старту</div>
+  <div class="what"><strong>Знайдено <button type="button" class="ref" data-s="garon-crown">Вінець Гарона</button>.</strong> Королівська регалія опиняється не в палаці, а в південній філії <button type="button" class="ref" data-s="thorn-drexel">«Торн і Дрексель»</button> у <button type="button" class="ref" data-s="kardosa">Кардосі</button>; <button type="button" class="ref" data-s="alisia-dan-torn">Алісія дан Торн</button> має вивезти її до столиці. Обставини знахідки не визначені.</div>
+</li>
+  </ol>
+</section>
+
+<section class="chapter">
+  <h2>Без точної дати</h2>
+  <p class="csub">Відомо, що було. Коли саме — ні.</p>
+  <ol class="tl">
+<li class="ev" data-p="clan-valde,montelia" tabindex="0">
+  
+  <div class="what"><strong><button type="button" class="ref" data-s="valdeval">Вальдеваль де Вальде</button></strong> заробляє імʼя в набігах, іде говорити з предками в сніжні гори, збирає <button type="button" class="ref" data-s="clan-valde">клан Вальде</button>, будує <button type="button" class="ref" data-s="valdegrad">Вальдеград</button> і оголошує себе <strong>князем</strong> — бо почув це слово з боку <button type="button" class="ref" data-s="montelia">Монтелії</button> й вирішив, що воно звучить краще за «вождя». Інші клани з цього посміювалися. Далі похід забави ради, про союзників ворога він не подумав, і в нерівному морському бою <strong>пробив дно власного корабля</strong>, потопивши його разом із собою та чемпіоном крігенсфламів.</div>
+</li>
+  </ol>
+</section>
+
+<section class="chapter">
+  <h2>Ваша хроніка</h2>
+  <p class="csub">Від 2 до 9 Tarsakh 746 року.</p>
+  <ol class="tl">
+<li class="ev day" data-p="kardosa,thorn-drexel" tabindex="0">
+  <div class="when"><span class="dnum">День 1</span><span class="ddate">2 Tarsakh 746</span></div>
+  <div class="what">
+    <div class="phase sun"><span class="pm">☀</span>
+      <ul class="sub">
+        <li class="start"><span class="chip">Сесія 1</span></li>
+        <li data-p="kardosa">Біг по дахах <button type="button" class="ref" data-s="kardosa">Кардоси</button> і «купівля» інформації про обмінний дім.</li>
+        <li data-p="thorn-drexel"><button type="button" class="ref" data-s="ester">Естер</button> пропонує партії пограбувати <button type="button" class="ref" data-s="thorn-drexel">обмінний дім «Торн і Дрексель»</button>: вона підслухала розмову банди <button type="button" class="ref" data-s="mierzotnyky">Мерзотників</button>, які підкупили когось із дому заради <strong>ключа й плану</strong>. Героям обіцяно гроші.</li>
+        <li data-p="">Для розрахунку з бандою партія <strong>виготовила підроблені монети</strong> — і вони не знадобилися: ключ і план <strong>перехопили силою</strong>. Коли прибігла стража, героям повірили, а <strong><button type="button" class="ref" data-s="mierzotnyky">Мерзотників</button> забрали</strong>.</li>
+      </ul></div>
+    <div class="phase moon"><span class="pm">🌙</span>
+      <ul class="sub">
+        <li data-p=""><strong>Пограбування.</strong> Пролізли до сховища й знайшли там <strong>таємну кімнату <button type="button" class="ref" data-s="alisia-dan-torn">Алісії дан Торн</button></strong>: пляшки з кровʼю, лист від батька (<button type="button" class="ref" data-s="orven-letter">Лист Орвена Торна до Алісії</button>) і <strong>двоє людей у клітці</strong> — <button type="button" class="ref" data-s="tomas">Томас</button> з дружиною <button type="button" class="ref" data-s="elvira">Ельвірою</button>, яких вона тримала на їжу. Партія їх звільнила.</li>
+        <li data-p="">З листа стало ясно, що <strong><button type="button" class="ref" data-s="orven-dan-torn">Орвен дан Торн</button> — не людина</strong>: він називає себе найстарішим представником свого племені на континенті, а дім заснував 300 років тому <strong>особисто</strong>.</li>
+        <li data-p="">Відкрили люк униз. У темряві спали <strong>десятки породжень вампірів</strong>. Вони прокинулися, почався бій, герої втекли, <strong>піднявши шум</strong>. На шум прибігла стража — і <strong>породження її покусали</strong>.</li>
+        <li data-p=""><button type="button" class="ref" data-s="ester">Естер</button> у метушні <strong>краде <button type="button" class="ref" data-s="garon-crown">Вінець Гарона</button> і зникає</strong>.</li>
+        <li data-p="">Партія виносить <button type="button" class="ref" data-s="lion-pendant">Кулон Лева</button>, непритомного бухгалтера й дуже перегодованого кота <button type="button" class="ref" data-s="shprotia">Шпротя</button>.</li>
+      </ul></div>
+  </div>
+</li>
+<li class="ev day" data-p="astur-empire,rosinant" tabindex="0">
+  <div class="when"><span class="dnum">День 2</span><span class="ddate">3 Tarsakh 746</span></div>
+  <div class="what">
+    <div class="phase sun"><span class="pm">☀</span>
+      <ul class="sub">
+        <li class="start"><span class="chip">Сесія 2</span></li>
+        <li data-p="">Вийшли з дому вдосвіта <strong>з мішками мідяків</strong>: срібла й золота в сховищі вже не було — його вивезли раніше.</li>
+        <li data-p="astur-empire">У порту переполох. Партія вилазить на маяк і бачить: <strong>на місто суне армія <button type="button" class="ref" data-s="astur-empire">Астурська Імперія</button></strong>, багато легіонів.</li>
+        <li data-p="">У порт прискакує загін вершників зі щитами, на яких <strong>червоний лев і дві сині хвилясті лінії</strong>. <button type="button" class="ref" data-s="leo-dan-vern">Лео дан Верн «Молодий Лев»</button> знімає шолом і кричить, що всі кораблі реквізовані короною, що на південних воротах затор із тисяч біженців, і що ті, хто володіє магією або досвідчений у бою, потрібні <strong>в цитаделі, у <button type="button" class="ref" data-s="colonel-turner">полковника Тернера</button></strong>. Закінчує: «<strong>За Короля! За Гарону! За Нортланд!</strong>»</li>
+        <li data-p="rosinant"><strong>Срібні Доки.</strong> Єдиний корабель там — <button type="button" class="ref" data-s="rosinant">Корвет «Росінант»</button>, затягнутий брезентом: сліди гарматних пробоїн, латки, нові дошки. Перед ним мовчазний натовп із вузлами. Крізь нього проходить загін лицарів у плащах кольору <strong>ультрамарину зі знаком срібного птаха</strong>, попереду — <button type="button" class="ref" data-s="alisia-dan-torn">Алісія дан Торн</button>. Стражник посилається на наказ полковника, і вона питає: «<strong>Як мене звати?</strong>» Корабель переходить до неї. Тоді їй шепочуть на вухо новину про пограбування — обличчя міняється миттєво: «<strong>Я в обмінний дім!</strong>»</li>
+        <li data-p="">На площі <button type="button" class="ref" data-s="leo-dan-vern">Лео</button> сходиться з <button type="button" class="ref" data-s="colonel-turner">Тернером</button>. Той забороняє кінну вилазку: Лео втратить кінноту, а вона потрібна місту. <strong>Лео заявляє, що не виконуватиме накази людини без приставки «дан»</strong>, і веде нортландців у бій. Астурців він затримав, <strong>поклав багато своїх</strong> — і повернувся.</li>
+        <li data-p="">Астурців на мості тримала ще й група авантюристів (<button type="button" class="ref" data-s="bob-group">група Боба</button>); <button type="button" class="ref" data-s="colonel-turner">Тернер</button> заплатив їм і дав місце в евакуації.</li>
+        <li data-p="">Партія намагається викрасти корабель тихо — не виходить, здіймається бій. Несподівано допомагає колишній солдат <button type="button" class="ref" data-s="briz">Бріз</button>.</li>
+        <li data-p="">У порт <strong>вриваються породження</strong> — це покусані напередодні стражники. Через паніку <strong>оборона міста падає зсередини</strong>.</li>
+        <li data-p="">На борт беруть <strong>близько 150 людей</strong>. Вечоріє; з моря видно, як Імперія входить у місто, <strong>яке вже палає</strong>, і як на вулицях упереміш б'ються імперці, солдати королівства й породження.</li>
+        <li data-p="">Уже відпливаючи, партія бачить <strong>здалека, на іншому кораблі</strong>: із цитаделі виривається <button type="button" class="ref" data-s="colonel-turner">Тернер</button> з <button type="button" class="ref" data-s="leo-dan-vern">Лео</button>, вони тримають породжень, поки люди сідають, — і <strong>Тернер не дає кораблю відпливти, поки Лео не застрибнув останнім</strong>.</li>
+        <li data-p="rosinant">На <button type="button" class="ref" data-s="rosinant">«Росінант»</button> прилітає <button type="button" class="ref" data-s="alisia-dan-torn">Алісія дан Торн</button> і <strong>вимагає віддати корону</strong>.</li>
+      </ul></div>
+    <div class="phase moon"><span class="pm">🌙</span>
+      <ul class="sub">
+        <li class="start"><span class="chip">Сесія 3</span></li>
+        <li data-p=""><strong>Битва з Алісією.</strong> Вона <strong>не повірила</strong>, що корони в партії немає, і атакувала — обурена, що в неї викрали корабель, усю кров і, <strong>особливо, всі плаття</strong>. <strong>Її вбито.</strong> <strong>ЛР</strong></li>
+      </ul></div>
+  </div>
+</li>
+<li class="ev day" data-p="saltwake,garona,arven,montelia,kardosa,vesela-lozhka,pleiades,lantaro" tabindex="0">
+  <div class="when"><span class="dnum">День 3</span><span class="ddate">4 Tarsakh 746</span></div>
+  <div class="what">
+    <div class="phase sun"><span class="pm">☀</span>
+      <ul class="sub">
+        <li data-p="saltwake">Припливли в <button type="button" class="ref" data-s="saltwake">Солтвейк</button>, випустили біженців і <button type="button" class="ref" data-s="briz">Бріза</button>.</li>
+        <li data-p="garona"><strong>Видіння <button type="button" class="ref" data-s="eldarion">Ельдаріона</button>:</strong> чорний ворон дає напрям — <strong>іти в <button type="button" class="ref" data-s="garona">Гарону</button></strong>.</li>
+        <li data-p="arven">Клерк <button type="button" class="ref" data-s="milan">Мілан</button> підказує, що питання власності на корабель вирішується через <button type="button" class="ref" data-s="salvio">Сальвіо</button> в <button type="button" class="ref" data-s="arven">Арвені</button> фразою «<strong>до пекаря</strong>».</li>
+        <li data-p="garona,montelia,arven">Новина, яка визначить усе далі: <strong>король <button type="button" class="ref" data-s="king-lionel-iv">Ліонель IV «Мудрий»</button> їде до <button type="button" class="ref" data-s="garona">Гарони</button></strong> і скликає прийом для всіх лордів Королівства й можливих союзників із <button type="button" class="ref" data-s="montelia">Монтелії</button>. На час прийому <strong>залив перекривають</strong> — до столиці тепер лише в обхід, через <button type="button" class="ref" data-s="arven">Арвен</button> і трактом.</li>
+        <li data-p="">Розслідування справи <button type="button" class="ref" data-s="maliser">Малісера</button>: капітан <strong>сам прийшов у відділення</strong> й узяв на себе вбивство власного сина, а тіло має <strong>розтрощене пострілом із дробовика обличчя</strong> — упізнати неможливо.</li>
+        <li class="start"><span class="chip">Сесія 4</span></li>
+        <li data-p=""><button type="button" class="ref" data-s="mediz">Медіз</button> пробує зняти <button type="button" class="ref" data-s="astur-slave-collar">Нашийник раба Астурії</button> — <strong>не виходить</strong>. І кажуть, що цей не такий, як інші: такі вдягають <strong>не на астурців, а на людей з Королівства</strong>.</li>
+        <li data-p="kardosa">Переказують новини із захопленої <button type="button" class="ref" data-s="kardosa">Кардоси</button>: <button type="button" class="ref" data-s="gold-black-woman">Жінка в золото-чорному платті</button> хвалиться, що <strong>спалила захисників мосту</strong>. У це не вірять — тіл не знайшли. Клірики, яких опитували, <strong>уникали з нею говорити</strong>, поки на них не гаркнув воїн у золотій масці.</li>
+        <li data-p="vesela-lozhka">Слід <button type="button" class="ref" data-s="ester">Естер</button>: у «<button type="button" class="ref" data-s="vesela-lozhka">Таверна «Весела Ложка»</button>» її знають як ту, що <strong>грає в кості й упевнено оббирає всіх</strong>. Припливла на невеликому, але дуже швидкому судні й пішла <strong>курсом на північ</strong>.</li>
+      </ul></div>
+    <div class="phase moon"><span class="pm">🌙</span>
+      <ul class="sub">
+        <li data-p="">Знайшли <button type="button" class="ref" data-s="basu">Басу</button> — живого, у домі сусідки <button type="button" class="ref" data-s="kishari">Кішарі</button>. Умовили плисти з ними, пообіцявши витягнути батька.</li>
+        <li data-p="pleiades,lantaro"><strong>Вʼязниця.</strong> Прохід куплено <strong>підробленими монетами</strong>. Усередині — <button type="button" class="ref" data-s="kess-favor">Кесс Фавор</button> зі своїми людьми й <button type="button" class="ref" data-s="favor-sorceress">Чарівниця Фавора</button>. Бій: <strong>чарівниця тікає dimension door</strong>, устигнувши їх роздивитися; решту вбито, зокрема самого главу <button type="button" class="ref" data-s="pleiades">Плеяди</button>. На трупі знайдено <button type="button" class="ref" data-s="vitelia-letter-favor">Лист Вітелії до Фавора</button> — вимогу інквізиції <strong>не чіпати кораблі <button type="button" class="ref" data-s="lantaro">Лантаро</button></strong>.</li>
+        <li data-p="">Утекли на корабель. <strong>У місті здійнялася тривога.</strong> <strong>ЛР</strong></li>
+      </ul></div>
+  </div>
+</li>
+<li class="ev day" data-p="sira-hreis" tabindex="0">
+  <div class="when"><span class="dnum">День 4</span><span class="ddate">5 Tarsakh 746</span></div>
+  <div class="what">
+    <div class="phase sun"><span class="pm">☀</span>
+      <ul class="sub">
+        <li data-p="sira-hreis">У морі зустріли <strong>абсолютно порожній</strong> торговий корабель — «<button type="button" class="ref" data-s="sira-hreis">«Сіра Грейс»</button>».</li>
+        <li class="start"><span class="chip">Сесія 5</span></li>
+        <li data-p="">Корабель виявився <strong>міміком</strong>. Билися <strong>всередині нього</strong>, перемогли й <strong>потопили</strong>.</li>
+      </ul></div>
+    <div class="phase moon"><span class="pm">🌙</span>
+      <ul class="sub">
+
+      </ul></div>
+  </div>
+</li>
+<li class="ev day" data-p="lantaro,lauris,montelia,arven,rosinant,garona,zalizo-i-shtuky,na-terasi,morella-house" tabindex="0">
+  <div class="when"><span class="dnum">День 5</span><span class="ddate">6 Tarsakh 746</span></div>
+  <div class="what">
+    <div class="phase sun"><span class="pm">☀</span>
+      <ul class="sub">
+        <li data-p="lantaro,lauris,montelia">У дорозі зустріли корабель, що йшов <strong>із <button type="button" class="ref" data-s="lantaro">Герцогство Лантаро</button> до <button type="button" class="ref" data-s="lauris">Лауріс</button></strong>. На борту двоє головних: комунікабельний <button type="button" class="ref" data-s="batcho">Батчо</button> і його сварливий напарник з Імперії <button type="button" class="ref" data-s="khalil">Халіль</button> — вони <strong>сперечалися, чи взагалі говорити</strong> з партією. Судно йшло <strong>під прапорами <button type="button" class="ref" data-s="montelia">Монтелія</button></strong> й на вигляд було торговим, але <strong>в каюті сиділи десятки імперських воїнів, готових до бою</strong>. Бою уникнули: партія <strong>пообіцяла Халілю нікому не розказувати</strong>.</li>
+        <li data-p="arven,rosinant">Прибули в <button type="button" class="ref" data-s="arven">Арвен</button> — затоплене місто, де вулиці стали каналами. <strong>Рівень 4.</strong> <button type="button" class="ref" data-s="rosinant">«Росінант»</button> лишили в порту <button type="button" class="ref" data-s="salvio">Сальвіо</button>.</li>
+        <li data-p="lantaro,garona">У порту — <strong>флотилія з <button type="button" class="ref" data-s="lantaro">Лантаро</button>, що йде на прийом до короля в <button type="button" class="ref" data-s="garona">Гарона</button></strong>: три кораблі, <strong>один із них механічний, пароплав</strong>, і ще два кораблі супроводу з Королівства. На найбільшому стоять <strong><button type="button" class="ref" data-s="marco-kabrini">Марко Кабріні</button> та <button type="button" class="ref" data-s="eliana-vitarelli">Еліана Вітареллі</button></strong> — <strong>посміхаються й махають</strong> натовпу в порту, і натовп махає у відповідь.</li>
+        <li data-p="zalizo-i-shtuky">Закупилися в «<button type="button" class="ref" data-s="zalizo-i-shtuky">«Залізо і Штуки»</button>» у <button type="button" class="ref" data-s="bremmel">Бреммеля</button> — торговця, який <strong>не ходить, а зʼявляється</strong>: телепортується власною крамницею, вічно посміхається й підписує цінники крінжовими віршиками. Узяли <button type="button" class="ref" data-s="greyvik-axe">Грейвікська сокира</button>, <button type="button" class="ref" data-s="pistol-silencer">Глушник від FN Contingency</button> і <button type="button" class="ref" data-s="pearl-of-light">Перлинка Світла</button>.</li>
+        <li class="start"><span class="chip">Сесія 6</span></li>
+        <li data-p="">Місто в переполоху: скрізь <button type="button" class="ref" data-s="wanted-poster">Розшукова листівка «РОЗШУК!»</button> — <strong>1000 золотих за заколот проти корони, живого чи мертвого</strong>.</li>
+        <li data-p="na-terasi">Повечеряли з <button type="button" class="ref" data-s="lady-angelina">леді Анджеліною</button> в «<button type="button" class="ref" data-s="na-terasi">Ресторан «На терасі»</button>» і уклали угоду: партія постачає їй сукні, <strong>перешиті з речей убитої <button type="button" class="ref" data-s="alisia-dan-torn">Алісії дан Торн</button></strong>. Дві продали одразу.</li>
+      </ul></div>
+    <div class="phase moon"><span class="pm">🌙</span>
+      <ul class="sub">
+        <li data-p="">Розмова з <button type="button" class="ref" data-s="pekar">Пекарем</button>, який фактично тримає Старе місто, — і з його шестирічною внучкою <button type="button" class="ref" data-s="bulochka">Булочкою</button>, що вже дає поради з кримінального бізнесу. Доручення: принести <strong>три картини жінки з темним волоссям і світлими очима</strong> (<button type="button" class="ref" data-s="morella-portraits">Три портрети Морелли</button>).</li>
+        <li data-p="morella-house">Проникли в <button type="button" class="ref" data-s="morella-house">білий будинок Морелли</button> — <strong>білий будинок без вікон і дверей</strong> біля парку. Пройшли нижні поверхи через <strong>ілюзорні пастки</strong> й дійшли до спальні.</li>
+      </ul></div>
+  </div>
+</li>
+<li class="ev day" data-p="rosinant,morella-house,garona" tabindex="0">
+  <div class="when"><span class="dnum">День 6</span><span class="ddate">7 Tarsakh 746</span></div>
+  <div class="what">
+    <div class="phase sun"><span class="pm">☀</span>
+      <ul class="sub">
+        <li class="start"><span class="chip">Сесія 7</span></li>
+        <li data-p=""><button type="button" class="ref" data-s="morella">Морелла</button> чекала в спальні серед картин. <strong>Героїв затягнуло всередину полотен</strong>, і там вони билися з її породженнями. Після перемоги <strong>на всіх трьох картинах вона стала намальована мертвою</strong>.</li>
+        <li data-p="rosinant,morella-house"><button type="button" class="ref" data-s="pekar">Пекар</button> розрахувався щедро: <strong>документи на <button type="button" class="ref" data-s="rosinant">«Росінант»</button></strong> і <strong><button type="button" class="ref" data-s="morella-house">особняк Морелли</button> у власність</strong>.</li>
+        <li data-p="">І дав нове доручення: віднести <button type="button" class="ref" data-s="pekar-letter">Лист Пекаря до отця Домініка</button> отцю <button type="button" class="ref" data-s="father-dominic">Домініку</button> у столицю — <strong>з неушкодженою печаткою</strong>. Партія свідомо вирішила <strong>не читати</strong>.</li>
+        <li data-p="garona">Оскільки в <button type="button" class="ref" data-s="garona">Гарона</button> просто так не пускають, <button type="button" class="ref" data-s="lady-angelina">Леді Анджеліна Тревен</button> дала вантаж із документами на заїзд: <strong><button type="button" class="ref" data-s="three-geese">Три гуски — Оля, Люба і Недіс</button></strong> для королівської фуа-гра. Гравці назвали їх <strong>Оля, Люба й Недіс</strong>.</li>
+        <li data-p="">Того ж дня <button type="button" class="ref" data-s="elian">Еліан</button> із <button type="button" class="ref" data-s="huge-warrior">Гремезний воїн</button> помічені біля таверни Нижнього Міста, а <button type="button" class="ref" data-s="bob-group">Група Боба</button> — шестеро в човні — <strong>пішла за ним на північ</strong>. Перевізнику <button type="button" class="ref" data-s="zhan">Жан</button> за цю інформацію <strong>заплатили підробленими монетами</strong>.</li>
+      </ul></div>
+    <div class="phase moon"><span class="pm">🌙</span>
+      <ul class="sub">
+
+      </ul></div>
+  </div>
+</li>
+<li class="ev day" data-p="arven,red-and-black" tabindex="0">
+  <div class="when"><span class="dnum">День 7</span><span class="ddate">8 Tarsakh 746</span></div>
+  <div class="what">
+    <div class="phase sun"><span class="pm">☀</span>
+      <ul class="sub">
+        <li class="start"><span class="chip">Сесія 8</span></li>
+        <li data-p="arven">Купили в <button type="button" class="ref" data-s="arven">Арвені</button> <strong>250 пляшок вина</strong> по золотому — на продаж у столиці півтора.</li>
+        <li data-p="arven"><strong>Блокпост на тракті.</strong> Партія розказала вартовим про корабель з імперцями — і <strong>з блокпоста відправили гінця в <button type="button" class="ref" data-s="arven">Арвен</button></strong>.</li>
+        <li data-p="red-and-black">Під вечір доїхали до ігрового дому «<button type="button" class="ref" data-s="red-and-black">Ігровий дім «Червоне і Чорне»</button>». Власник <button type="button" class="ref" data-s="adrian">Адріан</button> упевнений, що <strong>імперці сюди ніколи не дійдуть, бо «в них немає кораблів»</strong>.</li>
+        <li data-p="">У залі впізнали <strong><button type="button" class="ref" data-s="elian">Еліана</button></strong> — того самого, за кого дають тисячу. <strong>Бій. Убито його та його охоронця-найманця.</strong> Нагороду платять <strong>за труп, привезений до столиці</strong>, тож тіло забрали з собою.</li>
+        <li data-p="">У залі повно свідків. Ночувати не лишилися — <strong>виїхали в ніч і дощ</strong>.</li>
+      </ul></div>
+    <div class="phase moon"><span class="pm">🌙</span>
+      <ul class="sub">
+        <li data-p="">Табір у лісі. <strong>ЛР</strong></li>
+      </ul></div>
+  </div>
+</li>
+<li class="ev day" data-p="temple-of-elemir" tabindex="0">
+  <div class="when"><span class="dnum">День 8</span><span class="ddate">9 Tarsakh 746</span></div>
+  <div class="what">
+    <div class="phase sun"><span class="pm">☀</span>
+      <ul class="sub">
+        <li data-p="">Зранку на табір вийшла <button type="button" class="ref" data-s="bob-group">група авантюристів</button> і назвалася: <strong><button type="button" class="ref" data-s="bob">Бартоломео Озіріс Блейдсонг «Боб»</button></strong> — Бартоломео Озіріс Блейдсонг, <strong><button type="button" class="ref" data-s="leira">Лейра</button></strong> — бардеса верхи на власній сестрі, <strong><button type="button" class="ref" data-s="keira">Кейра</button></strong> — друїдка в подобі левиці, <strong><button type="button" class="ref" data-s="revan">Реван</button></strong> — клірик, <strong><button type="button" class="ref" data-s="viga">Віга Хрипуча</button></strong> — Віга Хрипуча, барбаріанка. Шостого, рогу <button type="button" class="ref" data-s="movchun">Мовчуна</button>, ніхто не бачив. <strong>Заявили, що труп їхній.</strong></li>
+        <li class="start"><span class="chip">Сесія 9</span></li>
+        <li data-p="">Дуже напружений бій <strong>перейшов у торги</strong>: домовилися <strong>поділити нагороду</strong>. <button type="button" class="ref" data-s="movchun">Мовчун</button> загинув, на нього наклали <strong>gentle repose</strong>. Далі поїхали в столицю <strong>разом, на одному возі</strong>.</li>
+        <li data-p="">На тракті зустріли <strong>військо <button type="button" class="ref" data-s="colonel-turner">полковника Тернера</button>, що йшло на південь</strong>, і сказали йому, що <strong>це вони попередили про висадку</strong>. Він їх запамʼятав.</li>
+        <li data-p=""><strong>Столиця.</strong> На стіні — графіті: <strong>особа в короні в петлі</strong>; малювали діти, за ними ганялася стража. Поруч <strong>роздають бідним хліб від <button type="button" class="ref" data-s="kamila-dan-torn">Каміли дан Торн</button></strong>.</li>
+        <li data-p="">Тіло здали офіцеру <button type="button" class="ref" data-s="sadrik">Садріку</button> за <strong>1000 золотих</strong> — і тільки там дізналися імʼя вбитого: <strong>Еліан</strong>. Триста, як домовлялися, віддали групі Боба.</li>
+        <li data-p=""><button type="button" class="ref" data-s="three-geese">Три гуски — Оля, Люба і Недіс</button> здали на птахоферму <button type="button" class="ref" data-s="haspar">Гаспара</button>, <button type="button" class="ref" data-s="wine-cargo">250 пляшок вина</button> продали за <strong>375 золотих</strong>.</li>
+        <li data-p="temple-of-elemir">У <button type="button" class="ref" data-s="temple-of-elemir">храмі Елеміра</button> перед ними забігли <strong>ті самі діти, що малювали графіті</strong>, а слідом прийшла стража. <strong>Партія знала, де вони сховалися, і не здала їх</strong> — саме через це <button type="button" class="ref" data-s="father-dominic">Отець Домінік</button> їй довіряє. Лист він <strong>прочитав і спалив</strong>, не сказавши ні слова про зміст. Тільки те, що вони <strong>дуже ризикували</strong>.</li>
+      </ul></div>
+    <div class="phase moon"><span class="pm">🌙</span>
+      <ul class="sub">
+        <li data-p="">Заночували в храмі. <strong>ЛР</strong></li>
+      </ul></div>
+  </div>
+</li>
+  </ol>
+</section>
+
+<section class="chapter">
+  <h2>Тим часом у світі</h2>
+  <p class="csub">Те, що відбувалося поруч, поки ви були зайняті іншим.</p>
+  <ol class="tl">
+<li class="ev" data-p="kardosa,greyvik" tabindex="0">
+  <div class="when">після падіння <button type="button" class="ref" data-s="kardosa">Кардоси</button></div>
+  <div class="what"><strong>Похорон у <button type="button" class="ref" data-s="greyvik">Грейвіку</button></strong> (<span class="chip">Сесія 6</span>). Під мурами столиці Нортланду горять <strong>близько двохсот багать</strong> — полеглі в Кардосі. <strong>Частина порожня: тіл не змогли зібрати.</strong> <button type="button" class="ref" data-s="leo-dan-vern">Лео дан Верн</button> промовляє над ними про честь, і військо скандує «Молодий Лев». На мурі стоять лорд <button type="button" class="ref" data-s="edward-dan-siver">Едвард дан Сівер</button>, який <strong>харкає кровʼю</strong>, і його єдина дочка <button type="button" class="ref" data-s="olivia-dan-siver">Олівія</button> — вона пропонує зміцнити хитку владу <strong>вдалим шлюбом</strong> із тим, кого зараз обожнює кожен житель Нортланду.</div>
+</li>
+<li class="ev" data-p="lauris" tabindex="0">
+  <div class="when">близько 7–8 Tarsakh</div>
+  <div class="what"><strong>Падіння <button type="button" class="ref" data-s="lauris">Лауріса</button></strong> (<span class="chip">Сесія 8</span>). У ранковому тумані в бухту входять десятки човнів під імперськими прапорами. З трьох десятків бастіонів <strong>стріляє тільки один</strong> — <button type="button" class="ref" data-s="oliver">Олівер</button>, який служив там місяць і встиг навести лад. Решту вже вирізали зсередини: солдати, привезені в трюмах під чужими прапорами, <strong>під ранок розбіглися по бастіонах</strong>. Два точних ядра в <button type="button" class="ref" data-s="golden-mask-commander">командувача в золотій масці</button> зупиняє <strong>невидима стіна</strong>; він лише киває — і <button type="button" class="ref" data-s="gold-black-woman">жінка в золото-чорному</button>, що зібралася з пилу за його спиною, <strong>спалює останній бастіон разом з Олівером</strong>.</div>
+</li>
+<li class="ev" data-p="ninth-legion,arven,lauris" tabindex="0">
+  <div class="when">одразу після</div>
+  <div class="what"><strong>Розгром <button type="button" class="ref" data-s="kasim">Касіма</button></strong> (<span class="chip">Сесія 9</span>). <button type="button" class="ref" data-s="ninth-legion">Девʼятий легіон</button> іде трактом на <button type="button" class="ref" data-s="arven">Арвен</button> — спалити виноградники, зігнати селян за мури й замкнути гарнізон страхом, щоб легіони потім спокійно зайняли <strong>весь простір між <button type="button" class="ref" data-s="lauris">Лаурісом</button> і Арвеном</strong>. Касім певен, що попередити нікому: ні сигналу, ні корабля-вісника. Назустріч із пилу виходить <strong>закута в сталь кіннота Королівства</strong>, і його легка кіннота вже на повному галопі.</div>
+</li>
+  </ol>
+</section>
+
+    <footer>Ведеться майстром. Оновлюється після кожної сесії.</footer>
+  </div>
 </div>
+
+<div id="pop" role="tooltip" aria-hidden="true"></div>
+
+<script>
+const PINS = {"astur-empire":{"x":45.3,"y":82.5},"high-council-of-faith":{"x":42.5,"y":77.1},"kingdom-garona":{"x":50.4,"y":46},"eastmarch":{"x":59.7,"y":53},"thorn-drexel":{"x":49.9,"y":47},"arven":{"x":51.8,"y":52.4},"lantaro":{"x":71.8,"y":49.6},"ostroh":{"x":73.1,"y":59.5},"clan-krigensflam":{"x":54.5,"y":18.2},"northland":{"x":45.5,"y":27},"greyvik":{"x":45,"y":33.3},"kardosa":{"x":47.8,"y":59.8},"clan-valde":{"x":54.5,"y":18.2},"montelia":{"x":69.3,"y":42.9},"rosinant":{"x":53.5,"y":54},"saltwake":{"x":55,"y":55.4},"garona":{"x":49.9,"y":47},"vesela-lozhka":{"x":55,"y":55.4},"pleiades":{"x":55,"y":55.4},"sira-hreis":{"x":53.5,"y":54},"lauris":{"x":48.8,"y":54.9},"zalizo-i-shtuky":{"x":51.8,"y":52.4},"na-terasi":{"x":51.8,"y":52.4},"morella-house":{"x":51.8,"y":52.4},"red-and-black":{"x":50.9,"y":49.7},"temple-of-elemir":{"x":49.9,"y":47},"ninth-legion":{"x":45.3,"y":82.5}};
+const DICT = {"eshkar":{"name":"Еш'кар","kind":"Персонаж","items":["Мандрівець, що понад тисячу років тому зʼявився на південному кордоні земель майбутньої Астурська Імперія.","Літописи описують його як високого, худорлявого чоловіка з очима, в яких відбивався вогонь, навіть коли навколо була темрява.","Носив посох із бронзовим навершям у формі полумʼя."]},"astur-empire":{"name":"Астурська Імперія","kind":"Фракція","items":["Теократична імперія на півдні, побудована навколо культу Священного Вогню.","Втратила землі Гароні в прикордонних війнах; на них постала Південна Провінція Гарони зі столицею Кардоса.","Нинішній правитель — Хасан ад-Дін Рашид III, який відкрито готує реванш."]},"high-council-of-faith":{"name":"Вища Рада Віри (Маджліс аль-Іман)","kind":"Фракція","items":["Найвищий духовний орган Астурська Імперія: семеро найвпливовіших мутаваліїв — верховних тлумачів Писання і хранителів доктрини Священного Вогню.","Заснована Еш'кар як нагляд за чистотою віри й праведністю імператорів."]},"kingdom-garona":{"name":"Королівство Гарона","kind":"Фракція","items":["Гарона — велика експансіоністська монархія з гербом червоного лева.","Королівство відоме дипломатією, династичними шлюбами й сильним військом.","Культ Сонця (Елемір) підтримує владу короля як «природний порядок»."]},"prophecy-of-garon":{"name":"Пророцтво Гарона","kind":"Світ","items":["Пророцтво загальновідоме в королівстві. Текст і його популярність — публічні."]},"eastmarch":{"name":"Істмарш","kind":"Світ","items":["Невеликий півострів на сході, притиснутий до Монтелія; провінція Гарона.","Кілька століть тому перейшов під владу Королівства завдяки династичному шлюбу.","Головне місто — Істпорт, найбільший торговельний вузол на сході."]},"thorn-drexel":{"name":"Обмінний дім «Торн і Дрексель»","kind":"Фракція","items":["У Гароні кажуть: «Без Торна і Дрекселя не воюють».","Дім майже неможливо «зламати силою» — він купує людей і рішення."]},"orven-dan-torn":{"name":"Орвен дан Торн","kind":"Персонаж","items":["Голова обмінного дому «Торн і Дрексель», представляє свій рід при дворі.","Давній друг і радник короля Ліонель IV «Мудрий»; монарх часто радиться з ним у фінансових і навіть державних справах.","Імʼя Орвен повторюється в поколіннях Торнів — воно стало символом спадковості та влади в родині. Так звали і одного із засновників дому."]},"lucio-dan-drexel":{"name":"Луціо дан Дрексель","kind":"Персонаж","items":["Представник роду Дрекселів у домі «Торн і Дрексель».","Імʼя добре відоме серед купців і аристократії, хоча самого Луціо майже ніхто не бачив."]},"arven":{"name":"Арвен","kind":"Місце","items":["Місто в дельті широкої ріки, центр якого затоплений.","Кілька десятків років тому вище за течією зруйнувалася стара дамба. Хвиля повільно, але невідворотно затопила центр разом із портом."]},"pekar":{"name":"Пекар","kind":"Персонаж","items":["Не просто ремісник, а людина, що фактично контролює все Старе місто Арвен.","Його люди стежать за порядком, вирішують конфлікти й тримають під контролем банди та торгівлю.","В обмін справно платить данину офіційній владі, і всі роблять вигляд, що все відбувається саме собою."]},"morella":{"name":"Морелла","kind":"Персонаж","items":["Художниця. Її картини цікавили одразу дві сторони, що не мали б перетинатися.","Убита партією в сесія 7 (6-й ігровий день)."]},"euriala":{"name":"Евріала","kind":"Персонаж","items":["Медіз знає лише те, що вона зникла."]},"lantaro":{"name":"Герцогство Лантаро","kind":"Фракція","items":["Найбільша держава Монтелія, історично — «майстерня світу».","Тут винайдено порох і перші зразки вогнепальної зброї.","Нині фактичною владою є регент Марко Кабріні, що прийшов через переворот."]},"marco-kabrini":{"name":"Марко Кабріні","kind":"Персонаж","items":["Регент і фактичний правитель герцогства Лантаро.","Колишній голова таємної служби. Людина без титулу, що піднялася завдяки розуму, жорсткості та безжальній практичності."]},"alessandro-vitarelli":{"name":"Герцог Алессандро Вітареллі","kind":"Персонаж","items":["Рене особисто бувала на зустрічах із ним."]},"katarina-vitarelli":{"name":"Герцогиня Катаріна Вітареллі","kind":"Персонаж","items":["Рене особисто бувала на зустрічах із нею."]},"eliana-vitarelli":{"name":"Еліана Вітареллі","kind":"Персонаж","items":["Донька герцога Алессандро Вітареллі та герцогині Катаріна Вітареллі — старої династії Лантаро.","На два роки молодша за Рене Фалькро.","Формально носить титул спадкоємиці й правительки; реальну владу тримає регент Марко Кабріні."]},"ostroh":{"name":"Острог","kind":"Місце","items":["Ярополк знає все, що бачив тієї ночі."]},"raud":{"name":"Рауд","kind":"Персонаж","items":["Ярополк з роду Гедиміновичів знає імʼя з ночі нападу. Партія знає імʼя з листа."]},"pero":{"name":"Пєро","kind":"Персонаж","items":["Ярополк знає все, що бачив тієї ночі."]},"clan-krigensflam":{"name":"Клан Крігенсфлам","kind":"Фракція","items":["Клан Фростланд, відомий як «Горящі Сокири».","Брав участь у розгромі Вальде."]},"northland":{"name":"Нортланд","kind":"Світ","items":["Найпівнічніші землі Гарона, які колись належали фростам (Фростланд).","Окремий масив суші на північ від серця королівства, через Рімвотер від Фростланду.","Міста: Айронголт, Грейвік — столиця."]},"greyvik":{"name":"Грейвік","kind":"Місце","items":["Столиця Нортланд (сесія 6). Місто на півдні провінції.","Мури з чорного каменю."]},"leo-dan-vern":{"name":"Лео дан Верн «Молодий Лев»","kind":"Персонаж","items":["Шляхтич із Нортланд, відомий серед воїнів як людина, що не вагається діяти першою.","Вік: 20 років. Отже битва з Крігенсфлам у його 18 — 2 роки до старту кампанії."]},"garon-crown":{"name":"Вінець Гарона","kind":"Предмет","items":["Що вони винесли його з дому «Торн і Дрексель», а Естер його вкрала й зникла з ним на північ.","Що це королівська регалія."]},"kardosa":{"name":"Місто Кардоса","kind":"Місце","items":["Кардоса — найбільший торговельний вузол півдня; тут можна купити майже все, але й втратити все дуже швидко.","Місто неспокійне: чутки про підпілля та імперських агентів спливають регулярно.","Кардосу часто називають «містом контрастів»: старі імперські квартали й нові королівські райони живуть поруч, але окремо."]},"alisia-dan-torn":{"name":"Алісія дан Торн","kind":"Персонаж","items":["Дочка Орвен дан Торн, сестра Каміла дан Торн.","Зовні менш публічна за сестру, але її вплив був відчутно сильнішим."]},"clan-valde":{"name":"Клан Вальде","kind":"Фракція","items":["Молодий клан Фростланд, заснований Вальдеваль де Вальде.","Зібраний із людей, що бачили його на полі бою й поважали.","Осів у збудованому ним місті Вальдеград на фростландському узбережжі."]},"valdegrad":{"name":"Вальдеград","kind":"Місце","items":["Невелике місто на узбережжі Фростланд, збудоване Вальдеваль де Вальде.","Осідок клану Вальде."]},"montelia":{"name":"Монтелія","kind":"Світ","items":["Континент на сході, що століттями лишався розділеним на десятки республік, князівств і міст-держав.","Війна й дипломатія тут зливаються в одну гру: союзи, шлюби і зради трапляються так само часто, як бенкети.","Найманці й золото завжди важили більше, ніж давні клятви."]},"ester":{"name":"Естер","kind":"Персонаж","items":["Молода пройдисвітка, рудоволоса дівчина з хитрим блиском у зелених очах.","Швидко мислить, знає всі чутки, вміє підлаштуватися під будь-яку компанію.","Гострий язик і невичерпна енергія часом дратують, але саме завдяки цим якостям вона завжди на крок попереду небезпеки.","Звикла діяти сама й не довіряє нікому до кінця, проте вміє прикидатися вірною союзницею, якщо це вигідно."]},"mierzotnyky":{"name":"Мерзотники з Кривого Провулку","kind":"Фракція","items":["Партія знає, що зробила з ними."]},"orven-letter":{"name":"Лист Орвена Торна до Алісії","kind":"Предмет","items":["Лист у них. Вони прочитали його повністю."]},"tomas":{"name":"Томас","kind":"Персонаж","items":["Партія його врятувала."]},"elvira":{"name":"Ельвіра","kind":"Персонаж","items":["Партія їх врятувала."]},"lion-pendant":{"name":"Кулон Лева","kind":"Предмет","items":["Партія знає, звідки кулон: вона сама його винесла."]},"shprotia":{"name":"Шпротя","kind":"Персонаж","items":["Вони його винесли."]},"colonel-turner":{"name":"Полковник Тернер","kind":"Персонаж","items":["Комендант Кардоса; відповідав за оборону міста під час кризи.","Дисциплінований і прагматичний офіцер, який ставив збереження сил вище за ризиковані маневри."]},"rosinant":{"name":"Корвет «Росінант»","kind":"Місце","items":["Вони на ньому відпливли."]},"bob-group":{"name":"Група Боба (робоча назва)","kind":"Фракція","items":["Бачили спалахи магії на мості й знають, що хтось тримав імперців."]},"briz":{"name":"Бріз","kind":"Персонаж","items":["Він бився на їхньому боці."]},"saltwake":{"name":"Солтвейк","kind":"Місце","items":["Невелике прибережне містечко на камʼянистому острові на південь від серця Гарони.","Формально територія королівства, але справжня влада належить Плеяди."]},"garona":{"name":"Гарона (столиця)","kind":"Місце","items":["У столиці Гарони без покровителя легко потрапити під чужі ігри."]},"milan":{"name":"Мілан","kind":"Персонаж","items":["Він дав їм наводку."]},"salvio":{"name":"Сальвіо","kind":"Персонаж","items":["Імʼя, місто і пароль."]},"king-lionel-iv":{"name":"Ліонель IV «Мудрий»","kind":"Персонаж","items":["Для більшості Ліонель IV — символ стабільності й величі королівства; його мудрість у їхніх очах не підлягає сумніву.","На ринках можна почути: «Не нам судити Мудрого — він знає краще».","У тавернах кажуть, що завдяки його обережності королівство тримає владу над усіма своїми провінціями.","Багато хто з простолюду вірить, що саме його кмітливість дозволяє мирно жити під захистом червоного лева, навіть якщо в провінціях іноді вибухають заворушення."]},"maliser":{"name":"Малісер «Мертва Голова»","kind":"Персонаж","items":["Людина, капітан із Солтвейк. Колишній пірат на прізвисько «Мертва Голова».","Друг Забрат, який і порадив його партії як капітана для «Росінант».","Має сина — Басу."]},"astur-slave-collar":{"name":"Нашийник раба Астурії","kind":"Предмет","items":["Що це нашийник раба Астурії, що він не знімається і що такі вдягають на людей з Королівства."]},"gold-black-woman":{"name":"Жінка в золото-чорному платті","kind":"Персонаж","items":["Сорсерка — людина з природженим хистом до магії, яких Хасан ад-Дін Рашид III збирає по всій Імперії й тримає при собі вірними особисто йому.","Придана до Командувач у золотій масці, командувача Девʼятий легіон.","Зʼявилася в Кардоса після захоплення міста.","Імʼя не відоме. Золото-чорне вбрання — кольори державного символу Імперії."]},"vesela-lozhka":{"name":"Таверна «Весела Ложка»","kind":"Місце","items":["Знають про сутичку з чуток і розслідування."]},"basu":{"name":"Басу","kind":"Персонаж","items":["Знають, що він живий, і шукають його."]},"kishari":{"name":"Кішарі","kind":"Персонаж","items":["Сусідка Малісер «Мертва Голова» в Солтвейк."]},"kess-favor":{"name":"Кесс Фавор","kind":"Персонаж","items":["Глава піратського обʼєднання Плеяди і фактичний керівник Солтвейк.","Контролював стражу, доки й більшість нелегальної торгівлі в місті.","Формально місто належить королівству, але всі ключові рішення ухвалювалися через нього.","Відомий як розсудливий і прагматичний лідер, що тримає владу через гроші, звʼязки та залякування."]},"favor-sorceress":{"name":"Чарівниця Фавора","kind":"Персонаж","items":["Бачили її й бачили, як вона зникла."]},"pleiades":{"name":"Плеяди","kind":"Фракція","items":["Піратське обʼєднання, що фактично керує Солтвейк.","Контролює стражу, доки й більшість нелегальної торгівлі містечка.","Формально місто належить короні, але всі ключові рішення ухвалювалися через главу Плеяд."]},"vitelia-letter-favor":{"name":"Лист Вітелії до Фавора","kind":"Предмет","items":["Мають лист на руках."]},"sira-hreis":{"name":"«Сіра Грейс»","kind":"Місце","items":["Торговий корабель, на який партія натрапила у відкритому морі — абсолютно порожній (сесія 4).","Виявився міміком: сам корабель був істотою."]},"lauris":{"name":"Лауріс","kind":"Місце","items":["Значення міста і те, що туди йшов корабель з імперськими солдатами."]},"batcho":{"name":"Батчо","kind":"Персонаж","items":["Один із двох головних на кораблі, що йшов із Лантаро до Лауріс (сесія 5).","Комунікабельний — саме з ним вдавалося говорити.","Його напарник — сварливий Халіль з Астурська Імперія."]},"khalil":{"name":"Халіль","kind":"Персонаж","items":["Другий із головних на кораблі, що йшов із Лантаро до Лауріс (сесія 5).","З Астурська Імперія. Сварливий; напарник комунікабельного Батчо."]},"zalizo-i-shtuky":{"name":"«Залізо і Штуки»","kind":"Місце","items":["Увесь асортимент і ціни — вони були в крамниці."]},"bremmel":{"name":"Бреммель","kind":"Персонаж","items":["Де крамниця, чим торгує, як він поводиться — і що він тепер пише їм у голову."]},"greyvik-axe":{"name":"Грейвікська сокира","kind":"Предмет","items":["Партія купила її сама."]},"pistol-silencer":{"name":"Глушник від FN Contingency","kind":"Предмет","items":["Він у них є."]},"pearl-of-light":{"name":"Перлинка Світла","kind":"Предмет","items":["Вона в них є."]},"wanted-poster":{"name":"Розшукова листівка «РОЗШУК!»","kind":"Предмет","items":["Бачили листівку й переполох у місті."]},"lady-angelina":{"name":"Леді Анджеліна Тревен","kind":"Персонаж","items":["Анджеліна Тревен. Власниця крамниць дорогого одягу в Арвен та інших містах королівства.","Її магазин в Арвені — ««Камзол і Вуаль»».","Ділова, прагматична, орієнтована на результат.","Репутацію вважає ключовим активом і не допускає ризиків, що можуть її зіпсувати."]},"na-terasi":{"name":"Ресторан «На терасі»","kind":"Місце","items":["Були тут."]},"bulochka":{"name":"Булочка","kind":"Персонаж","items":["Бачили її й чули, як вона говорить."]},"morella-portraits":{"name":"Три портрети Морелли","kind":"Предмет","items":["Що треба принести три картини жінки з темним волоссям і світлими очима."]},"morella-house":{"name":"Білий будинок Морелли","kind":"Місце","items":["Білий будинок без вікон та дверей біля парку в Нижньому Місті Арвен — тобто в затопленому центрі, він же Старе місто. Власність Морелла."]},"pekar-letter":{"name":"Лист Пекаря до отця Домініка","kind":"Предмет","items":["Що лист є, кому він і що його не можна відкривати."]},"father-dominic":{"name":"Отець Домінік","kind":"Персонаж","items":["Імʼя, храм і те, що йому треба передати лист."]},"three-geese":{"name":"Три гуски — Оля, Люба і Недіс","kind":"Предмет","items":["Три гуски для королівської фуа-гра — вантаж до королівського двору в Гарона.","Разом із вантажем ідуть документи, які дозволяють заїхати в столицю. Без них у Гарона просто так не пускають.","Доручення від Анджеліна Тревен (сесія 7). Фактично це їхній перепустка в місто."]},"elian":{"name":"Еліан","kind":"Персонаж","items":["Еліан. Імʼя стало відоме тільки в Гарона, коли партія здавала його тіло (сесія 9).","Чоловік із Розшукова листівка «РОЗШУК!»: звинувачувався в заколоті проти корони, нагорода 1000 золотих, живий чи мертвий.","На портреті: середній вік, довге хвилясте темне волосся, сива борода й вуса, прямий погляд.","Заколотник — див. Заколотники."]},"huge-warrior":{"name":"Гремезний воїн (охоронець-найманець)","kind":"Персонаж","items":["Що він був поруч із розшукуваним."]},"zhan":{"name":"Жан","kind":"Персонаж","items":["Молодий перевізник в Арвен.","Перевіз Група Боба на північ — шестеро в човні (сесія 7)."]},"red-and-black":{"name":"Ігровий дім «Червоне і Чорне»","kind":"Місце","items":["Ігровий дім на тракті між Арвен і Гарона. Власник — Адріан.","Адріан вважає, що імперці сюди ніколи не дійдуть, бо «в них немає кораблів»."]},"adrian":{"name":"Адріан","kind":"Персонаж","items":["Імʼя, заклад і його думку про війну."]},"bob":{"name":"Бартоломео Озіріс Блейдсонг «Боб»","kind":"Персонаж","items":["Бачили його в Арвені й чули від Жан, куди вони попливли."]},"leira":{"name":"Лейра","kind":"Персонаж","items":["Імʼя і що вона з групи Боба."]},"keira":{"name":"Кейра","kind":"Персонаж","items":["Імʼя і що вона сестра Лейри. Що вона друїдка — не підтверджено з їхнього боку."]},"revan":{"name":"Реван","kind":"Персонаж","items":["Бачили його в човні й чули, як він говорить."]},"viga":{"name":"Віга Хрипуча","kind":"Персонаж","items":["Бачили її в Арвені."]},"kamila-dan-torn":{"name":"Каміла дан Торн","kind":"Персонаж","items":["Дочка Орвен дан Торн, сестра Алісія дан Торн (мертва).","Улюблениця і дворян, і простого люду."]},"sadrik":{"name":"Офіцер Садрік","kind":"Персонаж","items":["Імʼя, посада й те, що він платить за голови."]},"haspar":{"name":"Гаспар","kind":"Персонаж","items":["Куди везти гусок і кому здавати."]},"wine-cargo":{"name":"250 пляшок вина","kind":"Предмет","items":["250 пляшок вина, куплені в Арвен на продаж у Гарона (сесія 8)."]},"temple-of-elemir":{"name":"Малий храм Елеміра","kind":"Місце","items":["Куди нести лист і кому."]},"edward-dan-siver":{"name":"Лорд Едвард дан Сівер","kind":"Персонаж","items":["Лорд у Грейвік, столиці Нортланд. Має єдину дочку — Олівія дан Сівер.","Носить хутряний плащ; стоїть на мурах над військом, що збирається."]},"olivia-dan-siver":{"name":"Олівія дан Сівер","kind":"Персонаж","items":["Єдина дочка лорда Едвард дан Сівер у Грейвік.","Світле волосся. Стояла з батьком на мурі над військом (сесія 6)."]},"oliver":{"name":"Олівер","kind":"Персонаж","items":["Командував бастіоном, що стеріг вхід у бухту Лауріс.","Служив там лише місяць, але встиг навести порядок: варта змінювалась за розкладом, двері трималися зачиненими, кожен солдат знав свій пост.","Пишався тим, що його бастіон — не один із тих розхлябаних гарнізонів, про які шепотіли в місті.","Мав дві нові гармати з Лантаро."]},"golden-mask-commander":{"name":"Командувач у золотій масці","kind":"Персонаж","items":["Бачили його роль у переказах із захопленої Кардоси."]},"kasim":{"name":"Касім","kind":"Персонаж","items":["Молодий, гарячий. Чорний плащ, що розвівався за спиною.","Вів сотні вершників Девʼятий легіон трактом на північ від Лауріс.","Мріяв, як його імʼя звучатиме при дворі."]},"ninth-legion":{"name":"Девʼятий легіон","kind":"Фракція","items":["Бачили наслідки в Кардоса, чули перекази; сцену на тракті — у сесія 9."]}};
+
+const stage = document.getElementById('stage');
+const pinEls = {};
+for (const [slug, c] of Object.entries(PINS)) {
+  const d = document.createElement('div');
+  d.className = 'pin';
+  d.style.left = c.x + '%';
+  d.style.top = c.y + '%';
+  const label = (DICT[slug] && DICT[slug].name) || slug;
+  d.innerHTML = '<b>' + label.replace(/[<>&]/g, '') + '</b><i></i>';
+  stage.appendChild(d);
+  pinEls[slug] = d;
+}
+
+let shown = [];
+function show(list) {
+  if (list.join() === shown.join()) return;
+  shown.forEach((s) => pinEls[s] && pinEls[s].classList.remove('on'));
+  shown = list.filter((s) => pinEls[s]);
+  shown.forEach((s) => pinEls[s].classList.add('on'));
+}
+function clear() { show([]); }
+
+function placesFrom(el) {
+  const v = el.getAttribute('data-p');
+  return v ? v.split(',').filter(Boolean) : [];
+}
+
+document.querySelectorAll('li.ev, ul.sub > li[data-p]').forEach((li) => {
+  const on = (e) => {
+    const p = placesFrom(li);
+    if (!p.length) return;
+    e.stopPropagation();
+    show(p);
+    li.closest('li.ev').classList.add('lit');
+  };
+  const off = () => { li.closest('li.ev').classList.remove('lit'); };
+  li.addEventListener('mouseenter', on);
+  li.addEventListener('mouseleave', off);
+  li.addEventListener('focus', on);
+  li.addEventListener('blur', off);
+});
+
+// ── попап ──
+const pop = document.getElementById('pop');
+function place(x, y) {
+  const r = pop.getBoundingClientRect();
+  const pad = 12;
+  let left = x + 16, top = y + 16;
+  if (left + r.width + pad > innerWidth) left = x - r.width - 16;
+  if (top + r.height + pad > innerHeight) top = Math.max(pad, y - r.height - 16);
+  pop.style.left = Math.max(pad, left) + 'px';
+  pop.style.top = Math.max(pad, top) + 'px';
+}
+function openPop(slug, x, y) {
+  const d = DICT[slug];
+  if (!d) return;
+  pop.innerHTML = (d.kind ? '<div class="pk">' + d.kind + '</div>' : '')
+    + '<div class="pn">' + d.name + '</div>'
+    + '<ul>' + d.items.map((i) => '<li>' + i + '</li>').join('') + '</ul>';
+  pop.classList.add('on');
+  pop.setAttribute('aria-hidden', 'false');
+  place(x, y);
+}
+function closePop() { pop.classList.remove('on'); pop.setAttribute('aria-hidden', 'true'); }
+
+document.querySelectorAll('button.ref').forEach((b) => {
+  const slug = b.dataset.s;
+  b.addEventListener('mouseenter', (e) => { openPop(slug, e.clientX, e.clientY); if (PINS[slug]) show([slug]); });
+  b.addEventListener('mousemove', (e) => { if (pop.classList.contains('on')) place(e.clientX, e.clientY); });
+  b.addEventListener('mouseleave', () => { closePop(); });
+  b.addEventListener('focus', () => {
+    const r = b.getBoundingClientRect();
+    openPop(slug, r.left, r.bottom - 16);
+    if (PINS[slug]) show([slug]);
+  });
+  b.addEventListener('blur', closePop);
+  b.addEventListener('click', (e) => { e.preventDefault(); const r = b.getBoundingClientRect(); openPop(slug, r.left, r.bottom - 16); if (PINS[slug]) show([slug]); });
+});
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePop(); clear(); } });
+</script>
 </body>
 </html>
