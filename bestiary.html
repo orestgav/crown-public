@@ -1,0 +1,1116 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Бестіарій Гарони</title>
+<style>
+  :root {
+    color-scheme: light;
+    --ground:#e6e2db; --paper:#faf8f5; --ink:#2e1c14; --muted:#5a4a40;
+    --accent:#5b0000; --edge:#cfc7bc; --alt:#efece7; --field:#ffffff;
+  }
+  :root:not([data-theme="light"]) { }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --ground:#15120f; --paper:#221e1a; --ink:#ece4da; --muted:#a2948a;
+      --accent:#d98b7c; --edge:#3b342d; --alt:#2b2621; --field:#1b1714;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --ground:#15120f; --paper:#221e1a; --ink:#ece4da; --muted:#a2948a;
+    --accent:#d98b7c; --edge:#3b342d; --alt:#2b2621; --field:#1b1714;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:16px; background:var(--ground); color:var(--ink);
+         font-family:'Segoe UI',system-ui,-apple-system,sans-serif; font-size:15px; line-height:1.5; }
+  header { position:sticky; top:env(safe-area-inset-top,0px); z-index:5; background:var(--ground); padding:8px 0 12px; }
+  h1 { margin:0 0 10px; font-size:1.25rem; color:var(--accent); text-transform:uppercase; letter-spacing:.05em; }
+  .controls { display:flex; gap:8px; flex-wrap:wrap; }
+  input, select { font:inherit; padding:8px 10px; border:1px solid var(--edge); border-radius:6px; background:var(--field); color:var(--ink); }
+  input:focus-visible, select:focus-visible { outline:2px solid var(--accent); outline-offset:1px; }
+  input { flex:1 1 220px; min-width:0; }
+  .count { font-size:.85rem; opacity:.7; align-self:center; }
+  main { display:grid; gap:18px; grid-template-columns:repeat(auto-fill,minmax(min(100%,560px),1fr)); align-items:start; }
+
+  .sb { background:var(--paper); border:1px solid var(--edge); border-radius:10px; padding:20px 22px; }
+  .sb h2 { margin:0; color:var(--accent); text-transform:uppercase; font-size:1.2rem; letter-spacing:.02em; }
+  .sub { margin:4px 0 14px; color:var(--muted); }
+  .top { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap; }
+  .vitals p { margin:5px 0; }
+  .init { margin:5px 0; white-space:nowrap; }
+
+  table.abil { width:100%; border-collapse:collapse; margin:14px 0; text-align:center; font-variant-numeric:tabular-nums; }
+  table.abil th, table.abil td { padding:5px 4px; border:0; font-weight:400; }
+  table.abil thead tr { background:var(--alt); }
+  table.abil thead th { font-weight:700; }
+  table.abil tbody th { font-weight:700; text-align:right; padding-right:14px; width:1%; white-space:nowrap; }
+  table.abil tr.save { background:var(--alt); }
+
+  .meta { margin:10px 0 0; }
+  hr { border:none; border-top:2px solid var(--accent); margin:16px 0 4px; }
+  .sb h3 { margin:16px 0 8px; color:var(--accent); text-transform:uppercase; font-size:1rem; letter-spacing:.03em; }
+  .sb h4 { margin:12px 0 4px; color:var(--accent); font-size:.9rem; }
+  .sb p { margin:9px 0; }
+  .sb h3 ~ p strong { font-style:italic; }
+  .sb h3 ~ p em { color:var(--muted); }
+  .link { color:var(--accent); border-bottom:1px dotted var(--accent); }
+  details.notes { margin-top:16px; background:var(--alt); border-radius:6px; padding:8px 12px; }
+  details.notes summary { cursor:pointer; font-weight:600; color:var(--accent); }
+  [hidden] { display:none !important; }
+  @media print {
+    body { background:#fff; color:#000; padding:0; } header { display:none; }
+    main { display:block; } .sb { break-inside:avoid; margin-bottom:14px; border-color:#999; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { animation:none !important; transition:none !important; } }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Бестіарій</h1>
+  <div class="controls">
+    <input id="q" type="search" placeholder="Пошук за назвою…" autocomplete="off">
+    <select id="cr">
+      <option value="">будь-який CR</option>
+      <option value="0-1">CR 0–1</option>
+      <option value="2-4">CR 2–4</option>
+      <option value="5-9">CR 5–9</option>
+      <option value="10-99">CR 10+</option>
+      <option value="none">без CR</option>
+    </select>
+    <span class="count" id="count"></span>
+  </div>
+</header>
+<main id="list">
+
+  <article class="sb" id="alisia-dan-torn-statblock" data-name="алісія дан торн" data-cr="5">
+    <h2>Алісія Дан Торн</h2>
+    <p class="sub"><em>Medium Undead (Vampire), Chaotic Evil</em></p>
+    <div class="top">
+      <div class="vitals">
+        <p><strong>AC</strong> 15 (швидкість і спритність)</p>
+        <p><strong>HP</strong> 110 (13d8 + 52)</p>
+        <p><strong>Speed</strong> 40 фт, Climb 40 фт</p>
+      </div>
+      <p class="init"><strong>Initiative</strong> +7</p>
+    </div>
+    <table class="abil">
+      <thead><tr><th></th><th>STR</th><th>DEX</th><th>CON</th><th>INT</th><th>WIS</th><th>CHA</th></tr></thead>
+      <tbody>
+        <tr><th>MOD</th><td>+3</td><td>+4</td><td>+4</td><td>+2</td><td>+2</td><td>+3</td></tr>
+        <tr class="save"><th>SAVE</th><td>—</td><td>+7</td><td>+7</td><td>—</td><td>+5</td><td>+4</td></tr>
+      </tbody>
+    </table>
+    <p class="meta"><strong>Gear</strong> —<br><strong>Skills</strong> Perception +5, Stealth +7, Athletics +5, Acrobatics +7<br><strong>Senses</strong> Darkvision 120 ft., Passive Perception 15<br><strong>Languages</strong> Common, Elvish, Infernal<br><strong>CR</strong> 5 (XP 1800; PB +3)</p>
+    <hr>
+    <h3>ACTIONS</h3>
+    <p><strong>Multiattack.</strong> Дві атаки Grave Strike і одна атака Bite.</p>
+    <p><strong>Grave Strike.</strong> <em>Melee Weapon Attack</em> +7 до атаки, досяжність 5 футів, одна ціль. Влучання: 7 (1d8 + 3) дробильних + 7 (2d6) некротичних пошкоджень. Ціль Large або менша стає grappled (escape DC STR 14).</p>
+    <p><strong>Bite.</strong> <em>Constitution Saving Throw: DC 14</em> досяжність 5 футів (лише якщо ціль grappled, incapacitated або willing). Влучання: 4 (1d4 + 2) колючих + 9 (2d8) некротичних пошкоджень; максимум HP жертви зменшується на суму некротичних пошкоджень, а Алісія відновлює половину цю кількість HP.</p>
+
+    <h3>TRAITS</h3>
+    <p><strong>Spider Climb.</strong> Може вільно лазити по мачтах, канатах і стінах без перевірок.</p>
+    <p><strong>Sunlight Sensitivity.</strong> У сонячному світлі має Disadvantage на атаки та перевірки здібностей і отримує 20 Radiant пошкоджень на початку свого ходу.</p>
+
+    <h3>LEGENDARY ACTIONS</h3>
+    <p><strong>Алісія може виконувати 3 легендарні дії за раунд.</strong></p>
+    <p><strong>1. Ривок.</strong> Рухається на повну свою швидкість.</p>
+    <p><strong>2. Grave Strike.</strong> Виконує одну атаку Grave Strike.</p>
+    <p><strong>3. Виклик кажанів.</strong> Викликає стайку кажанів (Bat Swarm) у радіусі 60 ft.</p>
+
+    <h3>ФАЗА 2</h3>
+    <p><strong>Blood Link.</strong> На початку кожного свого ходу, Алісія може поглинути життєву силу з обох елементалів, завдаючи кожному елементалю стільки ж шкоди.</p>
+    <p><strong>Vampiric Charm.</strong> Як дію, Алісія вибирає істоту в межах 60 ft, що бачить її. Істота має пройти WIS Save DC 14, або стає Charmed на 1 хвилину. Поки зачарована, істота бачить Алісію як богиню, не атакує її і може навіть захищати її від союзників. Перевірка повторюється наприкінці кожного ходу істоти.</p>
+    <p><strong>Crimson Bolt.</strong> <em>Ranged Spell Attack</em> +7 до атаки, досяжність 60 футів, одна ціль. Влучання: 5 (1d10) некротичних пошкоджень.</p>
+  </article>
+
+  <article class="sb" id="bombarda-mimik" data-name="бомбарда-мімік" data-cr="-1">
+    <h2>Бомбарда-Мімік</h2>
+    <p class="sub"><em>Середній монстр (перевертень), нейтральний</em></p>
+    <div class="top">
+      <div class="vitals">
+        <p><strong>AC</strong> 15 (природний доспех)</p>
+        <p><strong>HP</strong> 45 (8к8)</p>
+        <p><strong>Speed</strong> 15 фт.</p>
+      </div>
+      <p class="init"><strong>Initiative</strong> −1</p>
+    </div>
+    <table class="abil">
+      <thead><tr><th></th><th>STR</th><th>DEX</th><th>CON</th><th>INT</th><th>WIS</th><th>CHA</th></tr></thead>
+      <tbody>
+        <tr><th>MOD</th><td>+3</td><td>−1</td><td>+3</td><td>−3</td><td>+1</td><td>−2</td></tr>
+        
+      </tbody>
+    </table>
+    <p class="meta"><strong>Gear</strong> —<br><strong>Senses</strong> темний зір 60 фт., пасивне сприйняття 11<br><strong>CR</strong> — (PB +2)</p>
+    <hr>
+    <h3>ACTIONS</h3>
+    <p><strong>Псевдоядро (Recharge 5–6).</strong> Усі істоти в 20-футовому кубі в межах 120 футів повинні зробити рятунковий кидок Спритності (DC 14). При провалі істота отримує 2к6 дробильних та 2к6 кислотних ушкоджень; при успіху — половину цієї шкоди. <em>Опис:</em> бомбарда «вистрілює» грудкою кислоти й псевдометалу, що розлітається по палубі.</p>
+    <p><strong>Укус лафета.</strong> <em>Melee Weapon Attack</em> +6 до влучання, досяжність 5 футів, одна ціль. Влучання: 2к6 + 3 дробильних ушкоджень. Ціль автоматично стає схопленою.</p>
+
+    <h3>TRAITS</h3>
+    <p><strong>Обманчива зовнішність.</strong> Поки бомбарда-мімік не рухається й не атакує, вона абсолютно не відрізняється від звичайної корабельної бомбарди.</p>
+    <p><strong>Клейкий метал.</strong> Будь-яка істота, по якій бомбарда-мімік влучає атакою, автоматично стає схопленою (Escape DC 14).</p>
+  </article>
+
+  <article class="sb" id="varnen-hrabizhnyk" data-name="варнен, грабіжник" data-cr="0.25">
+    <h2>Варнен, Грабіжник</h2>
+    <p class="sub"><em>Medium humanoid (any race), chaotic neutral</em></p>
+    <div class="top">
+      <div class="vitals">
+        <p><strong>AC</strong> 14 (leather armor)</p>
+        <p><strong>HP</strong> 25 (5d8)</p>
+        <p><strong>Speed</strong> 30 фт</p>
+      </div>
+      <p class="init"><strong>Initiative</strong> +3</p>
+    </div>
+    <table class="abil">
+      <thead><tr><th></th><th>STR</th><th>DEX</th><th>CON</th><th>INT</th><th>WIS</th><th>CHA</th></tr></thead>
+      <tbody>
+        <tr><th>MOD</th><td>+0</td><td>+3</td><td>+0</td><td>+1</td><td>+0</td><td>+0</td></tr>
+        
+      </tbody>
+    </table>
+    <p class="meta"><strong>Gear</strong> 2 daggers, leather armor<br><strong>Senses</strong> passive Perception 10<br><strong>Languages</strong> Common, Thieves' Cant<br><strong>CR</strong> 1/4 (XP 50; PB +2)</p>
+    <hr>
+    <h3>ACTIONS</h3>
+    <p><strong>Кинджал (основна атака).</strong> <em>Melee or Ranged Weapon Attack</em> +5 до атаки, досяжність 5 футів або дальність 20/60 футів, одна ціль. Влучання: 1d4 + 3 колючих пошкоджень.</p>
+    <p><strong>Кинджал (бонусна атака).</strong> <em>Melee or Ranged Weapon Attack</em> +5 до атаки, досяжність 5 футів або дальність 20/60 футів, одна ціль. Влучання: 1d4 колючих пошкоджень (без модифікатора до шкоди).</p>
+
+    <h3>TRAITS</h3>
+    <p><strong>Sneak Attack (1/turn).</strong> Варнен завдає додаткові 1d6 пошкоджень цілі, якщо має перевагу в атаці або союзник ворога стоїть поруч і не є недієздатним. Для Sneak Attack потрібна атака finesse-зброєю.</p>
+    <p><strong>Двозбройний бій.</strong> Варнен володіє двома кинджалами та може використовувати бонусну дію, щоб завдати удару другим.</p>
+
+    <h3>BONUS ACTIONS</h3>
+    <p><strong>Cunning Action.</strong> Може використати Dash, Disengage або Hide як бонусну дію.</p>
+  </article>
+
+  <article class="sb" id="vidlunnia-korolevy-natovpu" data-name="відлуння королеви натовпу" data-cr="-1">
+    <h2>Відлуння Королеви Натовпу</h2>
+    <p class="sub"><em>Середній гуманоїд (аберація), хаотично-залежне</em></p>
+    <div class="top">
+      <div class="vitals">
+        <p><strong>AC</strong> 14 (ілюзорна велич)</p>
+        <p><strong>HP</strong> 30</p>
+        <p><strong>Speed</strong> 30 ft</p>
+      </div>
+      <p class="init"><strong>Initiative</strong> +2</p>
+    </div>
+    <table class="abil">
+      <thead><tr><th></th><th>STR</th><th>DEX</th><th>CON</th><th>INT</th><th>WIS</th><th>CHA</th></tr></thead>
+      <tbody>
+        <tr><th>MOD</th><td>+0</td><td>+2</td><td>+1</td><td>+1</td><td>+1</td><td>+4</td></tr>
+        <tr class="save"><th>SAVE</th><td>—</td><td>—</td><td>—</td><td>—</td><td>+3</td><td>+6</td></tr>
+      </tbody>
+    </table>
+    <p class="meta"><strong>Gear</strong> скіпетр Слави (ілюзорний)<br><strong>Senses</strong> пасивне сприйняття 11<br><strong>Languages</strong> розуміє мови натовпу<br><strong>CR</strong> — (PB +2)</p>
+    <hr>
+    <h3>ACTIONS</h3>
+    <p><strong>Скіпетр Слави.</strong> <em>Ranged Spell Attack</em> +6 до влучання, 60 ft, одна ціль. Влучання: 2d8 psychic damage.</p>
+    <p><strong>Велич Суверенки.</strong> Одна істота, яка чує Відлуння, робить ряткидок Мудрості (DC 14). При провалі: істота падає <em>Prone</em> і має disadvantage на атаки по Відлунню до початку свого наступного ходу.</p>
+    <p><strong>Проголошення Волі (Recharge 5–6).</strong> До 3 Підданих, які чують Відлуння, можуть негайно рухнутися на свою швидкість як реакцію і зробити одну атаку.</p>
+    <p><strong>Королівський Жест.</strong> Конус 30 футів. Цілі роблять ряткидок Сили (DC 14). При провалі їх відштовхує на 15 ft.</p>
+
+    <h3>REACTIONS</h3>
+    <p><strong>Захистіть Мене.</strong> Коли Відлуння отримує влучання, один Підданий у межах 5 ft може загинути замість неї.</p>
+  </article>
+
+  <article class="sb" id="vidlunnia-selestialnoi-korolevy" data-name="відлуння селестіальної королеви" data-cr="-1">
+    <h2>Відлуння Селестіальної Королеви</h2>
+    <p class="sub"><em>Medium небожитель (celestial), хаотично-залежна</em></p>
+    <div class="top">
+      <div class="vitals">
+        <p><strong>AC</strong> 14</p>
+        <p><strong>HP</strong> 32</p>
+        <p><strong>Speed</strong> 30 ft</p>
+      </div>
+      <p class="init"><strong>Initiative</strong> +2</p>
+    </div>
+    <table class="abil">
+      <thead><tr><th></th><th>STR</th><th>DEX</th><th>CON</th><th>INT</th><th>WIS</th><th>CHA</th></tr></thead>
+      <tbody>
+        <tr><th>MOD</th><td>+1</td><td>+2</td><td>+2</td><td>+2</td><td>+3</td><td>+4</td></tr>
+        <tr class="save"><th>SAVE</th><td>—</td><td>+4</td><td>—</td><td>—</td><td>+5</td><td>—</td></tr>
+      </tbody>
+    </table>
+    <p class="meta"><strong>Gear</strong> світлий клинок (ілюзорний)<br><strong>Senses</strong> пасивне сприйняття 13<br><strong>CR</strong> — (PB +2)</p>
+    <hr>
+    <h3>ACTIONS</h3>
+    <p><strong>Промінь Возвеличення.</strong> <em>Ranged Spell Attack</em> +6 до влучання, 60 ft, одна ціль. Влучання: 2d8 випромінювальних ушкоджень.</p>
+    <p><strong>Світлий Клинок.</strong> <em>Melee Weapon Attack</em> +6 до влучання, досяжність 5 ft, одна ціль. Влучання: 1d8 + 3 рубаючих ушкоджень плюс 1d6 випромінювальних ушкоджень.</p>
+    <p><strong>Священний Поріг.</strong> Замість атаки Відлуння обирає ділянку 20×10 ft у межах 60 ft, яку бачить. До початку її наступного ходу ця зона перетворюється на «тернисте світло»: місцевість у зоні стає складною (<em>difficult terrain</em>), а кожна істота, що рухається крізь неї, отримує 2d4 випромінювальних ушкоджень за кожну клітинку, яку проходить у цій зоні. Ушкодження не застосовуються, якщо істота не рухається.</p>
+  </article>
+
+  <article class="sb" id="hrap" data-name="грап" data-cr="0.25">
+    <h2>Грап</h2>
+    <p class="sub"><em>Medium humanoid (any race), chaotic neutral</em></p>
+    <div class="top">
+      <div class="vitals">
+        <p><strong>AC</strong> 14 (leather armor)</p>
+        <p><strong>HP</strong> 27 (6d8)</p>
+        <p><strong>Speed</strong> 30 фт</p>
+      </div>
+      <p class="init"><strong>Initiative</strong> +2</p>
+    </div>
+    <table class="abil">
+      <thead><tr><th></th><th>STR</th><th>DEX</th><th>CON</th><th>INT</th><th>WIS</th><th>CHA</th></tr></thead>
+      <tbody>
+        <tr><th>MOD</th><td>+4</td><td>+2</td><td>+0</td><td>−1</td><td>+0</td><td>−1</td></tr>
+        
+      </tbody>
+    </table>
+    <p class="meta"><strong>Gear</strong> Club, leather armor<br><strong>Senses</strong> passive Perception 10<br><strong>Languages</strong> Common<br><strong>CR</strong> 1/4 (XP 50; PB +2)</p>
+    <hr>
+    <h3>ACTIONS</h3>
+    <p><strong>Мультиатака.</strong> Грап б’є двічі.</p>
+    <p><strong>Дубина.</strong> <em>Melee Weapon Attack</em> +4 до атаки, досяжність 5 футів, одна ціль. Влучання: 1d8 + 4 дробильних пошкоджень.</p>
+
+    <h3>TRAITS</h3>
+    <p><strong>Несамовитий замах.</strong> Коли Грап робить атаку в ближньому бою, він може зробити це з перевагою, але до початку свого наступного ходу всі кидки атаки проти нього робляться з перевагою.</p>
+  </article>
+
+  <article class="sb" id="demon-lantsiuhiv" data-name="демон ланцюгів" data-cr="-1">
+    <h2>Демон Ланцюгів</h2>
+    <p class="sub"><em>Medium демон, хаотично-злий</em></p>
+    <div class="top">
+      <div class="vitals">
+        <p><strong>AC</strong> 13</p>
+        <p><strong>HP</strong> 28</p>
+        <p><strong>Speed</strong> 30 ft</p>
+      </div>
+      <p class="init"><strong>Initiative</strong> +2</p>
+    </div>
+    <table class="abil">
+      <thead><tr><th></th><th>STR</th><th>DEX</th><th>CON</th><th>INT</th><th>WIS</th><th>CHA</th></tr></thead>
+      <tbody>
+        <tr><th>MOD</th><td>+3</td><td>+2</td><td>+2</td><td>+0</td><td>+0</td><td>+0</td></tr>
+        
+      </tbody>
+    </table>
+    <p class="meta"><strong>Gear</strong> демонічні ланцюги<br><strong>Senses</strong> пасивне сприйняття 10<br><strong>Languages</strong> інфернальна<br><strong>CR</strong> — (PB +2)</p>
+    <hr>
+    <h3>ACTIONS</h3>
+    <p><strong>Ланцюг.</strong> <em>Melee Weapon Attack</em> +5 до влучання, досяжність 10 ft, одна ціль. Влучання: 1d8 + 3 рубаючих ушкоджень. Ціль робить рятунковий кидок Сили (DC 13). При провалі її притягує до демона, після чого демон може протягнути її ще на 10 ft у вибраному напрямку за собою.</p>
+  </article>
+
+  <article class="sb" id="ester-statblock" data-name="естер" data-cr="2">
+    <h2>Естер</h2>
+    <p class="sub"><em>Small Humanoid (halfling), Chaotic Neutral</em></p>
+    <div class="top">
+      <div class="vitals">
+        <p><strong>AC</strong> 15 (leather armor + Dex)</p>
+        <p><strong>HP</strong> 45 (6d8 + 18)</p>
+        <p><strong>Speed</strong> 35 фт</p>
+      </div>
+      <p class="init"><strong>Initiative</strong> +4</p>
+    </div>
+    <table class="abil">
+      <thead><tr><th></th><th>STR</th><th>DEX</th><th>CON</th><th>INT</th><th>WIS</th><th>CHA</th></tr></thead>
+      <tbody>
+        <tr><th>MOD</th><td>+0</td><td>+4</td><td>+3</td><td>+2</td><td>+1</td><td>+3</td></tr>
+        <tr class="save"><th>SAVE</th><td>+0</td><td>+6</td><td>+3</td><td>+2</td><td>+1</td><td>+5</td></tr>
+      </tbody>
+    </table>
+    <p class="meta"><strong>Gear</strong> concealed dagger, smoke vial, thief’s tools, city map, fancy coin<br><strong>Senses</strong> passive Perception 11<br><strong>Languages</strong> Common, Thieves’ Cant, Halfling<br><strong>CR</strong> 2 (XP 450; PB +2)</p>
+    <hr>
+    <h3>ACTIONS</h3>
+    <p><strong>Dagger.</strong> <em>Melee or Ranged Weapon Attack:</em> +6 to hit, reach 5 ft. or range 20/60 ft., one target. Hit: 6 (1d4 + 4) piercing damage. Sneak Attack 10 (3d6)</p>
+    <p><strong>Flash Bomb.</strong> <em>Equipment.</em> Естер кидає маленький флакон диму в радіусі 10 ft. Всі істоти в межах області повинні пройти DC 13 Constitution saving throw або отримати стан &quot;blinded&quot; до кінця свого наступного ходу.</p>
+
+    <h3>TRAITS</h3>
+    <p><strong>Lucky.</strong> При кидку 1 на d20 Естер може перекинути кубик (Halfling trait).</p>
+    <p><strong>Nimbleness.</strong> Може проходити крізь простір істоти, що є більша за неї.</p>
+
+    <h3>BONUS ACTIONS</h3>
+    <p><strong>Cunning Action.</strong> Може використати Dash, Disengage або Hide як бонусну дію.</p>
+    <p><strong>Misty Step (3/Day).</strong> Естер телепортується на 30 футів у незайняте місце, яке бачить.</p>
+
+    <h3>REACTIONS</h3>
+    <p><strong>Uncanny Dodge.</strong> Коли атакуюча істота, яку Естер бачить, влучає в неї, вона може зменшити шкоду вдвічі.</p>
+  </article>
+
+  <article class="sb" id="zabludshyi-pryhnichenyi" data-name="заблудший пригнічений" data-cr="-1">
+    <h2>Заблудший Пригнічений</h2>
+    <p class="sub"><em>Середній монстр, зазвичай нейтрально-злий</em></p>
+    <div class="top">
+      <div class="vitals">
+        <p><strong>AC</strong> 15 (природний доспех)</p>
+        <p><strong>HP</strong> 50</p>
+        <p><strong>Speed</strong> 30 футів</p>
+      </div>
+      <p class="init"><strong>Initiative</strong> +1</p>
+    </div>
+    <table class="abil">
+      <thead><tr><th></th><th>STR</th><th>DEX</th><th>CON</th><th>INT</th><th>WIS</th><th>CHA</th></tr></thead>
+      <tbody>
+        <tr><th>MOD</th><td>+3</td><td>+1</td><td>+3</td><td>−2</td><td>−2</td><td>−3</td></tr>
+        
+      </tbody>
+    </table>
+    <p class="meta"><strong>Gear</strong> —<br><strong>Senses</strong> темний зір 60 футів, пасивне Сприйняття 8<br><strong>Languages</strong> Загальна<br><strong>CR</strong> — (PB +3)</p>
+    <hr>
+    <h3>ACTIONS</h3>
+    <p><strong>Мультиатака.</strong> Заблудший здійснює дві атаки <em>Рукою з шипами</em>.</p>
+    <p><strong>Рука з шипами.</strong> <em>Рукопашна атака зброєю</em> +7 до влучання, досяжність 5 футів, одна ціль. Влучання: 9 (1к12 + 2) колючої шкоди.</p>
+    <p><strong>Обійми (Recharge 3–6).</strong> <em>Рукопашна атака зброєю</em> +7 до влучання, досяжність 5 футів, одна ціль. Влучання: 12 (2к10 + 2) колючої шкоди, і ціль стає схопленою (СЛ вислизання 14), якщо вона Середнього розміру або менша. Поки триває захоплення, ціль є <em>Restrained</em> і отримує 12 (4к6) психічної шкоди наприкінці кожного свого ходу. Пригнічений може тримати в обіймах лише одну ціль одночасно.</p>
+
+    <h3>TRAITS</h3>
+    <p><strong>Стискаючі обійми.</strong> Якщо пригнічений отримує шкоду, поки тримає істоту в захопленні, половина отриманої шкоди передається створінню, яке він утримує.</p>
+  </article>
+
+  <article class="sb" id="zmovnyk-povstantsiv" data-name="змовник повстанців" data-cr="4">
+    <h2>Змовник Повстанців</h2>
+    <p class="sub"><em>Середній гуманоїд (людина), будь-який світогляд</em></p>
+    <div class="top">
+      <div class="vitals">
+        <p><strong>AC</strong> 15 (шкіряна броня)</p>
+        <p><strong>HP</strong> 66 (12к8 + 12)</p>
+        <p><strong>Speed</strong> 30 фт.</p>
+      </div>
+      <p class="init"><strong>Initiative</strong> +3</p>
+    </div>
+    <table class="abil">
+      <thead><tr><th></th><th>STR</th><th>DEX</th><th>CON</th><th>INT</th><th>WIS</th><th>CHA</th></tr></thead>
+      <tbody>
+        <tr><th>MOD</th><td>+0</td><td>+3</td><td>+1</td><td>+1</td><td>+2</td><td>+2</td></tr>
+        <tr class="save"><th>SAVE</th><td>—</td><td>+6</td><td>—</td><td>—</td><td>+5</td><td>—</td></tr>
+      </tbody>
+    </table>
+    <p class="meta"><strong>Gear</strong> —<br><strong>Senses</strong> пасивне Сприйняття 11<br><strong>Languages</strong> загальна, ще одна на вибір<br><strong>CR</strong> 4 (XP 1100; PB +2)</p>
+    <hr>
+    <h3>ACTIONS</h3>
+    <p><strong>Мультиудар.</strong> Змовник робить дві атаки отруєним ножем (у ближньому або дальньому бою).</p>
+    <p><strong>Отруєний ніж.</strong> <em>Melee or Ranged Weapon Attack</em> +6 до влучання, досяжність 5 фт або дальність 20/60 фт, одна ціль. Влучання: 1к4 + 4 колотої шкоди. Ціль повинна зробити ряткидок Витривалості (DC 15), або отримує стан <em>Poisoned</em> до кінця свого наступного ходу.</p>
+    <p><strong>Димова бомба (Recharge 5–6).</strong> Змовник кидає алхімічну капсулу в точку в межах 30 фт. У радіусі 15 фт виникає зона густого диму (<em>heavy obscurement</em>) до початку наступного ходу змовника. Вітер середньої сили або сильніший негайно розвіює дим.</p>
+    <p><strong>Флакон з маслом (Grease) (1/бій).</strong> Змовник розбиває флакон у точці в межах 30 фт. На землі з’являється 10-футовий квадрат слизької поверхні на 1 хвилину. Коли істота вперше заходить у цю зону або починає там хід, вона повинна зробити ряткидок Спритності (DC 13), або падає <em>Prone</em>. Зона також вважається складною місцевістю (<em>difficult terrain</em>).</p>
+
+    <h3>TRAITS</h3>
+    <p><strong>Хитра дія.</strong> Змовник може бонусною дією виконати <em>Disengage</em>, <em>Dash</em> або <em>Hide</em>.</p>
+  </article>
+
+  <article class="sb" id="korabelnyi-mimik" data-name="корабельний мімік" data-cr="0.5">
+    <h2>Корабельний Мімік</h2>
+    <p class="sub"><em>Середній перевертень, нейтральний</em></p>
+    <div class="top">
+      <div class="vitals">
+        <p><strong>AC</strong> 12</p>
+        <p><strong>HP</strong> 34 (5к8 + 5)</p>
+        <p><strong>Speed</strong> 15 фт., лазіння 15 фт.</p>
+      </div>
+      <p class="init"><strong>Initiative</strong> +0</p>
+    </div>
+    <table class="abil">
+      <thead><tr><th></th><th>STR</th><th>DEX</th><th>CON</th><th>INT</th><th>WIS</th><th>CHA</th></tr></thead>
+      <tbody>
+        <tr><th>MOD</th><td>+2</td><td>+0</td><td>+1</td><td>−3</td><td>+1</td><td>−2</td></tr>
+        
+      </tbody>
+    </table>
+    <p class="meta"><strong>Gear</strong> —<br><strong>Senses</strong> Darkvision 60 ft. пасивне сприйняття 11<br><strong>CR</strong> 1/2 (XP 100; PB +2)</p>
+    <hr>
+    <h3>ACTIONS</h3>
+    <p><strong>Ложнонога.</strong> <em>Melee Weapon Attack</em> +4 до атаки, досяжність 5 футів, одна ціль. Влучання: 1к6 + 2 дробильних ушкоджень, і ціль підпадає під дію властивості <em>Клейкий</em>.</p>
+    <p><strong>Укус.</strong> <em>Melee Weapon Attack</em> +4 до атаки, досяжність 5 футів, одна ціль. Влучання: 1к6 + 2 колючих ушкоджень плюс 1к6 ушкоджень кислотою.</p>
+
+    <h3>TRAITS</h3>
+    <p><strong>Обманчива зовнішність.</strong> Корабельний мімік є повністю нерозпізнаваним, поки не рухається.</p>
+    <p><strong>Клейкий.</strong> Будь-яка істота, по якій мімік влучає атакою ближнього бою, стає схопленою (Escape DC 12).</p>
+    <p><strong>Борець.</strong> Корабельний мімік має перевагу на кидки атаки проти істот, яких він схопив.</p>
+  </article>
+
+  <article class="sb" id="krovianyi-elemental" data-name="кров’яний елементаль" data-cr="3">
+    <h2>Кров’яний Елементаль</h2>
+    <p class="sub"><em>Large Elemental, Chaotic Evil</em></p>
+    <div class="top">
+      <div class="vitals">
+        <p><strong>AC</strong> 13</p>
+        <p><strong>HP</strong> 60</p>
+        <p><strong>Speed</strong> 30 фт, Swim 30 фт</p>
+      </div>
+      <p class="init"><strong>Initiative</strong> +2</p>
+    </div>
+    <table class="abil">
+      <thead><tr><th></th><th>STR</th><th>DEX</th><th>CON</th><th>INT</th><th>WIS</th><th>CHA</th></tr></thead>
+      <tbody>
+        <tr><th>MOD</th><td>+3</td><td>+2</td><td>+3</td><td>−3</td><td>+0</td><td>−1</td></tr>
+        <tr class="save"><th>SAVE</th><td>+3</td><td>+2</td><td>+3</td><td>−3</td><td>+0</td><td>−1</td></tr>
+      </tbody>
+    </table>
+    <p class="meta"><strong>Gear</strong> —<br><strong>Senses</strong> Darkvision 60 ft., Passive Perception 10<br><strong>CR</strong> 3 (XP 700; PB +2)</p>
+    <hr>
+    <h3>ACTIONS</h3>
+    <p><strong>Slam.</strong> <em>Melee Weapon Attack</em> +5 до атаки, досяжність 5 футів, одна ціль. Влучання: 9 (2d6 + 2) дробильних пошкоджень. Якщо ціль Medium чи менша — вона падає <em>Prone</em> (STR save DC 13, щоб уникнути).</p>
+    <p><strong>Crimson Whelm (Recharge 5–6).</strong> Усі істоти в просторі елементаля роблять STR save DC 13. При провалі: 7 (2d6) некротичних пошкоджень і стан <em>Restrained</em> до кінця наступного ходу елементаля. Елементаль витягує кров з створіння і лікується на відповідне число. «Захоплені» істоти задихаються; на початку ходу елементаля отримують 2d6 некротичних пошкоджень. Елементаль може утримувати 1 Large або 2 Medium цілі. Істота в межах 5 ft може звільнити жертву (STR [Athletics] DC 13).</p>
+
+    <h3>TRAITS</h3>
+    <p><strong>Blood Form.</strong> Може проходити крізь отвори шириною 1 дюйм і ділити клітинку з іншою істотою. На початку ходу істоти, що перебуває в його просторі, вона робить рятунковий кидок Сили (DC 14), інакше отримує 2d6 некротичних пошкоджень і стає <em>Restrained</em> до кінця свого наступного ходу.</p>
+  </article>
+
+  <article class="sb" id="liia" data-name="лія" data-cr="2">
+    <h2>Лія</h2>
+    <p class="sub"><em>Medium humanoid (any race), neutral evil</em></p>
+    <div class="top">
+      <div class="vitals">
+        <p><strong>AC</strong> 13 (mage armor)</p>
+        <p><strong>HP</strong> 17 (6d8+6)</p>
+        <p><strong>Speed</strong> 30 фт</p>
+      </div>
+      <p class="init"><strong>Initiative</strong> +2</p>
+    </div>
+    <table class="abil">
+      <thead><tr><th></th><th>STR</th><th>DEX</th><th>CON</th><th>INT</th><th>WIS</th><th>CHA</th></tr></thead>
+      <tbody>
+        <tr><th>MOD</th><td>−1</td><td>+2</td><td>+1</td><td>+0</td><td>+0</td><td>+3</td></tr>
+        
+      </tbody>
+    </table>
+    <p class="meta"><strong>Gear</strong> Dagger<br><strong>Senses</strong> passive Perception 10<br><strong>Languages</strong> Common, Elvish<br><strong>CR</strong> 2 (XP 450; PB +2)</p>
+    <hr>
+    <h3>ACTIONS</h3>
+    <p><strong>Кинджал.</strong> <em>Melee Weapon Attack</em> +4 до атаки, досяжність 5 футів, одна ціль. Влучання: 1d4+2 колючих пошкоджень.</p>
+
+    <h3>TRAITS</h3>
+    <p><strong>Заклинатель.</strong> Лія — заклинач 4 рівня. Її характеристика заклинань — Інтелект (спаскидок проти заклинань DC 13, +5 до атак заклинаннями). Підготовані закляття: <em>Заговори (at will):</em> Chill Touch, Ray of Frost, Minor Illusion <em>1-й рівень (4 слоти):</em> Mage Armor, Disguise Self, Magic Missile, Sleep <em>2-й рівень (3 слоти):</em> Silence, Web, Hold Person</p>
+  </article>
+
+  <article class="sb" id="maliser-statblock" data-name="малісер" data-cr="2">
+    <h2>Малісер</h2>
+    <p class="sub"><em>Середній гуманоїд (будь-яка раса), будь-яке світобачення</em></p>
+    <div class="top">
+      <div class="vitals">
+        <p><strong>AC</strong> 14</p>
+        <p><strong>HP</strong> 35 (7к8 + 14)</p>
+        <p><strong>Speed</strong> 30 футів</p>
+      </div>
+      <p class="init"><strong>Initiative</strong> +2</p>
+    </div>
+    <table class="abil">
+      <thead><tr><th></th><th>STR</th><th>DEX</th><th>CON</th><th>INT</th><th>WIS</th><th>CHA</th></tr></thead>
+      <tbody>
+        <tr><th>MOD</th><td>+3</td><td>+2</td><td>+2</td><td>+0</td><td>+0</td><td>+2</td></tr>
+        
+      </tbody>
+    </table>
+    <p class="meta"><strong>Gear</strong> меч, обріз<br><strong>Senses</strong> пасивне сприйняття 10<br><strong>Languages</strong> будь-яка одна (зазвичай Загальна)<br><strong>CR</strong> 2 (XP 450; PB +2)</p>
+    <hr>
+    <h3>ACTIONS</h3>
+    <p><strong>Обріз.</strong> <em>Далекобійна атака зброєю</em> +5 до влучання, дистанція 20/60 футів, одна ціль. Влучання: 12 (4к4 + 4) колючих ушкоджень.</p>
+    <p><strong>Меч.</strong> <em>Рукопашна атака зброєю</em> +5 до влучання, досяжність 5 футів, одна ціль. Влучання: 8 (1к8 + 4) рубаючих ушкоджень.</p>
+
+    <h3>TRAITS</h3>
+    <p><strong>Морська качка.</strong> Капітан має перевагу на перевірки характеристик і рятункові кидки, щоб не впасти <em>prone</em>.</p>
+  </article>
+
+  <article class="sb" id="matsak-hlybokovodnoho-zhakhu" data-name="мацак глибоководного жаху" data-cr="-1">
+    <h2>Мацак Глибоководного Жаху</h2>
+    <p class="sub"><em>Середній монстр (частина істоти), нейтральний</em></p>
+    <div class="top">
+      <div class="vitals">
+        <p><strong>AC</strong> 13 (природний захист)</p>
+        <p><strong>HP</strong> 15 (3d8 + 3)</p>
+        <p><strong>Speed</strong> 0 фт.</p>
+      </div>
+      <p class="init"><strong>Initiative</strong> +1</p>
+    </div>
+    <table class="abil">
+      <thead><tr><th></th><th>STR</th><th>DEX</th><th>CON</th><th>INT</th><th>WIS</th><th>CHA</th></tr></thead>
+      <tbody>
+        <tr><th>MOD</th><td>+3</td><td>+1</td><td>+1</td><td>−5</td><td>+0</td><td>−5</td></tr>
+        
+      </tbody>
+    </table>
+    <p class="meta"><strong>Gear</strong> —<br><strong>Senses</strong> сліпий зір 30 фт. (відчуття вібрації у воді)<br><strong>CR</strong> — (PB +2)</p>
+    <hr>
+    <h3>ACTIONS</h3>
+    <p><strong>Удар мацаком.</strong> <em>Рукопашна атака зброєю</em> +5 до влучання, досяжність 15 фт., одна ціль. Влучання: 7 (1d8 + 3) дробильних ушкоджень. Ціль має пройти перевірку Сили або Спритності (DC 13), інакше стає схопленою (<em>grappled</em>). Поки ціль схоплена, мацак не може атакувати іншу ціль цією ж кінцівкою.</p>
+    <p><strong>Нищівні обійми.</strong> Мацак стискає схоплену ним істоту. Ціль автоматично отримує 10 (2d6 + 3) дробильних ушкоджень і має зробити рятунковий кидок згідно з правилом <em>Вибивання духу</em>.</p>
+
+    <h3>TRAITS</h3>
+    <p><strong>Амфібія.</strong> Мацак може дихати як під водою, так і на повітрі.</p>
+    <p><strong>Вибивання духу.</strong> Кожного разу, коли мацак завдає шкоди істоті, ця істота має зробити рятунковий кидок Витривалості (DC 13). У разі провалу істота миттєво видихає все повітря і починає задихатися. Кількість раундів до падіння в 0 HP дорівнює модифікатору Витривалості істоти (мінімум 1), якщо вона не може дихати.</p>
+    <p><strong>Частина цілого.</strong> Мацак є частиною більшої істоти за стіною. Якщо мацак отримує випромінювальні (radiant) або психічні ушкодження, він автоматично відпускає будь-яку схоплену ціль і втягується в стіну.</p>
+  </article>
+
+  <article class="sb" id="mozok-taverny-mimika" data-name="мозок таверни-міміка" data-cr="9">
+    <h2>Мозок Таверни-Міміка</h2>
+    <p class="sub"><em>Гігантське чудовисько (перевертень), світобачення змінюється</em></p>
+    <div class="top">
+      <div class="vitals">
+        <p><strong>AC</strong> 15 (природний доспех)</p>
+        <p><strong>HP</strong> 124 (8к20 + 40)</p>
+        <p><strong>Speed</strong> 40 футів</p>
+      </div>
+      <p class="init"><strong>Initiative</strong> −4</p>
+    </div>
+    <table class="abil">
+      <thead><tr><th></th><th>STR</th><th>DEX</th><th>CON</th><th>INT</th><th>WIS</th><th>CHA</th></tr></thead>
+      <tbody>
+        <tr><th>MOD</th><td>+5</td><td>−4</td><td>+5</td><td>+3</td><td>+0</td><td>−1</td></tr>
+        <tr class="save"><th>SAVE</th><td>+9</td><td>—</td><td>+9</td><td>—</td><td>+4</td><td>—</td></tr>
+      </tbody>
+    </table>
+    <p class="meta"><strong>Gear</strong> —<br><strong>Senses</strong> сліпе чуття 5 футів, темний зір 60 футів, пасивне сприйняття 10<br><strong>Languages</strong> Загальна та ще три мови<br><strong>CR</strong> 9 (XP 5000; PB +4)</p>
+    <hr>
+    <h3>ACTIONS</h3>
+    <p><strong>Псевдопод.</strong> <em>Рукопашна атака зброєю</em> +9 до влучання, досяжність 10 футів, одна ціль. Влучання: 16 (2к10 + 5) дробильних ушкоджень, і ціль стає схопленою (Escape DC 16).</p>
+
+    <h3>TRAITS</h3>
+    <p><strong>Центральний мозок.</strong> Мозок Таверни-Міміка є керуючим органом усієї будівлі. Поки він існує, таверна зберігає ознаки живого перевертня.</p>
+
+    <h3>SPELLS</h3>
+    <p><strong>Оскверняючий Ихор.</strong> <em>1 рівень, некромантія </em>Час накладання: 1 дія Дистанція: 60 футів Компоненти: С, М (трохи мокроти) Тривалість: миттєва Класи: Друїд, Чародій, Колдун, Волшебник</p>
+    <p>Мозок випльовує згусток оскверненої мокроти в одну істоту в межах дистанції. Здійсніть далекобійну атаку закляттям по цілі. При влучанні ціль отримує 2к8 некротичних ушкоджень. Доки ціль не використає свою дію, щоб витерти мокроту, вона на початку кожного свого ходу отримує 1к4 некротичних ушкоджень, а всі хіти, які вона відновлює, зменшуються вдвічі.</p>
+  </article>
+
+  <article class="sb" id="namalovanyi-piddanyi-minion" data-name="намальований підданий (міньйон)" data-cr="0.125">
+    <h2>Намальований Підданий (Міньйон)</h2>
+    <p class="sub"><em>Середній гуманоїд (аберація), світобачення залежить від творця</em></p>
+    <div class="top">
+      <div class="vitals">
+        <p><strong>AC</strong> 12</p>
+        <p><strong>HP</strong> 8</p>
+        <p><strong>Speed</strong> 30 фт</p>
+      </div>
+      <p class="init"><strong>Initiative</strong> +0</p>
+    </div>
+    <table class="abil">
+      <thead><tr><th></th><th>STR</th><th>DEX</th><th>CON</th><th>INT</th><th>WIS</th><th>CHA</th></tr></thead>
+      <tbody>
+        <tr><th>MOD</th><td>+1</td><td>+0</td><td>+0</td><td>−2</td><td>+0</td><td>−1</td></tr>
+        
+      </tbody>
+    </table>
+    <p class="meta"><strong>Gear</strong> —<br><strong>Senses</strong> пасивне сприйняття 10<br><strong>CR</strong> 1/8 (XP 25; PB +2)</p>
+    <hr>
+    <h3>ACTIONS</h3>
+    <p><strong>Кулак.</strong> <em>Рукопашна атака зброєю</em> +4 до влучання, досяжність 5 футів, одна ціль. Влучання: 4 1d6 + 1 дробильних ушкоджень.</p>
+
+    <h3>TRAITS</h3>
+    <p><strong>Грубий мазок.</strong> Після отримання будь-якої шкоди підданий залишає за собою слід фарби — клітинка, яку він займає, стає складною місцевістю (<em>difficult terrain</em>) до кінця бою або поки фарба не буде очищена.</p>
+    <p><strong>Липка фарба.</strong> Замість атаки підданий може кинутися на героя. Після цього він миттєво гине. Ціль повинна зробити рятунковий кидок Спритності (DC 12). У разі провалу її рух припиняється, і вона стає <em>Grappled</em> до кінця свого наступного ходу.</p>
+  </article>
+
+  <article class="sb" id="odynokyi-pryhnichenyi" data-name="одинокий пригнічений" data-cr="-1">
+    <h2>Одинокий Пригнічений</h2>
+    <p class="sub"><em>Середній монстр, зазвичай нейтрально-злий</em></p>
+    <div class="top">
+      <div class="vitals">
+        <p><strong>AC</strong> 16 (природний доспех)</p>
+        <p><strong>HP</strong> 60 (15к8 + 45)</p>
+        <p><strong>Speed</strong> 30 футів</p>
+      </div>
+      <p class="init"><strong>Initiative</strong> +1</p>
+    </div>
+    <table class="abil">
+      <thead><tr><th></th><th>STR</th><th>DEX</th><th>CON</th><th>INT</th><th>WIS</th><th>CHA</th></tr></thead>
+      <tbody>
+        <tr><th>MOD</th><td>+4</td><td>+1</td><td>+3</td><td>−2</td><td>+0</td><td>−2</td></tr>
+        
+      </tbody>
+    </table>
+    <p class="meta"><strong>Gear</strong> —<br><strong>Senses</strong> темний зір 60 футів, пасивне Сприйняття 10<br><strong>Languages</strong> Загальна<br><strong>CR</strong> — (PB +4)</p>
+    <hr>
+    <h3>ACTIONS</h3>
+    <p><strong>Мультиатака.</strong> Одинокий пригнічений робить одну атаку <em>Рукою-гарпуном</em> і використовує <em>Скорботні обійми</em>.</p>
+    <p><strong>Рука-гарпун.</strong> <em>Рукопашна атака зброєю</em> +7 до влучання, досяжність 60 футів, одна ціль. Влучання: 10 (2к8 + 2) колючої шкоди, і ціль стає схопленою (СЛ вислизання 14), якщо вона Великого розміру або менша. У пригніченого дві руки-гарпуни, кожною з яких він може утримувати одну істоту.</p>
+    <p><strong>Скорботні обійми.</strong> Кожна істота, схоплена пригніченим, повинна зробити рятунковий кидок Мудрості (DC 14). При провалі ціль отримує 12 (4к6) психічної шкоди, при успіху — половину. В обох випадках пригнічений притягує істоту на 30 футів до себе.</p>
+
+    <h3>TRAITS</h3>
+    <p><strong>Телепатична п’явка.</strong> На початку ходу пригніченого кожна істота в межах 5 футів від нього повинна зробити рятунковий кидок Мудрості (DC 15), або отримати 10 (3к6) психічної шкоди.</p>
+  </article>
+
+  <article class="sb" id="okhoronets-hralnoho-domu" data-name="охоронець грального дому" data-cr="6">
+    <h2>Охоронець Грального Дому</h2>
+    <p class="sub"><em>Середній гуманоїд (людина), будь-який світогляд</em></p>
+    <div class="top">
+      <div class="vitals">
+        <p><strong>AC</strong> 18 (напівпластинчаста броня, щит)</p>
+        <p><strong>HP</strong> 102 (12к10 + 36)</p>
+        <p><strong>Speed</strong> 30 фт.</p>
+      </div>
+      <p class="init"><strong>Initiative</strong> +2</p>
+    </div>
+    <table class="abil">
+      <thead><tr><th></th><th>STR</th><th>DEX</th><th>CON</th><th>INT</th><th>WIS</th><th>CHA</th></tr></thead>
+      <tbody>
+        <tr><th>MOD</th><td>+4</td><td>+2</td><td>+3</td><td>+0</td><td>+1</td><td>+0</td></tr>
+        <tr class="save"><th>SAVE</th><td>+7</td><td>—</td><td>+6</td><td>—</td><td>—</td><td>—</td></tr>
+      </tbody>
+    </table>
+    <p class="meta"><strong>Gear</strong> —<br><strong>Senses</strong> пасивне Сприйняття 14<br><strong>Languages</strong> загальна<br><strong>CR</strong> 6 (XP 2300; PB +3)</p>
+    <hr>
+    <h3>ACTIONS</h3>
+    <p><strong>Мультиудар.</strong> Охоронець робить дві атаки дворучним мечем.</p>
+    <p><strong>Дворучний меч.</strong> <em>Melee Weapon Attack</em> +8 до влучання, досяжність 5 фт, одна ціль. Влучання: 2к6 + 5 рублячої шкоди.</p>
+
+    <h3>TRAITS</h3>
+    <p><strong>Невблаганний.</strong> Коли охоронець вперше за бій падає до 0 хітів, він замість цього залишається на 1 хіті.</p>
+  </article>
+
+  <article class="sb" id="okhoronets-povstantsiv" data-name="охоронець повстанців" data-cr="5">
+    <h2>Охоронець Повстанців</h2>
+    <p class="sub"><em>Середній гуманоїд (людина), будь-який світогляд</em></p>
+    <div class="top">
+      <div class="vitals">
+        <p><strong>AC</strong> 18 (кольчуга)</p>
+        <p><strong>HP</strong> 92 (11к8 + 33)</p>
+        <p><strong>Speed</strong> 30 фт.</p>
+      </div>
+      <p class="init"><strong>Initiative</strong> +1</p>
+    </div>
+    <table class="abil">
+      <thead><tr><th></th><th>STR</th><th>DEX</th><th>CON</th><th>INT</th><th>WIS</th><th>CHA</th></tr></thead>
+      <tbody>
+        <tr><th>MOD</th><td>+4</td><td>+1</td><td>+3</td><td>+0</td><td>+0</td><td>+1</td></tr>
+        <tr class="save"><th>SAVE</th><td>+7</td><td>—</td><td>+6</td><td>—</td><td>—</td><td>—</td></tr>
+      </tbody>
+    </table>
+    <p class="meta"><strong>Gear</strong> бойовий молот, кольчуга<br><strong>Senses</strong> пасивне Сприйняття 13<br><strong>Languages</strong> загальна<br><strong>CR</strong> 5 (XP 1800; PB +3)</p>
+    <hr>
+    <h3>ACTIONS</h3>
+    <p><strong>Мультиудар.</strong> Охоронець робить дві атаки бойовим молотом. Перша атака супроводжується <em>Гуркітким клинком</em> (<em>Booming Blade</em>).</p>
+    <p><strong>Гуркіткий клинок (Booming Blade).</strong> <em>Атака ближнього бою</em> +7 до влучання, досяжність 10 фт, одна ціль. Влучання: 1к12 + 4 дробильної шкоди + 1к8 грозової шкоди. Якщо ціль добровільно рухається до початку наступного ходу охоронця, вона отримує 2к8 грозової шкоди.</p>
+    <p><strong>Бойовий молот.</strong> <em>Атака ближнього бою</em> +7 до влучання, досяжність 10 фт, одна ціль. Влучання: 1к12 + 4 дробильної шкоди.</p>
+
+    <h3>TRAITS</h3>
+    <p><strong>Крушер.</strong> Коли охоронець завдає дробильну шкоду, він може перемістити ціль на 5 фт у будь-який вільний напрямок.</p>
+    <p><strong>Стійка оборони.</strong> Охоронець має перевагу на перевірки та ряткидки проти штовхання (<em>shove</em>) або іншого примусового переміщення.</p>
+
+    <h3>REACTIONS</h3>
+    <p><strong>Сентінел.</strong> Коли істота в межах 5 фт від охоронця робить атаку по цілі, відмінній від нього, він може використати реакцію, щоб зробити атаку ближнього бою. Якщо атака влучає, швидкість цілі стає 0 до кінця її ходу.</p>
+    <p><strong>Охорона.</strong> Коли істота вперше входить у досяжність охоронця (10 фт), він може зробити атаку бойовим молотом. Якщо атака влучає, швидкість цілі стає 0 до кінця її ходу.</p>
+  </article>
+
+  <article class="sb" id="padshyi-anhel" data-name="падший ангел" data-cr="-1">
+    <h2>Падший Ангел</h2>
+    <p class="sub"><em>Large небожитель (celestial), нейтрально-злий</em></p>
+    <div class="top">
+      <div class="vitals">
+        <p><strong>AC</strong> 15</p>
+        <p><strong>HP</strong> 45</p>
+        <p><strong>Speed</strong> 30 ft, Fly 40 ft</p>
+      </div>
+      <p class="init"><strong>Initiative</strong> +2</p>
+    </div>
+    <table class="abil">
+      <thead><tr><th></th><th>STR</th><th>DEX</th><th>CON</th><th>INT</th><th>WIS</th><th>CHA</th></tr></thead>
+      <tbody>
+        <tr><th>MOD</th><td>+4</td><td>+2</td><td>+3</td><td>+0</td><td>+1</td><td>+2</td></tr>
+        <tr class="save"><th>SAVE</th><td>+7</td><td>—</td><td>+6</td><td>—</td><td>—</td><td>—</td></tr>
+      </tbody>
+    </table>
+    <p class="meta"><strong>Gear</strong> великий меч<br><strong>Senses</strong> пасивне сприйняття 11<br><strong>CR</strong> — (PB +2)</p>
+    <hr>
+    <h3>ACTIONS</h3>
+    <p><strong>Великий меч.</strong> <em>Melee Weapon Attack</em> +6 до влучання, досяжність 10 ft, одна ціль. Влучання: 1d6 + 4 рубаючих ушкоджень плюс 2d6 випромінювальних ушкоджень. Додатково: ціль робить рятунковий кидок Спритності (DC 13). При провалі її відкидує на 15 ft у напрямку, який обирає ангел, і вона падає <em>prone</em>. Якщо ціль врізається в стіну або скелю — отримує ще 1d4 дробильних ушкоджень.</p>
+    <p><strong>Кидок меча.</strong> <em>Ranged Weapon Attack</em> +6 до влучання, дистанція 20/60, одна ціль. Влучання: 1d6 + 4 рубаючих ушкоджень плюс 1d6 випромінювальних ушкоджень.</p>
+    <p><strong>Небесний пікіруючий удар (Recharge 5–6).</strong> Якщо ангел цього ходу пролетів щонайменше 20 ft по прямій до цілі й різко «падає» на неї, усі істоти в радіусі 5 ft від точки удару роблять рятунковий кидок Спритності (DC 13). При провалі істоту відкидує на 15 ft і збиває з ніг (<em>prone</em>).</p>
+  </article>
+
+  <article class="sb" id="pekelna-honcha" data-name="пекельна гонча" data-cr="-1">
+    <h2>Пекельна Гонча</h2>
+    <p class="sub"><em>Medium демон, нейтрально-злий</em></p>
+    <div class="top">
+      <div class="vitals">
+        <p><strong>AC</strong> 13</p>
+        <p><strong>HP</strong> 30</p>
+        <p><strong>Speed</strong> 40 ft</p>
+      </div>
+      <p class="init"><strong>Initiative</strong> +2</p>
+    </div>
+    <table class="abil">
+      <thead><tr><th></th><th>STR</th><th>DEX</th><th>CON</th><th>INT</th><th>WIS</th><th>CHA</th></tr></thead>
+      <tbody>
+        <tr><th>MOD</th><td>+3</td><td>+2</td><td>+2</td><td>−2</td><td>+1</td><td>−1</td></tr>
+        
+      </tbody>
+    </table>
+    <p class="meta"><strong>Gear</strong> —<br><strong>Senses</strong> пасивне сприйняття 11<br><strong>Languages</strong> розуміє мову свого пекельного господаря<br><strong>CR</strong> — (PB +2)</p>
+    <hr>
+    <h3>ACTIONS</h3>
+    <p><strong>Укус.</strong> <em>Melee Weapon Attack</em> +5 до влучання, досяжність 5 ft, одна ціль. Влучання: 1d8 + 3 колючих ушкоджень плюс 1d6 вогняних ушкоджень.</p>
+    <p><strong>Вогняний Подих (Recharge 5–6).</strong> Конус 15 ft. Істоти в зоні роблять рятунковий кидок Спритності (DC 13). При провалі отримують 3d6 вогняних ушкоджень, при успіху — половину.</p>
+
+    <h3>TRAITS</h3>
+    <p><strong>Тактика зграї.</strong> Гонча має advantage на кидки атаки по істоті, якщо хоча б один союзник гончої перебуває в межах 5 ft від цілі і цей союзник не є недієздатним.</p>
+  </article>
+
+  <article class="sb" id="pekelna-dueliantka" data-name="пекельна дуелянтка" data-cr="3">
+    <h2>Пекельна Дуелянтка</h2>
+    <p class="sub"><em>Medium демон, хаотично-зла</em></p>
+    <div class="top">
+      <div class="vitals">
+        <p><strong>AC</strong> 15</p>
+        <p><strong>HP</strong> 45</p>
+        <p><strong>Speed</strong> 35 ft</p>
+      </div>
+      <p class="init"><strong>Initiative</strong> +3</p>
+    </div>
+    <table class="abil">
+      <thead><tr><th></th><th>STR</th><th>DEX</th><th>CON</th><th>INT</th><th>WIS</th><th>CHA</th></tr></thead>
+      <tbody>
+        <tr><th>MOD</th><td>+3</td><td>+3</td><td>+2</td><td>+1</td><td>+1</td><td>+3</td></tr>
+        <tr class="save"><th>SAVE</th><td>+5</td><td>+5</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+      </tbody>
+    </table>
+    <p class="meta"><strong>Gear</strong> двосічний пекельний меч<br><strong>Senses</strong> пасивне сприйняття 11<br><strong>Languages</strong> інфернальна<br><strong>CR</strong> 3 (XP 700; PB +2)</p>
+    <hr>
+    <h3>ACTIONS</h3>
+    <p><strong>Двосічний Пекельний Меч.</strong> <em>Melee Weapon Attack</em> +7 до влучання, досяжність 5 ft, одна ціль. Влучання: 1d8 + 3 рубаючих ушкоджень плюс 1d6 вогняних ушкоджень.</p>
+    <p><strong>Друге лезо (Bonus Action).</strong> Демониця може зробити другу атаку іншим лезом: <em>Melee Weapon Attack</em> +7 до влучання. Влучання: 1d8 + 3 рубаючих ушкоджень.</p>
+    <p><strong>Карусель Клинків (Recharge 5–6).</strong> Усі істоти в межах 5 ft роблять рятунковий кидок Спритності (DC 14). При провалі отримують 2d6 рубаючих плюс 2d6 вогняних ушкоджень, при успіху — половину.</p>
+
+    <h3>REACTIONS</h3>
+    <p><strong>Пекельний Контрудар (1/раунд).</strong> Коли істота в межах 5 ft промахується по демониці атакою, вона може зробити одну атаку мечем у відповідь.</p>
+  </article>
+
+  <article class="sb" id="pikhotynets-imperii-kliryk" data-name="піхотинець імперії, клірик" data-cr="3">
+    <h2>Піхотинець Імперії, Клірик</h2>
+    <p class="sub"><em>Середній гуманоїд (будь-яка раса), будь-яке світобачення</em></p>
+    <div class="top">
+      <div class="vitals">
+        <p><strong>AC</strong> 15 (кольчужна броня, щит)</p>
+        <p><strong>HP</strong> 35 (6к8 + 18)</p>
+        <p><strong>Speed</strong> 30 футів</p>
+      </div>
+      <p class="init"><strong>Initiative</strong> +0</p>
+    </div>
+    <table class="abil">
+      <thead><tr><th></th><th>STR</th><th>DEX</th><th>CON</th><th>INT</th><th>WIS</th><th>CHA</th></tr></thead>
+      <tbody>
+        <tr><th>MOD</th><td>+1</td><td>+0</td><td>+3</td><td>+0</td><td>+3</td><td>+1</td></tr>
+        
+      </tbody>
+    </table>
+    <p class="meta"><strong>Gear</strong> булава, щит, кольчужна броня<br><strong>Senses</strong> пасивна уважність 16<br><strong>Languages</strong> будь-яка одна плюс ще одна<br><strong>CR</strong> 3 (XP 700; PB +2)</p>
+    <hr>
+    <h3>ACTIONS</h3>
+    <p><strong>Булава.</strong> <em>Рукопашна атака зброєю</em> +4 до влучання, досяжність 5 футів, одна ціль. Влучання: 4 (1к6 + 1) дробильних ушкоджень.</p>
+
+    <h3>TRAITS</h3>
+    <p><strong>Військовий заклинач.</strong> Клірик має перевагу на рятункові кидки концентрації для підтримки заклять і може виконувати соматичні компоненти заклять, навіть тримаючи зброю та щит.</p>
+
+    <h3>REACTIONS</h3>
+    <p><strong>Надихаючий наказ.</strong> Коли союзник Імперії в межах 30 футів провалює кидок атаки або рятунковий кидок, клірик може використати реакцію, щоб дозволити цьому союзнику негайно перекинути кидок і обрати кращий результат.</p>
+
+    <h3>SPELLS</h3>
+    <p><strong>Закляття.</strong> Клірик — заклинач 5 рівня (МДР — ключова характеристика; КС заклять 14; +6 до влучання закляттями).</p>
+    <p><strong>Канітри (за бажанням).</strong> sacred flame, guidance, thaumaturgy.</p>
+    <p><strong>1 рівень (4/день).</strong> bless, cure wounds, healing word, shield of faith, hellish rebuke</p>
+    <p><strong>2 рівень (3/день).</strong> aid, lesser restoration, prayer of healing.</p>
+    <p><strong>3 рівень (2/день).</strong> spirit guardians, mass healing word.</p>
+  </article>
+
+  <article class="sb" id="pikhotynets-imperii-luchnyk" data-name="піхотинець імперії, лучник" data-cr="0.125">
+    <h2>Піхотинець Імперії, Лучник</h2>
+    <p class="sub"><em>Середній гуманоїд (будь-яка раса), будь-яке світобачення</em></p>
+    <div class="top">
+      <div class="vitals">
+        <p><strong>AC</strong> 12 (кольчужна рубаха)</p>
+        <p><strong>HP</strong> 15 (2к8 + 2)</p>
+        <p><strong>Speed</strong> 30 футів</p>
+      </div>
+      <p class="init"><strong>Initiative</strong> +1</p>
+    </div>
+    <table class="abil">
+      <thead><tr><th></th><th>STR</th><th>DEX</th><th>CON</th><th>INT</th><th>WIS</th><th>CHA</th></tr></thead>
+      <tbody>
+        <tr><th>MOD</th><td>+1</td><td>+1</td><td>+1</td><td>+0</td><td>+0</td><td>+0</td></tr>
+        
+      </tbody>
+    </table>
+    <p class="meta"><strong>Gear</strong> короткий лук, кольчужна рубаха<br><strong>Senses</strong> пасивна уважність 12<br><strong>Languages</strong> будь-яка одна<br><strong>CR</strong> 1/8 (XP 25; PB +2)</p>
+    <hr>
+    <h3>ACTIONS</h3>
+    <p><strong>Короткий лук.</strong> <em>Далекобійна атака зброєю</em> +4 до влучання, дистанція 80/320 футів, одна ціль. Влучання: 4 (1к6 + 1) колючих ушкоджень.</p>
+  </article>
+
+  <article class="sb" id="pikhotynets-imperii-pikener" data-name="піхотинець імперії, пікенер" data-cr="0.125">
+    <h2>Піхотинець Імперії, Пікенер</h2>
+    <p class="sub"><em>Середній гуманоїд (будь-яка раса), будь-яке світобачення</em></p>
+    <div class="top">
+      <div class="vitals">
+        <p><strong>AC</strong> 12 (кольчужна рубаха)</p>
+        <p><strong>HP</strong> 15 (2к8 + 2)</p>
+        <p><strong>Speed</strong> 30 футів</p>
+      </div>
+      <p class="init"><strong>Initiative</strong> +1</p>
+    </div>
+    <table class="abil">
+      <thead><tr><th></th><th>STR</th><th>DEX</th><th>CON</th><th>INT</th><th>WIS</th><th>CHA</th></tr></thead>
+      <tbody>
+        <tr><th>MOD</th><td>+1</td><td>+1</td><td>+1</td><td>+0</td><td>+0</td><td>+0</td></tr>
+        
+      </tbody>
+    </table>
+    <p class="meta"><strong>Gear</strong> піка, кольчужна рубаха<br><strong>Senses</strong> пасивна уважність 12<br><strong>Languages</strong> будь-яка одна<br><strong>CR</strong> 1/8 (XP 25; PB +2)</p>
+    <hr>
+    <h3>ACTIONS</h3>
+    <p><strong>Піка.</strong> <em>Рукопашна атака зброєю</em> +4 до влучання, досяжність 10 футів, одна ціль. Влучання: 6 (1к10 + 1) колючих ушкоджень.</p>
+
+    <h3>TRAITS</h3>
+    <p><strong>Фланговий тиск.</strong> Якщо Піхотинець і союзник Імперії атакують ціль з двох протилежних боків, атаки пікенера по цій цілі виконуються з перевагою.</p>
+  </article>
+
+  <article class="sb" id="pikhotynets-imperii-rozvidnyk" data-name="піхотинець імперії, розвідник" data-cr="0.25">
+    <h2>Піхотинець Імперії, Розвідник</h2>
+    <p class="sub"><em>Середній гуманоїд (будь-яка раса), будь-яке світобачення</em></p>
+    <div class="top">
+      <div class="vitals">
+        <p><strong>AC</strong> 14 (шкіряна броня)</p>
+        <p><strong>HP</strong> 15 (3к8 + 3)</p>
+        <p><strong>Speed</strong> 30 футів</p>
+      </div>
+      <p class="init"><strong>Initiative</strong> +3</p>
+    </div>
+    <table class="abil">
+      <thead><tr><th></th><th>STR</th><th>DEX</th><th>CON</th><th>INT</th><th>WIS</th><th>CHA</th></tr></thead>
+      <tbody>
+        <tr><th>MOD</th><td>+0</td><td>+3</td><td>+1</td><td>+0</td><td>+1</td><td>+0</td></tr>
+        
+      </tbody>
+    </table>
+    <p class="meta"><strong>Gear</strong> короткий меч, шкіряна броня<br><strong>Senses</strong> пасивна уважність 13<br><strong>Languages</strong> будь-яка одна<br><strong>CR</strong> 1/4 (XP 50; PB +2)</p>
+    <hr>
+    <h3>ACTIONS</h3>
+    <p><strong>Короткий меч.</strong> <em>Рукопашна атака зброєю</em> +6 до влучання, досяжність 5 футів, одна ціль. Влучання: 6 (1к6 + 3) колючих ушкоджень.</p>
+    <p><strong>Підступна атака (1/хід).</strong> Розвідник завдає додаткові 7 (2к6) ушкоджень цілі, по якій має перевагу, або якщо поруч із ціллю (у межах 5 футів) перебуває союзник розвідника і він не є недієздатним.</p>
+
+    <h3>BONUS ACTIONS</h3>
+    <p><strong>Хитрий маневр.</strong> Розвідник може виконати Відхід або Ривок (Dash) як бонусну дію.</p>
+  </article>
+
+  <article class="sb" id="pikhotynets-imperii-shchytovyk" data-name="піхотинець імперії, щитовик" data-cr="0.125">
+    <h2>Піхотинець Імперії, Щитовик</h2>
+    <p class="sub"><em>Середній гуманоїд (будь-яка раса), будь-яке світобачення</em></p>
+    <div class="top">
+      <div class="vitals">
+        <p><strong>AC</strong> 14 (кольчужна рубаха, щит)</p>
+        <p><strong>HP</strong> 15 (2к8 + 2)</p>
+        <p><strong>Speed</strong> 30 футів</p>
+      </div>
+      <p class="init"><strong>Initiative</strong> +1</p>
+    </div>
+    <table class="abil">
+      <thead><tr><th></th><th>STR</th><th>DEX</th><th>CON</th><th>INT</th><th>WIS</th><th>CHA</th></tr></thead>
+      <tbody>
+        <tr><th>MOD</th><td>+1</td><td>+1</td><td>+1</td><td>+0</td><td>+0</td><td>+0</td></tr>
+        
+      </tbody>
+    </table>
+    <p class="meta"><strong>Gear</strong> меч, щит, кольчужна рубаха<br><strong>Senses</strong> пасивна уважність 12<br><strong>Languages</strong> будь-яка одна<br><strong>CR</strong> 1/8 (XP 25; PB +2)</p>
+    <hr>
+    <h3>ACTIONS</h3>
+    <p><strong>Меч.</strong> <em>Рукопашна атака зброєю</em> +4 до влучання, досяжність 5 футів, одна ціль. Влучання: 5 (1к8 + 1) рубаючих ушкоджень.</p>
+
+    <h3>TRAITS</h3>
+    <p><strong>Фланговий тиск.</strong> Якщо Піхотинець і союзник Імперії знаходяться по різні боки від однієї цілі, атаки щитовика по цій цілі виконуються з перевагою.</p>
+  </article>
+
+  <article class="sb" id="serafym" data-name="серафим" data-cr="1">
+    <h2>Серафим</h2>
+    <p class="sub"><em>Medium небожитель (celestial), нейтрально-залежний</em></p>
+    <div class="top">
+      <div class="vitals">
+        <p><strong>AC</strong> 13</p>
+        <p><strong>HP</strong> 20</p>
+        <p><strong>Speed</strong> 0 ft, Fly 30 ft (hover)</p>
+      </div>
+      <p class="init"><strong>Initiative</strong> +2</p>
+    </div>
+    <table class="abil">
+      <thead><tr><th></th><th>STR</th><th>DEX</th><th>CON</th><th>INT</th><th>WIS</th><th>CHA</th></tr></thead>
+      <tbody>
+        <tr><th>MOD</th><td>−2</td><td>+2</td><td>+1</td><td>+0</td><td>+3</td><td>+2</td></tr>
+        
+      </tbody>
+    </table>
+    <p class="meta"><strong>Gear</strong> —<br><strong>Senses</strong> пасивне сприйняття 13<br><strong>CR</strong> 1 (XP 200; PB +2)</p>
+    <hr>
+    <h3>ACTIONS</h3>
+    <p><strong>Промінь Осуду.</strong> Одна істота в межах 60 ft, яку серафим бачить, робить рятунковий кидок Мудрості (DC 13). При провалі ціль стає <em>Blinded</em> і починає світитися яскравим світлом (10 ft bright / 10 ft dim) до початку наступного ходу серафима. Атаки по цій цілі мають advantage.</p>
+
+    <h3>REACTIONS</h3>
+    <p><strong>Сліпучий Спалах (1/раунд).</strong> Коли істота в межах 60 ft, яку серафим бачить, здійснює атаку, серафим випромінює різкий спалах світла. Атакуючий робить рятунковий кидок Витривалості (DC 13). При провалі атака здійснюється з disadvantage.</p>
+  </article>
+
+  <article class="sb" id="strazhnyk-torn-i-dreksel" data-name="стражник торн і дрексель" data-cr="0.125">
+    <h2>Стражник Торн і Дрексель</h2>
+    <p class="sub"><em>Medium humanoid (any race), lawful neutral</em></p>
+    <div class="top">
+      <div class="vitals">
+        <p><strong>AC</strong> 15 (chain shirt, shield)</p>
+        <p><strong>HP</strong> 12 (2d8 + 2)</p>
+        <p><strong>Speed</strong> 30 фт</p>
+      </div>
+      <p class="init"><strong>Initiative</strong> +1</p>
+    </div>
+    <table class="abil">
+      <thead><tr><th></th><th>STR</th><th>DEX</th><th>CON</th><th>INT</th><th>WIS</th><th>CHA</th></tr></thead>
+      <tbody>
+        <tr><th>MOD</th><td>+1</td><td>+1</td><td>+1</td><td>+0</td><td>+0</td><td>+0</td></tr>
+        
+      </tbody>
+    </table>
+    <p class="meta"><strong>Gear</strong> Halberd, light crossbow, chain shirt, shield<br><strong>Senses</strong> passive Perception 12<br><strong>Languages</strong> Common<br><strong>CR</strong> 1/8 (XP 25; PB +2)</p>
+    <hr>
+    <h3>ACTIONS</h3>
+    <p><strong>Алебарда.</strong> <em>Melee Weapon Attack</em> +3 до атаки, досяжність 10 футів, одна ціль. Влучання: 1d10 + 2 рубаних пошкоджень.</p>
+    <p><strong>Легкий арбалет.</strong> <em>Ranged Weapon Attack</em> +3 до атаки, дальність 80/320 футів, одна ціль. Влучання: 1d8 + 2 проникаючих пошкоджень.</p>
+
+    <h3>TRAITS</h3>
+    <p><strong>Weapon Mastery: Cleave (Алебарда).</strong> Коли стражник влучає алебардою по цілі, він може як безкоштовну дію завдати 1d10 проникаючих пошкоджень іншій цілі в межах 5 футів від першої, якщо вона теж в зоні досяжності.</p>
+  </article>
+
+  <article class="sb" id="displacer-beast" data-name="displacer beast" data-cr="6">
+    <h2>Displacer Beast</h2>
+    <p class="sub"><em>Large чудовисько, lawful evil</em></p>
+    <div class="top">
+      <div class="vitals">
+        <p><strong>AC</strong> 14 (natural armor)</p>
+        <p><strong>HP</strong> 80 (13d10 + 39)</p>
+        <p><strong>Speed</strong> 50 фт, climb 40 фт</p>
+      </div>
+      <p class="init"><strong>Initiative</strong> +3</p>
+    </div>
+    <table class="abil">
+      <thead><tr><th></th><th>STR</th><th>DEX</th><th>CON</th><th>INT</th><th>WIS</th><th>CHA</th></tr></thead>
+      <tbody>
+        <tr><th>MOD</th><td>+4</td><td>+3</td><td>+3</td><td>−2</td><td>+2</td><td>−1</td></tr>
+        
+      </tbody>
+    </table>
+    <p class="meta"><strong>Gear</strong> —<br><strong>Senses</strong> darkvision 60 ft., passive Perception 15<br><strong>CR</strong> 6 (XP 2300; PB +3)</p>
+    <hr>
+    <h3>ACTIONS</h3>
+    <p><strong>Multiattack.</strong> Робить 3 атаки (дві може бути щупальцями)</p>
+    <p><strong>Claw.</strong> <em>Melee Weapon Attack</em> +7 до влучання, 5 ft. Влучання: 1d8 + 4 piercing.</p>
+    <p><strong>Tentacles.</strong> <em>Melee Weapon Attack</em> +7 до влучання, 10 ft. Влучання: 2d6 + 4 bludgeoning + 2d6 piercing, і ціль grappled (DC 14).</p>
+
+    <h3>TRAITS</h3>
+    <p><strong>Avoidance.</strong> Якщо істота піддається ефекту, що дозволяє зробити ряткидок, щоб отримати лише половину шкоди, вона не отримує шкоди при успіху і половину при провалі.</p>
+    <p><strong>Displacement.</strong> Істота створює ілюзію, що зміщує її положення, даючи disadvantage на атаки проти неї. Після отримання влучання ефект зникає до кінця її наступного ходу.</p>
+    <p><strong>Keen Smell.</strong> Перевага на перевірки Perception, що залежать від нюху.</p>
+    <p><strong>Pack Tactics.</strong> Перевага на атаки, якщо союзник у межах 5 ft від цілі.</p>
+    <p><strong>Pounce.</strong> Якщо істота рухається ≥20 ft і атакує, ціль робить STR save DC 15 або падає <em>prone</em>. Якщо вже prone — бонусна атака Bite.</p>
+    <p><strong>Running Leap.</strong> Стрибок до 40 ft (довжина) або 20 ft (висота).</p>
+    <p><strong>Shifting Step.</strong> Якщо атака ворога промахується, може переміститися на 5 ft без провокації атак.</p>
+  </article>
+
+  <article class="sb" id="drexel-enforcer" data-name="drexel enforcer" data-cr="4">
+    <h2>Drexel Enforcer</h2>
+    <p class="sub"><em>Medium Humanoid, Lawful Neutral</em></p>
+    <div class="top">
+      <div class="vitals">
+        <p><strong>AC</strong> 18 (plate)</p>
+        <p><strong>HP</strong> 90 (12d8+36)</p>
+        <p><strong>Speed</strong> 30 фт</p>
+      </div>
+      <p class="init"><strong>Initiative</strong> +1</p>
+    </div>
+    <table class="abil">
+      <thead><tr><th></th><th>STR</th><th>DEX</th><th>CON</th><th>INT</th><th>WIS</th><th>CHA</th></tr></thead>
+      <tbody>
+        <tr><th>MOD</th><td>+4</td><td>+1</td><td>+3</td><td>+1</td><td>+2</td><td>+0</td></tr>
+        <tr class="save"><th>SAVE</th><td>+6</td><td>+2</td><td>+5</td><td>+2</td><td>+4</td><td>+1</td></tr>
+      </tbody>
+    </table>
+    <p class="meta"><strong>Gear</strong> Plate armor, longsword, shield<br><strong>Senses</strong> Passive Perception 14<br><strong>Languages</strong> Common<br><strong>CR</strong> 4 (XP 1100; PB +2)</p>
+    <hr>
+    <h3>ACTIONS</h3>
+    <p><strong>Multiattack.</strong> <em>Melee Weapon Attack</em> The enforcer makes two melee attacks.</p>
+    <p><strong>Longsword.</strong> <em>Melee Weapon Attack</em> +6 to hit, reach 5 ft., one target. Hit: 1d8+4 slashing damage (versatile 1d10+4).</p>
+
+    <h3>TRAITS</h3>
+    <p><strong>Unshakable Presence.</strong> The enforcer has advantage on saving throws against being frightened or charmed.</p>
+
+    <h3>BONUS ACTIONS</h3>
+    <p><strong>Battle Order.</strong> The enforcer can direct one allied creature within 30 feet to move up to half their speed without provoking opportunity attacks.</p>
+
+    <h3>REACTIONS</h3>
+    <p><strong>Redirect Assault.</strong> When a creature within 30 ft. misses with a weapon attack, the enforcer can shout a command. The attacker may immediately reroll the attack with disadvantage. This can be done once per round.</p>
+  </article>
+
+  <article class="sb" id="swarm-of-bats" data-name="swarm of bats" data-cr="0.25">
+    <h2>Swarm of Bats</h2>
+    <p class="sub"><em>Large Swarm of Tiny Beasts, Unaligned</em></p>
+    <div class="top">
+      <div class="vitals">
+        <p><strong>AC</strong> 12</p>
+        <p><strong>HP</strong> 11 (2d10)</p>
+        <p><strong>Speed</strong> 5 фт, Fly 30 фт</p>
+      </div>
+      <p class="init"><strong>Initiative</strong> +2</p>
+    </div>
+    <table class="abil">
+      <thead><tr><th></th><th>STR</th><th>DEX</th><th>CON</th><th>INT</th><th>WIS</th><th>CHA</th></tr></thead>
+      <tbody>
+        <tr><th>MOD</th><td>−3</td><td>+2</td><td>+0</td><td>−4</td><td>+1</td><td>−3</td></tr>
+        <tr class="save"><th>SAVE</th><td>−3</td><td>+2</td><td>+0</td><td>−4</td><td>+1</td><td>−3</td></tr>
+      </tbody>
+    </table>
+    <p class="meta"><strong>Gear</strong> —<br><strong>Senses</strong> Blindsight 60 ft., passive Perception 11<br><strong>Languages</strong> None<br><strong>CR</strong> 1/4 (XP 50; PB +2)</p>
+    <hr>
+    <h3>ACTIONS</h3>
+    <p><strong>Bites.</strong> <em>Melee Weapon Attack</em> +4 до атаки, досяжність 5 футів, одна ціль. Влучання: (2d4) колючих пошкоджень.</p>
+    <p><strong>Bites (Bloodied).</strong> <em>Melee Weapon Attack</em> +4 до атаки, досяжність 5 футів, одна ціль. Влучання: (1d4) колючих пошкоджень.</p>
+
+    <h3>TRAITS</h3>
+    <p><strong>Swarm.</strong> Рій може перебувати в тій самій клітинці, що й інші істоти, і проходити крізь отвори, достатні для Tiny істот. Рій не може відновлювати HP чи отримувати тимчасові HP.</p>
+    <p><strong>Обліплення.</strong> Коли рій заходить у клітинку істоти, та повинна пройти кидок рятунку Сили (DC 12) або стає осліпленою до початку свого наступного ходу — кажани повністю обліплюють її обличчя та тіло.</p>
+  </article>
+
+  <article class="sb" id="wasted-thrall" data-name="wasted thrall" data-cr="0.25">
+    <h2>Wasted Thrall</h2>
+    <p class="sub"><em>Medium undead, chaotic evil</em></p>
+    <div class="top">
+      <div class="vitals">
+        <p><strong>AC</strong> 12 (rotting flesh)</p>
+        <p><strong>HP</strong> 18 (4d8)</p>
+        <p><strong>Speed</strong> 30 фт, climb 20 фт</p>
+      </div>
+      <p class="init"><strong>Initiative</strong> +1</p>
+    </div>
+    <table class="abil">
+      <thead><tr><th></th><th>STR</th><th>DEX</th><th>CON</th><th>INT</th><th>WIS</th><th>CHA</th></tr></thead>
+      <tbody>
+        <tr><th>MOD</th><td>+1</td><td>+1</td><td>+0</td><td>−3</td><td>−1</td><td>−2</td></tr>
+        <tr class="save"><th>SAVE</th><td>+3</td><td>—</td><td>+2</td><td>—</td><td>—</td><td>—</td></tr>
+      </tbody>
+    </table>
+    <p class="meta"><strong>Gear</strong> —<br><strong>Senses</strong> darkvision 60 ft., passive Perception 9<br><strong>Languages</strong> understands Common but can’t speak<br><strong>CR</strong> 1/4 (XP 50; PB +2)</p>
+    <hr>
+    <h3>ACTIONS</h3>
+    <p><strong>Clawing Grasp.</strong> <em>Melee Weapon Attack</em> +4 to hit, reach 5 ft., one target. Hit: 6 (2d4 + 1) slashing damage. Ціль має зробити кидок STR (DC 13), або бути утриманою (grappled).</p>
+    <p><strong>Blood Drain.</strong> Якщо Поневолений утримує істоту, він може почати висмоктувати її кров. Ціль отримує 7 (2d6) некротичного урону, а Поневолений відновлює таку ж кількість хітпоїнтів.</p>
+
+    <h3>TRAITS</h3>
+    <p><strong>Undying Hunger.</strong> Якщо гравець втратив хітпоїнти цього раунду, Поневолений отримує перевагу на кидки атаки проти нього.</p>
+  </article>
+</main>
+<script>
+  const q = document.getElementById('q'), cr = document.getElementById('cr');
+  const items = [...document.querySelectorAll('.sb')], count = document.getElementById('count');
+  function apply() {
+    const t = q.value.trim().toLowerCase(), r = cr.value;
+    let n = 0;
+    for (const el of items) {
+      const v = parseFloat(el.dataset.cr);
+      let okCr = true;
+      if (r === 'none') okCr = v < 0;
+      else if (r) { const [a, b] = r.split('-').map(Number); okCr = v >= a && v <= b; }
+      const show = okCr && (!t || el.dataset.name.includes(t));
+      el.hidden = !show;
+      if (show) n++;
+    }
+    count.textContent = n + ' з ' + items.length;
+  }
+  q.addEventListener('input', apply); cr.addEventListener('change', apply); apply();
+</script>
+
+</body>
+</html>
