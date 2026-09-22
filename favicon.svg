@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Корона Короля Гарона">
+  <rect width="64" height="64" rx="14" fill="#9f1d2d"/>
+  <path fill="#f6c344" d="M11 19.5a3.5 3.5 0 1 1 5.6 2.8L22 29l7.2-13.7a3.5 3.5 0 1 1 5.6 0L42 29l5.4-6.7a3.5 3.5 0 1 1 4.2 1.2L48 45H16l-3.6-21.5a3.5 3.5 0 0 1-1.4-4Z"/>
+  <path fill="#ffd96b" d="M18 38h28l-1.2 7H19.2z"/>
+  <path fill="#f6c344" d="M16 48h32v5H16z"/>
+</svg>
