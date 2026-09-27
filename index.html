@@ -162,12 +162,30 @@ li.ev.lit>.when,li.ev.lit>.what{color:var(--ink)}
 ul.sub li.start{padding-top:2px}
 ul.sub li.start .chip{display:inline-flex;align-items:center;gap:10px;
   font-size:13px;letter-spacing:.08em;padding:7px 10px}
+ul.sub li.start .chip.is-expanded{display:flex;flex-wrap:wrap;width:min(100%,440px)}
 .session-play{display:inline-grid;place-items:center;width:30px;height:30px;
   padding:0;border:1px solid currentColor;border-radius:50%;
   color:var(--ember);background:var(--paper-2);font-size:15px;line-height:1;
   cursor:pointer}
 .session-play:hover,.session-play:focus-visible{color:var(--paper-2);background:var(--ember);outline:none}
 .session-play:focus-visible{box-shadow:0 0 0 3px var(--ember-soft)}
+.session-progress{display:none;align-items:center;gap:9px;width:100%;
+  font-family:"Literata",serif;font-size:11px;letter-spacing:0;text-transform:none;
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.is-expanded .session-progress{display:flex}
+.session-progress input{flex:1;min-width:60px;height:20px;margin:0;cursor:pointer;
+  appearance:none;background:transparent}
+.session-progress input::-webkit-slider-runnable-track{height:5px;border-radius:5px;
+  background:linear-gradient(to right,var(--ember) var(--progress,0%),var(--line) var(--progress,0%))}
+.session-progress input::-moz-range-track{height:5px;border-radius:5px;
+  background:linear-gradient(to right,var(--ember) var(--progress,0%),var(--line) var(--progress,0%))}
+.session-progress input::-webkit-slider-thumb{appearance:none;width:14px;height:14px;
+  margin-top:-4.5px;border:2px solid var(--paper-2);border-radius:50%;background:var(--ember);
+  box-shadow:0 0 0 1px var(--ember)}
+.session-progress input::-moz-range-thumb{width:10px;height:10px;
+  border:2px solid var(--paper-2);border-radius:50%;background:var(--ember);
+  box-shadow:0 0 0 1px var(--ember)}
+.session-progress input:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
 
 .qgrp{font-family:"Unbounded",system-ui,sans-serif;font-weight:800;font-size:10px;
   letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);margin:30px 0 12px;
@@ -624,15 +642,50 @@ const SESSION_AUDIO = {"10":"audio/session-010-full-with-music.mp3"};
 const sessionPlayer = new Audio();
 sessionPlayer.preload = 'none';
 let activePlay = null;
+let activeBadge = null;
+let activeProgress = null;
+let activeCurrent = null;
+let activeTotal = null;
+function sessionTime(seconds) {
+  if (!Number.isFinite(seconds)) return '0:00';
+  const n = Math.floor(seconds);
+  const minutes = Math.floor(n / 60);
+  const basic = minutes + ':' + String(n % 60).padStart(2, '0');
+  return minutes < 60 ? basic : Math.floor(minutes / 60) + ':' + String(minutes % 60).padStart(2, '0') + ':' + String(n % 60).padStart(2, '0');
+}
+function updateSessionProgress() {
+  if (!activeProgress) return;
+  const duration = Number.isFinite(sessionPlayer.duration) ? sessionPlayer.duration : 0;
+  const current = Number.isFinite(sessionPlayer.currentTime) ? sessionPlayer.currentTime : 0;
+  activeProgress.disabled = duration <= 0;
+  activeProgress.max = String(duration || 1);
+  activeProgress.value = String(Math.min(current, duration || 1));
+  activeProgress.style.setProperty('--progress', (duration ? current / duration * 100 : 0) + '%');
+  activeProgress.setAttribute('aria-valuetext', sessionTime(current) + ' із ' + sessionTime(duration));
+  activeCurrent.textContent = sessionTime(current);
+  activeTotal.textContent = sessionTime(duration);
+}
+function setSessionPlayState(playing) {
+  if (!activePlay) return;
+  activePlay.textContent = playing ? 'Ⅱ' : '▶';
+  activePlay.setAttribute('aria-label', (playing ? 'Призупинити' : 'Відтворити') + ' опис сесії ' + activePlay.dataset.session);
+  activePlay.setAttribute('aria-pressed', String(playing));
+}
 function resetSessionPlay() {
   if (!activePlay) return;
-  activePlay.textContent = '▶';
-  activePlay.setAttribute('aria-label', 'Відтворити опис сесії ' + activePlay.dataset.session);
-  activePlay.setAttribute('aria-pressed', 'false');
+  setSessionPlayState(false);
+  activeBadge.classList.remove('is-expanded');
   activePlay = null;
+  activeBadge = null;
+  activeProgress = null;
+  activeCurrent = null;
+  activeTotal = null;
 }
 sessionPlayer.addEventListener('ended', resetSessionPlay);
 sessionPlayer.addEventListener('error', resetSessionPlay);
+for (const event of ['loadedmetadata', 'durationchange', 'timeupdate', 'seeked']) {
+  sessionPlayer.addEventListener(event, updateSessionProgress);
+}
 for (const badge of document.querySelectorAll('li.start .chip')) {
   const match = badge.textContent.trim().match(/^Сесія (\d+)$/);
   if (!match || !SESSION_AUDIO[match[1]]) continue;
@@ -644,25 +697,48 @@ for (const badge of document.querySelectorAll('li.start .chip')) {
   button.setAttribute('aria-label', 'Відтворити опис сесії ' + match[1]);
   button.setAttribute('aria-pressed', 'false');
   badge.appendChild(button);
+  const timeline = document.createElement('div');
+  timeline.className = 'session-progress';
+  const currentLabel = document.createElement('span');
+  currentLabel.textContent = '0:00';
+  const progress = document.createElement('input');
+  progress.type = 'range';
+  progress.min = '0';
+  progress.max = '1';
+  progress.step = '0.1';
+  progress.value = '0';
+  progress.disabled = true;
+  progress.setAttribute('aria-label', 'Перемотати опис сесії ' + match[1]);
+  const totalLabel = document.createElement('span');
+  totalLabel.textContent = '0:00';
+  timeline.append(currentLabel, progress, totalLabel);
+  badge.appendChild(timeline);
+  progress.addEventListener('input', () => {
+    if (activePlay !== button || !Number.isFinite(sessionPlayer.duration)) return;
+    sessionPlayer.currentTime = Number(progress.value);
+    updateSessionProgress();
+  });
   button.addEventListener('click', async () => {
     if (activePlay === button && !sessionPlayer.paused) {
       sessionPlayer.pause();
-      button.textContent = '▶';
-      button.setAttribute('aria-label', 'Відтворити опис сесії ' + match[1]);
-      button.setAttribute('aria-pressed', 'false');
+      setSessionPlayState(false);
       return;
     }
     if (activePlay !== button) {
       sessionPlayer.pause();
       resetSessionPlay();
+      activePlay = button;
+      activeBadge = badge;
+      activeProgress = progress;
+      activeCurrent = currentLabel;
+      activeTotal = totalLabel;
       sessionPlayer.src = SESSION_AUDIO[match[1]];
     }
     try {
       await sessionPlayer.play();
-      activePlay = button;
-      button.textContent = 'Ⅱ';
-      button.setAttribute('aria-label', 'Призупинити опис сесії ' + match[1]);
-      button.setAttribute('aria-pressed', 'true');
+      badge.classList.add('is-expanded');
+      setSessionPlayState(true);
+      updateSessionProgress();
     } catch { resetSessionPlay(); }
   });
 }
